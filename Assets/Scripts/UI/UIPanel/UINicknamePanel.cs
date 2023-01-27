@@ -12,14 +12,13 @@ public class UINicknamePanel : UIBase
     public Button OkBtn;
     public GameObject ExistNickNameTxt;
     public InputField NickInputField;
-    public UINicknamePanel(GameObject UIPrefab,Action action)
+    public UINicknamePanel(GameObject UIPrefab)
     {
         UINicknamePanel r = UIPrefab.GetComponent<UINicknamePanel>();
         r.Awake();
         r.UIPrefab = UIPrefab;
 
         this.UIPrefab = r.InstantiatePrefab() as GameObject;
-        this.Callback = action;
     }
   public override  void Start()
     {
@@ -29,18 +28,28 @@ public class UINicknamePanel : UIBase
             //닉넴 체크(몇글자 이하인지)
             ExistNickNameTxt.SetActive(false);
             FirebaseLogin.Instance.NickNameCheck(NickInputField.text).ContinueWith((task) => {
-                Debug.Log("닉넴은 "+task.Result);
-                switch (task.Result.ToString())
-                {
-                    case "Success":
-                        break;
+                Debug.Log("닉넴은 "+(string)task.Result);
+                UnityMainThreadDispatcher.Instance().Enqueue(()=> {
 
-                    case "Fail":
-                        break;
+                    SendMessage itemFriend = JsonUtility.FromJson<SendMessage>(task.Result.ToString());
 
-                    default:
-                        break;
-                }
+                    switch (itemFriend.message)
+                    {
+                        case "Success":
+
+                            LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                            Destroy(this.gameObject);
+                            break;
+
+                        case "Fail":
+                            ExistNickNameTxt.SetActive(true);
+                            break;
+
+                        default:
+                            break;
+                    }
+                });
+            
             }); //서버에 같은 닉넴 있는지 체크
            // LoadingSceneController.Instance.LoadScene(SceneName.Main);
             //Callback.Invoke();//콜백 실행

@@ -232,7 +232,7 @@ public class FirebaseLogin : MonoBehaviour
                                     if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
                                     {
                                         // Debug.Log("");
-                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab, () => LoadingSceneController.Instance.LoadScene(SceneName.Main));
+                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
 
                                         //SetUserInfo(GameManager.Instance.PlayerUserInfo);
 

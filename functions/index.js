@@ -102,14 +102,18 @@ exports.nickNameCheck=functions.https.onCall(async (req, res) => {
   const doc = await user.get();
   if (!doc.exists) {
     console.log('No such document!');
-  
-    return JSON.stringify("Success");
+
+    message.name="NickNameCheck";
+    message.message="Success";
+
+    return JSON.stringify(message);
   
   } 
   else {
-    
+    message.name="NickNameCheck";
+    message.message="Fail";
     //console.log('Document data:', JSON.stringify(doc.data()));
-    return JSON.stringify("Fail");
+    return JSON.stringify(message);
   }
 });
 exports.addBuilding=functions.https.onCall(async(req,res)=>{
