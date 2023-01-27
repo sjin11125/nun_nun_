@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Building
+  - Coin_Button
+  - Button
+  - GridSquare
+  - ok
+  - Shape
+  - Lock
+  - unLock
+  - Start
+  - Character
+  - building
+  - ItemController
+  - NextSquare
+  - ShapeStorage
+  - Grid
+  - GameOvar
+  - MainTimer
+  - KeepTimer
+  - KeepShape
+  - Canvas
+  - Upgrade
+  - Rotation
+  - Remove
+  - Profile
+  - Inven_Building
+  - Inven_Nuni
+  - addFriend
+  - VisitorBook
+  - Combo
+  - SettingPanel
+  - UpdatePanel
+  - Nuni
+  - Profile_Image
+  - Dialog
+  - bunsu
+  - Str
+  - TutoBuy
+  - ShopBtn
+  - Card
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - overUI
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Bottom
+    uniqueID: 868980993
+    locked: 0
+  - name: Middle
+    uniqueID: 2559954653
+    locked: 0
+  - name: Top
+    uniqueID: 2754968083
+    locked: 0
