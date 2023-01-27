@@ -232,11 +232,11 @@ public class FirebaseLogin : MonoBehaviour
                                     if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
                                     {
                                         // Debug.Log("");
-                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
+                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab, () => LoadingSceneController.Instance.LoadScene(SceneName.Main));
 
                                         //SetUserInfo(GameManager.Instance.PlayerUserInfo);
 
-                                        NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                                      //  NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
                                     }
                                     else
                                     {
@@ -272,6 +272,20 @@ public class FirebaseLogin : MonoBehaviour
                 Debug.LogError(task.Result);
             }
         });
+    }
+    public Task<string> NickNameCheck(string nickname)
+    {
+        functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);
+        var function = functions.GetHttpsCallable("nickNameCheck");
+
+        SendMessage IdToken = new SendMessage("Send IdToken", nickname);
+
+        return function.CallAsync(JsonUtility.ToJson(IdToken)).ContinueWithOnMainThread((task) => {
+
+            return (string)task.Result.Data;
+
+        });
+
     }
     public Task<string> GetMyAchieveInfo(string uid)
     {

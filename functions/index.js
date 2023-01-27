@@ -97,7 +97,7 @@ exports.nickNameCheck=functions.https.onCall(async (req, res) => {
   console.log("req: "+req);
   const nickName=JSON.parse(req);
   
-  console.log("req to json: "+idToken.message);
+  console.log("req to json: "+nickName.message);
   const user = db.collection('user').doc(nickName.message);
   const doc = await user.get();
   if (!doc.exists) {
