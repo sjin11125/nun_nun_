@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1207589744616473758}
   - component: {fileID: 5900678746733590018}
   - component: {fileID: 1819547242806887121}
-  - component: {fileID: 460459023667633218}
+  - component: {fileID: 4109879285005708411}
   m_Layer: 5
   m_Name: NicknamePannel
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &460459023667633218
+--- !u!114 &4109879285005708411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,15 +89,16 @@ MonoBehaviour:
   m_GameObject: {fileID: -1136479446299908012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160d60f7339d0e34b95794f5e862cd33, type: 3}
+  m_Script: {fileID: 11500000, guid: ef1e45b3d602598418c6cb058718bce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UICloseBtn: {fileID: 0}
   UIYesBtn: {fileID: 0}
   UINoBtn: {fileID: 0}
   UIBackCloseBtn: {fileID: 0}
-  UIPrefab: {fileID: -1136479446299908012}
+  UIPrefab: {fileID: 0}
   canvas: {fileID: 0}
+  OkBtn: {fileID: 3323561645605916836}
 --- !u!1 &1078807047683187668
 GameObject:
   m_ObjectHideFlags: 0

@@ -92,7 +92,26 @@ exports.findUser=functions.https.onCall(async (req, res) => {
     return JSON.stringify(doc.data());
   }
 });
-
+exports.nickNameCheck=functions.https.onCall(async (req, res) => {
+  const db=admin.firestore();
+  console.log("req: "+req);
+  const nickName=JSON.parse(req);
+  
+  console.log("req to json: "+idToken.message);
+  const user = db.collection('user').doc(nickName.message);
+  const doc = await user.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  
+    return JSON.stringify("Success");
+  
+  } 
+  else {
+    
+    //console.log('Document data:', JSON.stringify(doc.data()));
+    return JSON.stringify("Fail");
+  }
+});
 exports.addBuilding=functions.https.onCall(async(req,res)=>{
   const buildingData=JSON.parse(req);
     //const buildingData=JSON.parse(req);

@@ -228,19 +228,23 @@ public class FirebaseLogin : MonoBehaviour
 
                                     Debug.Log("My id: " + GameManager.Instance.MyAchieveInfos[achieveInfo.Id].Id);
                                 }
-                                if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
-                                {
-                                   // Debug.Log("");
-                                    UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
+                                UnityMainThreadDispatcher.Instance().Enqueue(()=> {
+                                    if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
+                                    {
+                                        // Debug.Log("");
+                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
 
-                                    //SetUserInfo(GameManager.Instance.PlayerUserInfo);
+                                        //SetUserInfo(GameManager.Instance.PlayerUserInfo);
 
-                                    NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
-                                }
-                                else
-                                {
-                                    LoadingSceneController.Instance.LoadScene(SceneName.Main);
-                                }
+                                        NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                                    }
+                                    else
+                                    {
+                                        LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                                    }
+
+                                });
+                               
 
                             }
                         });
