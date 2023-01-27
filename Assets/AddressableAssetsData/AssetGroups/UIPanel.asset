@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UIPanel
+  m_EditorClassIdentifier: 
+  m_GroupName: UIPanel
+  m_Data:
+    m_SerializedData: []
+  m_GUID: f16b320ac2ee19043999efaf4d02d0cf
+  m_SerializeEntries:
+  - m_GUID: a9b4838d0b9b1c5479ffa29ccd1a084a
+    m_Address: Assets/Prefabs/UI/UIPanel/Achieve_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: da51a8f3e96963d4ba809e36b3b41a14
+    m_Address: Assets/Prefabs/UI/UIPanel/BasePanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 824c62bb4e24a5a468473209badcb638
+    m_Address: Assets/Prefabs/UI/UIPanel/EffectPannel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1a869d8cf2182a744bbfcf6a4df0f5cd
+    m_Address: Assets/Prefabs/UI/UIPanel/Friend_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5b3d3258f3ca83444917b76c09612c56
+    m_Address: Assets/Prefabs/UI/UIPanel/Inventory_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 722276e85c6a58646b7f4471c90ff5ef
+    m_Address: Assets/Prefabs/UI/UIPanel/LoadingNuni.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a4b3051d2840de6408dfed7c9dfedd5c
+    m_Address: Assets/Prefabs/UI/UIPanel/Message_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b83c0e6543bc6914ebe7225844ed7ab6
+    m_Address: Assets/Prefabs/UI/UIPanel/MoneyPannel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f85a03e91a6e56b409b201027f6f269b
+    m_Address: Assets/Prefabs/UI/UIPanel/NicknamePannel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ae439c27a8e85ff45b11d480e23f946f
+    m_Address: Assets/Prefabs/UI/UIPanel/profile_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 03f0f8d29fe679841a2d24d29d060bda
+    m_Address: Assets/Prefabs/UI/UIPanel/Ranking_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: efb072454993492408b8e047d75d4ff7
+    m_Address: Assets/Prefabs/UI/UIPanel/SellPanel Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2b1e0b382f545724789c13b18a878bf2
+    m_Address: Assets/Prefabs/UI/UIPanel/Store_panel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a6518bce09e224449be850da3a762f64
+    m_Address: Assets/Prefabs/UI/UIPanel/UpgradePanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ec8be013d48043b44ba732b48a58be87
+    m_Address: Assets/Prefabs/UI/UIPanel/VisitorBookPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e91345750d263af4498e71946c3bd34e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d841e2030ada54e48a7bfa1cb9c2ba9f, type: 2}
+    - {fileID: 11400000, guid: c84e40906d3ae084faadd7d86c1aa6bc, type: 2}
