@@ -130,7 +130,7 @@ public class BuildingSave : MonoBehaviour
 
         Newtonsoft.Json.Linq.JArray j = Newtonsoft.Json.Linq.JArray.Parse(json);
 
-        switch (buildingDef)
+       /* switch (buildingDef)
         {
             case BuildingDef.getFriendBuilding:
 
@@ -189,7 +189,7 @@ public class BuildingSave : MonoBehaviour
             default:
                 break;
         }
-  
+  */
     }
 }
 

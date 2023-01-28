@@ -13,7 +13,6 @@ using Firebase.Functions;
 using UnityEngine.SceneManagement;
 
 
-
 public class FirebaseLogin : MonoBehaviour
 {	// Auth 용 instance
     public Text infoText;
@@ -58,37 +57,13 @@ public class FirebaseLogin : MonoBehaviour
 
         CheckFirebaseDependencies();
 
+        
+
     }
 
+  
 
-   /* public void GetBuilding()
-    {
-        addMessage("아싸").ContinueWith((task) => {
-            Debug.Log(task);
-            Debug.Log(task.IsFaulted);
-        if (task.IsFaulted)
-        {
-                foreach (var inner in task.Exception.InnerExceptions)
-                {
-                    if (inner is FunctionsException)
-                    {
-                        var e = (FunctionsException)inner;
-                        // Function error code, will be INTERNAL if the failure
-                        // was not handled properly in the function call.
-                        var code = e.ErrorCode;
-                        var message = e.Message;
 
-                        Debug.LogError(code);
-                        Debug.LogError(message);
-                    }
-                    Debug.LogError("예외: "+inner.Message);
-                }
-           
-        }
-         else
-            Debug.Log("통신성공: "+task.Result);
-        });
-    }*/
     public Task<string> GetBuilding(string uid)
     {
         functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);

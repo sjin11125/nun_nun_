@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: 
+  m_GroupName: Buildings
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b19b711fe181fb44683c3531aa6d4358
+  m_SerializeEntries:
+  - m_GUID: fdb2b5c775863bc41b0f4d22136176a8
+    m_Address: Assets/Prefabs/Building/buildings/building_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d52e53dfb7b300c45bf29aa7f1aaf320
+    m_Address: Assets/Prefabs/Building/buildings/bunsu_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b1767d8e4a5651e46a9cc93b965d70d5
+    m_Address: Assets/Prefabs/Building/buildings/fashion_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 76385d16ace105b4a959d0e5c52ad629
+    m_Address: Assets/Prefabs/Building/buildings/flower_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 704c8e9990059f647a7379782feb195c
+    m_Address: Assets/Prefabs/Building/buildings/school_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e972d3c9323cfcf40937987b1e9fa731
+    m_Address: Assets/Prefabs/Building/buildings/syrup_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ae3ec7764245fcd41930c8ce28ec204c
+    m_Address: Assets/Prefabs/Building/buildings/village_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 070648dee2ab29f4c8f6f6d3792762f9
+    m_Address: Assets/Prefabs/Building/Strs/fence_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f6b05ef3f1a90fa45880b342957aa166
+    m_Address: Assets/Prefabs/Building/Strs/flower1_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5e6bc7fe885ff844d8a09a7eeac7ad08
+    m_Address: Assets/Prefabs/Building/Strs/flower2_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e911597c90bce544daffe0927911ef37
+    m_Address: Assets/Prefabs/Building/Strs/streetlamp1_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5ffc72249d7dd334d8d9667240dde3e3
+    m_Address: Assets/Prefabs/Building/Strs/streetlamp2_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 023d3b00d9904e146856f2216d0687bd
+    m_Address: Assets/Prefabs/Building/Strs/tree1_level.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e91345750d263af4498e71946c3bd34e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cdab2036f7108f8458ce76cebb4b68ee, type: 2}
+    - {fileID: 11400000, guid: d6ab99f5e22e516469acf6b9faf7377e, type: 2}
