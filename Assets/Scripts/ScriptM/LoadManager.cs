@@ -286,7 +286,14 @@ public class LoadManager : MonoBehaviour
             if (item.Value.isLock.Equals("T"))
             {
                 Debug.Log(item.Value.cardImage) ;
-                GameObject nuni = Instantiate(GameManager.CharacterPrefab[item.Value.cardImage], nunis.transform);
+                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.NuniInfo[item.Value.cardImage].Path).Completed += (gameobject) =>
+                {
+                    //GameObject BuildingPrefab = gameobject.Result;
+                   // Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
+
+                    //callback.Invoke();
+              
+                GameObject nuni = Instantiate(gameobject.Result, nunis.transform);
 
                 nuni.name = item.Value.Id;
                 Card nuni_card = nuni.GetComponent<Card>();
@@ -294,6 +301,7 @@ public class LoadManager : MonoBehaviour
 
 
                 MyNuniPrefab.Add(item.Value.Id, nuni);         //현재 가지고 있는 누니 오브젝트 딕셔너리에 추가
+                };
             }
         }
         Debug.Log("누니 불러옴");

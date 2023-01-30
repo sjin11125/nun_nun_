@@ -21,6 +21,7 @@ public class CardInfo
     public string Gold;   //보유효과
     public string Weight;       //가중치
 
+    public string Path;
 }
 public class Card : MonoBehaviour
 {
@@ -39,7 +40,6 @@ public class Card : MonoBehaviour
     public string[] Building;     //보유시 영향을 주는 건물
     public string Gold;   //보유효과
     public string Weight;       //가중치
-    public string Path;
 
     public bool isDialog;               //대사 말하고 있나
     public Card(Cardsave cardSave)

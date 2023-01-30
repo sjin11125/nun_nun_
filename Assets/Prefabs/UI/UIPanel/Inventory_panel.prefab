@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7393901714820283302}
   - component: {fileID: 7393901714820283301}
   - component: {fileID: 7393901714820283300}
-  - component: {fileID: 7393901714820283299}
   m_Layer: 5
   m_Name: StructureButton
   m_TagString: Inven_Building
@@ -122,51 +121,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7393901714820283301}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7393901714820283299}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: Inventory_Structure_Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7393901714820283299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7393901714820283297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77f783ec89ef2e488738aea68be24ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory_prefab: {fileID: 2236633136755091253, guid: 9367a89363d66a24e9a006b4349ecce0, type: 3}
-  inventory_nuni_prefab: {fileID: 0}
-  Content: {fileID: 8990476914130578026}
-  NuniParent: {fileID: 0}
-  InvenBuildingBtn: {fileID: 0}
-  InvenStrBtn: {fileID: 0}
-  InvenNuniBtn: {fileID: 0}
-  InvenCloseBtn: {fileID: 0}
+      m_Calls: []
 --- !u!1 &7393901714895607607
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +783,6 @@ GameObject:
   - component: {fileID: 8990476914840238867}
   - component: {fileID: 8990476914840238866}
   - component: {fileID: 8990476914840238865}
-  - component: {fileID: 7393901714581195125}
   m_Layer: 5
   m_Name: NuniButton
   m_TagString: Inven_Nuni
@@ -938,51 +892,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8990476914840238866}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7393901714581195125}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: Inventory_Nuni_Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7393901714581195125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8990476914840238895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77f783ec89ef2e488738aea68be24ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory_prefab: {fileID: 2236633136755091253, guid: 0171688ffe1bfff4788196a4587df52d, type: 3}
-  inventory_nuni_prefab: {fileID: 2236633136755091253, guid: 0171688ffe1bfff4788196a4587df52d, type: 3}
-  Content: {fileID: 8990476914130578026}
-  NuniParent: {fileID: 0}
-  InvenBuildingBtn: {fileID: 0}
-  InvenStrBtn: {fileID: 0}
-  InvenNuniBtn: {fileID: 0}
-  InvenCloseBtn: {fileID: 0}
+      m_Calls: []
 --- !u!1 &8990476915023580087
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +905,6 @@ GameObject:
   - component: {fileID: 8990476915023580091}
   - component: {fileID: 8990476915023580090}
   - component: {fileID: 8990476915023580089}
-  - component: {fileID: 8990476915023580092}
   m_Layer: 5
   m_Name: BuildingButton
   m_TagString: Inven_Building
@@ -1105,51 +1014,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8990476915023580090}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8990476915023580092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8990476915023580087}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77f783ec89ef2e488738aea68be24ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory_prefab: {fileID: 2236633136755091253, guid: 9367a89363d66a24e9a006b4349ecce0, type: 3}
-  inventory_nuni_prefab: {fileID: 0}
-  Content: {fileID: 8990476914130578026}
-  NuniParent: {fileID: 0}
-  InvenBuildingBtn: {fileID: 8990476915023580089}
-  InvenStrBtn: {fileID: 0}
-  InvenNuniBtn: {fileID: 8990476914840238865}
-  InvenCloseBtn: {fileID: 0}
+      m_Calls: []
 --- !u!1 &8990476915134771987
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,7 +1483,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8990476915023580092}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
         m_MethodName: Inventory_Exit
         m_Mode: 1
