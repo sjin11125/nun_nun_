@@ -208,7 +208,7 @@ public class FirebaseLogin : MonoBehaviour
                         Newtonsoft.Json.Linq.JArray NuniData = Newtonsoft.Json.Linq.JArray.Parse(Result[3].ToString());  //누니 정보 넣기
                         foreach (var achieve in NuniData)//누니
                         {
-                            Card nuniInfo = JsonUtility.FromJson<Card>(achieve.ToString());
+                            CardInfo nuniInfo = JsonUtility.FromJson<CardInfo>(achieve.ToString());
                             GameManager.Instance.NuniInfo.Add(nuniInfo.cardImage, nuniInfo);
 
                             Debug.Log("nuniData: " + GameManager.Instance.NuniInfo[nuniInfo.cardImage].cardImage);

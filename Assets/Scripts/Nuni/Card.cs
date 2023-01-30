@@ -4,6 +4,24 @@ using UnityEngine;
 
 
 [System.Serializable]
+public class CardInfo
+{
+    public string cardName;
+    public string cardImage;
+    public int Cost;
+    public int Item;        //무슨 아이템인지(0~4)
+    public string isLock;
+    //public string Level;        //레벨
+    //public string Star;     //별
+    //public string Gauge;        //게이지
+    public string Info;     //누니설명
+    public string Effect;   //보유효과
+
+    public string[] Building;     //보유시 영향을 주는 건물
+    public string Gold;   //보유효과
+    public string Weight;       //가중치
+
+}
 public class Card : MonoBehaviour
 {
     public string cardName;
@@ -21,7 +39,7 @@ public class Card : MonoBehaviour
     public string[] Building;     //보유시 영향을 주는 건물
     public string Gold;   //보유효과
     public string Weight;       //가중치
-
+    public string Path;
 
     public bool isDialog;               //대사 말하고 있나
     public Card(Cardsave cardSave)

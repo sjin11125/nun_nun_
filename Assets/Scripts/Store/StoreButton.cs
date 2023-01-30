@@ -16,7 +16,8 @@ public class StoreButton : MonoBehaviour
 
     public string Building_Image;
 
-
+    [SerializeField]
+    public StoreNuniInfo StoreNuniInfo;
 
     public void SetStoreData(BuildingParse buildingInfo)
     {
@@ -53,7 +54,7 @@ public class StoreButton : MonoBehaviour
         }
     }
 
-    public void SetNuniData(Card nuniInfo)
+    public void SetNuniData(CardInfo nuniInfo)
     {
         if (Name != null)
             Name.text = nuniInfo.cardName;
@@ -63,11 +64,5 @@ public class StoreButton : MonoBehaviour
             Image.sprite = image.Result;
 
         };
-        if (BuyBtn != null)
-        {
-            BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼
-
-            }).AddTo(this);
-        }
     }
 }

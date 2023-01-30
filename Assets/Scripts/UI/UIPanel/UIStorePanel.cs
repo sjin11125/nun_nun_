@@ -12,6 +12,8 @@ public class UIStorePanel : UIBase
     public List<StoreMenu> StoreMenu;
     [SerializeField]
     public List<GameObject> StoreViews;
+    [SerializeField]
+    public StoreNuniInfo StoreNuniInfo;
 
     public UIStorePanel(GameObject UIPrefab)
     {
@@ -69,6 +71,7 @@ public class UIStorePanel : UIBase
                         StoreViews[0].SetActive(false);
                         StoreViews[1].SetActive(false);
                         StoreViews[2].SetActive(true);
+                        StoreNuniInfo.InfoPanel.SetActive(false);
                         Exit(item.Content.transform);
                         try
                         {
@@ -78,7 +81,20 @@ public class UIStorePanel : UIBase
                                 GameObject NuniInfoObj = Instantiate(item.Prefab, item.Content.transform) as GameObject;
                                 StoreButton NuniInfo = NuniInfoObj.GetComponent<StoreButton>();
 
+
                                 NuniInfo.SetNuniData(items.Value);
+                                NuniInfo.BuyBtn.OnClickAsObservable().Subscribe(_=> {
+                                    if (StoreNuniInfo != null)
+                                    {
+                                        StoreNuniInfo.InfoPanel.SetActive(true);
+
+                                        StoreNuniInfo.NuniInfo.text = items.Value.Info;
+                                        StoreNuniInfo.NuniName.text = items.Value.cardName;
+                                        StoreNuniInfo.NuniEffect.text = items.Value.Effect;
+
+                                        StoreNuniInfo.NuniImage.sprite = NuniInfo.Image.sprite;
+                                    }
+                                }).AddTo(this);
                             }
                         }
                         catch (System.Exception e)

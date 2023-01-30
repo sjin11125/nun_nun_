@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public static Dictionary<string, GameObject> CharacterPrefab;       //모든 캐릭터 누니 딕셔너리
 
     public static Card[] AllNuniArray;              //엑셀에서 받아 온 모든 누니 정보 배열
-    public Dictionary<string, Card> NuniInfo = new Dictionary<string, Card>();
+    public Dictionary<string, CardInfo> NuniInfo = new Dictionary<string, CardInfo>();
 
     public Dictionary<string,Card> CharacterList;      //현재가지고 있는 누니 리스트
     //public static Card[] CharacterArray;               //현재 가지고 있는 캐릭터 배열

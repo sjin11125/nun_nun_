@@ -14,6 +14,7 @@ public class Cardsave
     public string cardImage;
     public string isLock;
     public string Id;
+    public string Path;
 
     public Cardsave(string uid, string cardImage, string isLock, string id)
     {
@@ -184,6 +185,15 @@ public class StoreMenu
     public Button Btn;
     public GameObject Prefab;
     public GameObject Content;
+
+}
+[Serializable]
+public class StoreNuniInfo
+{
+    //public Button Btn;
+    public GameObject InfoPanel;
+    public Text NuniName,NuniInfo,NuniEffect;
+    public Image NuniImage;
 
 }
 [Serializable]
