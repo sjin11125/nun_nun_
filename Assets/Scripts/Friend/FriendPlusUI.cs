@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UnityEngine.AddressableAssets;
 
 public class FriendPlusUI : MonoBehaviour
 {
@@ -72,7 +73,6 @@ public class FriendPlusUI : MonoBehaviour
                 });
             }).AddTo(this);
         }
-        
     }
 
     public void SetFriendInfo(FriendInfo friendInfo)
@@ -80,5 +80,11 @@ public class FriendPlusUI : MonoBehaviour
         FriendName.text = friendInfo.FriendName;
         //FriendImage.sprite=GameManager.Instance.ima            //이미지 넣기
         FriendMessage.text = friendInfo.FriendMessage;
+
+        Addressables.LoadAssetAsync<Sprite>(friendInfo.FriendImage).Completed += (image) =>
+        {            //어드레서블로 이미지 불러서 넣기
+            FriendImage.sprite = image.Result;
+
+        };
     }
 }

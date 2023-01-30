@@ -192,6 +192,7 @@ public class LoadingSceneController : MonoBehaviour
 
     public void GetBuildingNuniInfo(string uid)
     {
+        //LoadManager.Instance.MyBuildings.Clear();
         FirebaseLogin.Instance.GetBuilding(uid).ContinueWith((task) =>      //건물 불러오기
         {
             Debug.Log("task.Result: " + task.Result);
@@ -215,7 +216,8 @@ public class LoadingSceneController : MonoBehaviour
                         Newtonsoft.Json.Linq.JArray Result = Newtonsoft.Json.Linq.JArray.Parse(task.Result);
 
                         LoadManager.Instance.MyBuildings.Clear();
-
+                        LoadManager.Instance.MyBuildingsPrefab.Clear();
+                                            LoadManager.Instance.MyNuniPrefab.Clear();
                         foreach (var item in Result)
                         {
                             Debug.Log("item: " + item.ToString());
@@ -244,19 +246,26 @@ public class LoadingSceneController : MonoBehaviour
                                             Cardsave itemNuni = JsonUtility.FromJson<Cardsave>(item.ToString());
                                             //Debug.Log("item: " + JsonUtility.ToJson(item));
                                             Card tempNuni = new Card(itemNuni);
-                                            if (!GameManager.Instance.CharacterList.ContainsKey(tempNuni.Id))
-                                                GameManager.Instance.CharacterList.Add(tempNuni.Id, tempNuni);
+                                            if (!LoadManager.Instance.MyNuni.ContainsKey(tempNuni.Id))
+                                                LoadManager.Instance.MyNuni.Add(tempNuni.Id, tempNuni);
+
+                                            if (uid == GameManager.Instance.PlayerUserInfo.Uid)
+                                            {
+                                                if (!GameManager.Instance.CharacterList .ContainsKey(tempNuni.Id))
+                                                    GameManager.Instance.CharacterList.Add(tempNuni.Id, tempNuni);
+                                            }
+
                                         }
 
                                         UnityMainThreadDispatcher.Instance().Enqueue(() =>
                                         {
+                                            
                                             if (SceneManager.GetActiveScene().name!=SceneName.Game.ToString())
                                             {
                                                 LoadManager.Instance.BuildingLoad();
                                                 LoadManager.Instance.NuniLoad();
                                             }
-                                           
-
+                                         
                                             StartCoroutine(Fade(false));
 
                                         }); //BuildingLoad();

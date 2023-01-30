@@ -24,6 +24,7 @@ public class LoadManager : MonoBehaviour
     UiLoadingPanel UILoadingPanel;
 
     public  Dictionary<string, Building> MyBuildings = new Dictionary<string, Building>();          //내가 가지고 있는 빌딩들(id, Building)
+    public  Dictionary<string, Card> MyNuni = new Dictionary<string, Card>();          //내가 가지고 있는 빌딩들(id, Building)
 
       public  Dictionary<string, GameObject> MyBuildingsPrefab = new Dictionary<string, GameObject>();          //내가 가지고 있는 빌딩들 오브젝트(id, Building)
       public  Dictionary<string, GameObject> MyNuniPrefab = new Dictionary<string, GameObject>();          //내가 가지고 있는 누니들 오브젝트(id, Building)
@@ -39,6 +40,8 @@ public class LoadManager : MonoBehaviour
     public Text ShinMoneyText;
 
     public string FriendUid;
+
+    public Button MyHomeBtn;
 
     private void FixedUpdate()
     {
@@ -227,61 +230,18 @@ public class LoadManager : MonoBehaviour
             {
                 Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
             }
-            /*
-            for (int i = 0; i < GameManager.Items.Length; i++)
-            {
-                GameManager.Items[i] = false;
-            }*/
         }
 
+        MyHomeBtn.OnClickAsObservable().Subscribe(_=> {
 
-        /*if (SceneManager.GetActiveScene().name.Equals("Main") && GameManager.Instance.CharacterList!=null )       //���ξ����� �ε��ϱ�(����)
-        {
-            for (int i = 0; i < GameManager.Instance.CharacterList.Count; i++)
-            {
-                Card c = GameManager.Instance.CharacterList[i];
-                if (c.isLock.Equals("T"))
-                {
-                    GameObject nuni = Instantiate(GameManager.CharacterPrefab[c.cardImage], nunis.transform);
-                    Card nuni_card = nuni.GetComponent<Card>();
-                    nuni_card.SetValue(c);
-                }
-            }
+            LoadingSceneController.Instance.LoadScene(SceneName.Main);
 
-        }*/
-
-       /* if (SceneManager.GetActiveScene().name.Equals("FriendMain") )                            //친구 마을 씬이냐
-        {
-            for (int i = 0; i < GameManager.FriendBuildingList.Count; i++)
-            {
-                Building LoadBuilding = GameManager.FriendBuildingList[i];           // ���� ������ �մ� ���� ����Ʈ�� ���� ������Ʈ
-                string BuildingName = LoadBuilding.Building_Image;        //���� ������ �ִ� ���� ����Ʈ���� ���� �̸� �θ���
-
-
-                GameObject BuildingPrefab = GameManager.BuildingPrefabData[BuildingName];
-                GameObject g = Instantiate(BuildingPrefab, new Vector3(LoadBuilding.BuildingPosition.x, LoadBuilding.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
-
-                Building g_Building = g.GetComponent<Building>();
-                g_Building.SetValue(LoadBuilding);
-                //g.transform.position=new Vector3(LoadBuilding.BuildingPosition.x,LoadBuilding.BuildingPosition.y, 0);
-
-                g.name = LoadBuilding.Id;            //�̸� �缳��
-
-                g_Building.Type = BuildType.Load;
-                g_Building.Place_Initial(g_Building.Type);
-
-                // g_Building.Rotation();
-
-            }
-
-          //  Destroy(LoadingPanel);
-        }*/
-
+        });
 
     }
     public void NuniLoad()
     {
-        foreach (var item in GameManager.Instance.CharacterList)
+        foreach (var item in MyNuni)
         {
             if (item.Value.isLock.Equals("T"))
             {
