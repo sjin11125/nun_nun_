@@ -46,8 +46,6 @@ public class GameManager : MonoBehaviour
 
     //----------------------------------------------------여기서부터 누니--------------------------------------------------
     [Header("누니")]
-    public Sprite[] CharacterImageInspector;            // 인스펙터에서 받아 온 모든 누니들의 이미지
-    public static Dictionary<string, Sprite> CharacterImageData;
 
     public GameObject[] CharaterPrefabInspector;        // 인스펙터에서 받아 온 모든 누니들의 프리팹
     public static Dictionary<string, GameObject> CharacterPrefab;       //모든 캐릭터 누니 딕셔너리
@@ -84,7 +82,6 @@ public class GameManager : MonoBehaviour
     public static string StateMessage;      //플레이어 상태메세지
 
     public ReactiveProperty< Sprite> ProfileImage=new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
-    public ReactiveProperty<int> sadfa=new ReactiveProperty<int>();       //플레이어 프로필 이미지
 
     public static FriendInfo[] Friends;       //친구 목록(닉네임)
 
@@ -161,7 +158,7 @@ public class GameManager : MonoBehaviour
         BuildingPrefabData = new Dictionary<string, GameObject>();      //전체 빌딩 프리팹 리스트 (가지고 있지 않은 것도 포함)
 
         CharacterPrefab = new Dictionary<string, GameObject>();
-        CharacterImageData = new Dictionary<string, Sprite>();
+
         CharacterList = new Dictionary<string, Card>();
         IDs = new List<string>();                   //퀘스트 
         NuniDialog = new List<NuniDialog>();
@@ -175,11 +172,6 @@ public class GameManager : MonoBehaviour
         }
 
 
-        
-        for (int i = 0; i < CharacterImageInspector.Length; i++)        //캐릭터 
-        {
-            CharacterImageData.Add(CharacterImageInspector[i].name, CharacterImageInspector[i]);
-        }
         for (int i = 0; i < CharaterPrefabInspector.Length; i++)
         {
             CharacterPrefab.Add(CharaterPrefabInspector[i].name, CharaterPrefabInspector[i]);
@@ -215,11 +207,6 @@ public class GameManager : MonoBehaviour
     {
         return DogamChaImageData[ImageName.Trim()];
 
-    }
-    public static Sprite GetCharacterImage(string ImageName)
-    {
-        
-        return CharacterImageData[ImageName.Trim()];
     }
 
     public string IDGenerator()

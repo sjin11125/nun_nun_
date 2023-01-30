@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UnityEngine.AddressableAssets;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -222,9 +223,13 @@ public class InventoryManager : MonoBehaviour
             inven.name = item.Value.Id;
             Image ButtonImage = inven.GetComponent<Image>();
 
+            Addressables.LoadAssetAsync<Sprite>(item.Value.cardImage).Completed += (image) =>
+            {            //어드레서블로 이미지 불러서 넣기
+                ButtonImage.sprite = image.Result;
 
+            };
 
-            ButtonImage.sprite = GameManager.GetCharacterImage(item.Value.cardImage);
+           // ButtonImage.sprite = GameManager.GetCharacterImage(item.Value.cardImage);
 
             InventoryButton inventoryBtn = inven.GetComponent<InventoryButton>();
             inventoryBtn.this_nuni = item.Value;
