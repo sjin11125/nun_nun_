@@ -175,6 +175,16 @@ public class AchieveMenu
     public Button Btn;
     public GameObject Prefab;
 
+
+}
+[Serializable]
+public class StoreMenu
+{
+    public StoreMenuType Type;
+    public Button Btn;
+    public GameObject Prefab;
+    public GameObject Content;
+
 }
 [Serializable]
 public class AchieveCount

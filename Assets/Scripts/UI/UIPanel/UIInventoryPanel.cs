@@ -173,8 +173,8 @@ public class UIInventoryPanel : UIBase
                         }
                         try
                         {
-                            ActiveBuilding = LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building);
-
+                             LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building,()=> { 
+                            ActiveBuilding = LoadManager.Instance.MyBuildingsPrefab[inventoryBtn.temp_building.Id].GetComponent<Building>();
                             ActiveBuildingPrefab = ActiveBuilding.gameObject;
 
                             ActiveButton = inventoryBtn;
@@ -185,11 +185,8 @@ public class UIInventoryPanel : UIBase
 
                             GridBuildingSystem.OnEditMode.OnNext(ActiveBuilding);  //건설모드 ON
                             inventoryBtn.SetNoImage(true);
-
-                            /* ActiveButton.temp_building.BuildEditBtn[1].btn.OnClickAsObservable().Subscribe(_=>
-                             {
-                                 ActiveButton.temp_building.isLock = "T";
-                             }).AddTo(this);*/
+                             });
+                       
                         }
                         catch (System.Exception e)
                         {

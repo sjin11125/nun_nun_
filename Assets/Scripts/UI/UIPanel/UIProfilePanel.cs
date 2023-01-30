@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using UnityEngine.AddressableAssets;
 
 public class UIProfilePanel : UIBase
 {
@@ -42,24 +43,32 @@ public class UIProfilePanel : UIBase
 
         foreach (var item in GameManager.Instance.CharacterList)
         {
-            for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
-            {
-                if (item.Value.cardImage== GameManager.AllNuniArray[i].cardImage)
-                {
+           
+              
                     GameObject ImageObj = Instantiate(NuniImagePrefab, Content.transform) as GameObject;
                     Image PrefabImage = ImageObj.GetComponentInChildren<Image>();
-                    PrefabImage.sprite = GameManager.AllNuniArray[i].Image;
+            Addressables.LoadAssetAsync<Sprite>(item.Value.cardImage).Completed += (image) =>
+            {            //어드레서블로 이미지 불러서 넣기
+                PrefabImage.sprite = image.Result;
+
+            };
 
                     Button PrefabButton = ImageObj.GetComponentInChildren<Button>();
 
                     PrefabButton.OnClickAsObservable().Subscribe(_=> {              //누니 사진 버튼 누르면
-                        ProfileImage.sprite= GameManager.AllNuniArray[i].Image;
+                        Addressables.LoadAssetAsync<Sprite>(item.Value.cardImage).Completed += (image) =>
+                        {            //어드레서블로 이미지 불러서 넣기
+                            ProfileImage.sprite = image.Result;
+
+                        };
+
+                       // ProfileImage.sprite= GameManager.AllNuniArray[i].Image;
 
 
                     }).AddTo(this);
-                    break;  
-                }
-            }
+                 
+               
+            
         }
         
         SaveBtn.OnClickAsObservable().Subscribe(_ => {          //저장 버튼 누르면

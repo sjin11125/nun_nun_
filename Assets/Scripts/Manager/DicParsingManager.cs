@@ -44,19 +44,10 @@ public class DicParsingManager : MonoBehaviour
             Card character = new Card(pro_data[1], pro_data[2], pro_data[3], pro_data[4], pro_data[5], pro_data[6],
                                        pro_data[7], pro_data[8], pro_data[9], pro_data[10], pro_data[11], pro_data[12], pro_data[13]);
             //잠금    /   이름  /  아이템 /   이미지 /  가격  /  레벨  /  별   /  게이지 /  설명  / 보유효과  / 건물  / 골드 획득량
-            character.SetChaImage(GameManager.CharacterImageData[pro_data[4]]);
+            //character.SetChaImage(GameManager.CharacterImageData[pro_data[4]]);
             CharacterList.Add(character);
         }
 
-        for (int i = 0; i < CharacterList.Count; i++)
-        {
-            string ImageName = CharacterList[i].cardImage;
-            if (GameManager.CharacterImageData.ContainsKey(ImageName))
-            {
-                CharacterList[i].SetChaImage(GameManager.CharacterImageData[ImageName]);     //누니 이미지 넣기     
-
-            }
-        }
         return CharacterList.ToArray();
 
     }

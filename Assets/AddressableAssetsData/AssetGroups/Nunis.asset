@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Nunis
+  m_EditorClassIdentifier: 
+  m_GroupName: Nunis
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 79ca6f01fc7c52246a01d29b3d66649b
+  m_SerializeEntries:
+  - m_GUID: f44ed27b62a49394fbccc42d070d7fad
+    m_Address: Assets/Prefabs/NuNi/cheeky_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 382c4bd17406c504795422c4db63f97c
+    m_Address: Assets/Prefabs/NuNi/chef_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 86ef0d5b6c2dd784b9dc8f2e9fe7502f
+    m_Address: Assets/Prefabs/NuNi/child_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 79eee491cdb3d8e41b8bc4443a3a0454
+    m_Address: Assets/Prefabs/NuNi/clean_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 25e16d4973e416149b33fafb26b42a58
+    m_Address: Assets/Prefabs/NuNi/develope_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 378dff9f4b41fea44a887620b752d6d1
+    m_Address: Assets/Prefabs/NuNi/elder_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3a0595121073cf49954cdd84485eca9
+    m_Address: Assets/Prefabs/NuNi/emperor_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4ccf4a39135dc41499f2f825a2caeeec
+    m_Address: Assets/Prefabs/NuNi/fashion_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b045a7778b7ee5843b0fe4990ee46e03
+    m_Address: Assets/Prefabs/NuNi/flower_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 454c89a0741c0144ba39ac98619cd42d
+    m_Address: Assets/Prefabs/NuNi/minam_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: be6f1f22b8f5d2d42adfeec24bf347dd
+    m_Address: Assets/Prefabs/NuNi/paint_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ecd809e2d91cfaa40bccc6622d76c98c
+    m_Address: Assets/Prefabs/NuNi/pang_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4fc5ad7f563603942af112c014691155
+    m_Address: Assets/Prefabs/NuNi/repair_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 09b85469def996a458783fdbc0687d97
+    m_Address: Assets/Prefabs/NuNi/snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: aa82bca8267d9b44b80310c355178d46
+    m_Address: Assets/Prefabs/NuNi/student_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 33c66c9ed78a4644492034cee28b56d3
+    m_Address: Assets/Prefabs/NuNi/tam_snow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e91345750d263af4498e71946c3bd34e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2282c78325a395547aa77e7cec31bd48, type: 2}
+    - {fileID: 11400000, guid: 99f683a8db0f9fe478cd50aba3a65f19, type: 2}

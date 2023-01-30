@@ -82,7 +82,7 @@ SpriteRenderer:
   m_Size: {x: 1.3, y: 1.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!210 &2727309370130021792
@@ -165,6 +165,10 @@ MonoBehaviour:
   - buildUIType: 3
     btn: {fileID: 3928244213411529022}
     prefab: {fileID: 0}
+  VisitorBookBtn:
+    buildUIType: 0
+    btn: {fileID: 0}
+    prefab: {fileID: 0}
   UIPanels:
   - {fileID: 8670738209561198717, guid: efb072454993492408b8e047d75d4ff7, type: 3}
   - {fileID: 5544224975788530128, guid: a6518bce09e224449be850da3a762f64, type: 3}
@@ -173,19 +177,14 @@ MonoBehaviour:
   BuildingPosition: {x: -2.1, y: 0.82500005}
   isLock: T
   Building_name: flower_level(Clone)
-  Reward: 640000008c000000b4000000
-  Building_Image: flower_level(Clone)
-  Cost: f4010000b0040000d0070000
-  ShinCost: 030000000500000008000000
+  Building_Image: flower_level
   Level: 1
   isFliped: F
   BuildingPosition_x: 
   BuildingPosition_y: 
   Id: oij2r
-  str: 
   layer_y: 0
   Type: 4
-  save: {fileID: 0}
   pos: {x: 1.5749999, y: -9.35, z: 0}
 --- !u!114 &-2284381711254009516
 MonoBehaviour:

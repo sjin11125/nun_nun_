@@ -19,7 +19,7 @@ public class RandomSelect : MonoBehaviour
         deck = new List<Card>();
         for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
         {
-            total += int.Parse(GameManager.AllNuniArray[i].weight);
+            total += int.Parse(GameManager.AllNuniArray[i].Weight);
         }
 
         for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
@@ -113,7 +113,7 @@ public class RandomSelect : MonoBehaviour
 
             for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
             {
-                weight += int.Parse(GameManager.AllNuniArray[i].weight);
+                weight += int.Parse(GameManager.AllNuniArray[i].Weight);
                 if (selectNum <= weight)
                 {
                     Card temp = new Card(GameManager.AllNuniArray[i]);

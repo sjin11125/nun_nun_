@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine.EventSystems;
+using UnityEngine.AddressableAssets;
 //using UnityEngine.EventSystems;
 
 [Serializable]
@@ -28,6 +29,7 @@ public class BuildingParse
     public string BuildingPosition_y;
     public string Id;
     public string str;      //설치물인지
+    public string Path;
     //-----------------------------------------------------------
     
 }
@@ -70,21 +72,15 @@ public class Building : MonoBehaviour
     //-------------------------파싱정보------------------------------
     [Header("건물 배치 유무")]
     public string isLock;               //잠금 유무
-    public string Building_name;            //건물 이름s
-    [Header("건물 획득 자원")]
-    public int[] Reward =new int[3] { 0, 0, 0 };               //획득자원
+    public string Building_name;            //건물 이름
     [Header("건물 설명")]
     public string Building_Image;          //빌딩 이미지 이름 *
-    [Header("건물 비용")]
-    public int[] Cost = new int[3] { 0, 0, 0 };        //건물비용
-    public int[] ShinCost = new int[3] { 0, 0, 0 };
     [Header("건물 레벨")]
     public int Level = 1;       //건물 레벨
     public string isFliped = "F";
     public string BuildingPosition_x;
     public string BuildingPosition_y;
     public string Id;
-    public string str;      //설치물인지
                             //-----------------------------------------------------------
 
     [Header("건물 레이어")]
@@ -124,9 +120,9 @@ public class Building : MonoBehaviour
         isLock = islock;
         Building_name = buildingname;
 
-        this.Reward[0] =int.Parse(Reward) ;                 //생성재화
+        /*this.Reward[0] =int.Parse(Reward) ;                 //생성재화
         this.Reward[1] = int.Parse(Reward2);
-        this.Reward[2] = int.Parse(Reward3);
+        this.Reward[2] = int.Parse(Reward3);*/
 
         //Info = info;                //건물 설명
 
@@ -136,7 +132,7 @@ public class Building : MonoBehaviour
         string[] Cost2=cost2.ToString().Split('*');
         string[] Cost3=cost3.ToString().Split('*');
 
-        this.Cost[0] = int.Parse(Cost[0]);              //비용(골드)
+        /*this.Cost[0] = int.Parse(Cost[0]);              //비용(골드)
         this.Cost[1] = int.Parse(Cost2[0]);
         this.Cost[2] = int.Parse(Cost3[0]);
 
@@ -146,7 +142,7 @@ public class Building : MonoBehaviour
         this.ShinCost[1] = int.Parse(Cost2[1]);
         this.ShinCost[2] = int.Parse(Cost3[1]);
 
-        this.str = isStr;
+        this.str = isStr;*/
         Level = 1;
 
     }
@@ -161,25 +157,25 @@ public class Building : MonoBehaviour
         BuildingNameEnum = getBuilding.BuildingNameEnum;
         isStr = getBuilding.isStr;
         //area = getBuilding.area;
-        Cost = getBuilding.Cost;
-        ShinCost = getBuilding.ShinCost;
+        //Cost = getBuilding.Cost;
+        //ShinCost = getBuilding.ShinCost;
         layer_y = getBuilding.layer_y;
         Level = getBuilding.Level;
         isFliped = getBuilding.isFliped;
        BuildingPosition_x = getBuilding.BuildingPosition_x;
         BuildingPosition_y = getBuilding.BuildingPosition_y;
-        Reward = getBuilding.Reward;
+        //Reward = getBuilding.Reward;
         Id = getBuilding.Id;
     }
     public void SetValueParse(BuildingParse parse)
     {
         isLock = parse.isLock;               //잠금 유무
         Building_name = parse.Building_name;            //건물 이름
-        Reward = parse.Reward;               //획득자원
+        //Reward = parse.Reward;               //획득자원
         //Info = parse.Info;                 //건물 설명
         Building_Image = parse.Building_Image;          //빌딩 이미지 이름 *
-        Cost = parse.Cost;        //건물비용
-        ShinCost = parse.ShinCost;
+        //Cost = parse.Cost;        //건물비용
+        //ShinCost = parse.ShinCost;
         Level = parse.Level;       //건물 레벨
         isFliped = parse.isFliped;
         BuildingPosition_x = parse.BuildingPosition_x;
@@ -217,8 +213,8 @@ public class Building : MonoBehaviour
         BuildingCopy.layer_y = this.layer_y;
         BuildingCopy.Level = this.Level;
 
-        BuildingCopy.Cost = this.Cost;
-        BuildingCopy.ShinCost = this.ShinCost;
+        //BuildingCopy.Cost = this.Cost;
+        //BuildingCopy.ShinCost = this.ShinCost;
         BuildingCopy.Id = this.Id;
         BuildingCopy.isFliped = isFliped;
         return BuildingCopy;
@@ -296,6 +292,10 @@ public class Building : MonoBehaviour
                 break;
             case 2:
                 BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
+                Addressables.LoadAssetAsync<Sprite>(Building_Image+Level.ToString()).Completed += (image) => {            //어드레서블로 이미지 불러서 넣기
+                    BuildingImage.sprite = image.Result;
+
+                };
                 break;
             case 3:                     //레벨3은 아직 보류
                 break;
@@ -585,13 +585,7 @@ public class Building : MonoBehaviour
     {
         LoadManager.AddBuildingSubject.OnNext(this);     //현재 가지고 있는 빌딩 리스트에 추가
 
-        //GameManager.BuildingArray = GameManager.BuildingList.ToArray();
-        Debug.Log("GameManager.BuildingArray: "+ GameManager.BuildingArray.Length);
-
-        //
-
-       // LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.addValue, this);
-        //GameManager.isUpdate = true;
+      
     }
     #endregion
     

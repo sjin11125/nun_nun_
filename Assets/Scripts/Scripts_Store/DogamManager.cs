@@ -47,13 +47,8 @@ public class DogamManager : MonoBehaviour
         BuildingInformation = DPManager.Parse(0);    //건물 정보 파싱
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
    
-    public void StrOpen()
+    /*public void StrOpen()
     {
         Transform[] scroll_child = Scroll_str.GetComponentsInChildren<Transform>();
         for (int i = 1; i < scroll_child.Length; i++)
@@ -109,7 +104,7 @@ public class DogamManager : MonoBehaviour
                  LockButtonList.Add(DogamChaButton);
 
 
-             }*/
+             }
             Debug.Log("스프라이트 이름: "+image[1].sprite.name);
         }
     }
@@ -239,7 +234,7 @@ public class DogamManager : MonoBehaviour
             FriendCha.transform.SetParent(Scroll.transform);
 
         }
-    }
+    }*/
 
 }
 

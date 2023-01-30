@@ -534,16 +534,12 @@ MonoBehaviour:
   BuildingPosition: {x: 0, y: 0}
   isLock: T
   Building_name: village_level(Clone)
-  Reward: 000000000000000000000000
-  Building_Image: village_level(Clone)
-  Cost: 000000000000000000000000
-  ShinCost: 000000000000000000000000
+  Building_Image: village_level
   Level: 1
   isFliped: F
   BuildingPosition_x: 
   BuildingPosition_y: 
   Id: 
-  str: 
   layer_y: 0
   Type: 0
   pos: {x: 0, y: 0, z: 0}

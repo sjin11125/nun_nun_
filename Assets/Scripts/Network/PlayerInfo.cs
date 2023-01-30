@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Networking;
 using UniRx;
+using UnityEngine.AddressableAssets;
+
 public class PlayerInfo : MonoBehaviour                 //플레이어 프로필 스크립트
 {
     public static string Id;            //플레이어 아이디
@@ -20,17 +22,19 @@ public class PlayerInfo : MonoBehaviour                 //플레이어 프로필 스크립
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
-        {
-            if (GameManager.AllNuniArray[i].Image.name != GameManager.Instance.PlayerUserInfo.Image)
-                continue;
+      
+         
             //GameManager.Instance.ProfileImage.Subscribe((value) => ProfileImage.sprite = value). ;// = GameManager.AllNuniArray[i].Image;
             GameManager.Instance.ProfileImage.AsObservable().Subscribe((value) => {
                 ProfileImage.sprite = value;
 
             });
-            ProfileImage.sprite = GameManager.AllNuniArray[i].Image;
-        }
+        Addressables.LoadAssetAsync<Sprite>(GameManager.Instance.PlayerUserInfo.Image).Completed += (image) =>
+        {            //어드레서블로 이미지 불러서 넣기
+            ProfileImage.sprite = image.Result;
+
+        };
+        
         
        
 

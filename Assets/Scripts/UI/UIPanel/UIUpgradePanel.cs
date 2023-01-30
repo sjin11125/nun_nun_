@@ -64,25 +64,21 @@ public class UIUpgradePanel : UIBase
                 Destroy(this.gameObject);
             }).AddTo(this);
         }
-        for (int j = 0; j < GameManager.BuildingArray.Length; j++)
-        {
-            if (building.Building_Image == GameManager.BuildingArray[j].Building_Image)
-            {
 
-                UpgradeTextBefore.text = GameManager.BuildingArray[j].Reward[building.Level - 1].ToString();     //업글 전 획득 재화
-                Debug.Log("업글전: " + GameManager.BuildingArray[j].Reward[building.Level - 1]);
+                UpgradeTextBefore.text =GameManager.Instance.BuildingInfo[building.Building_Image].Reward [building.Level - 1].ToString();     //업글 전 획득 재화
+                Debug.Log("업글전: " + GameManager.Instance.BuildingInfo[building.Building_Image].Reward[building.Level - 1]);
 
-                MoneyCost = GameManager.BuildingArray[j].Cost[building.Level];
-                ShinMoneyCost= GameManager.BuildingArray[j].ShinCost[building.Level];
+                MoneyCost = GameManager.Instance.BuildingInfo[building.Building_Image].Cost[building.Level];
+                ShinMoneyCost= GameManager.Instance.BuildingInfo[building.Building_Image].ShinCost[building.Level];
 
-                UpgradeTextAfter.text = GameManager.BuildingArray[j].Reward[building.Level].ToString();                       //업글 후 획득 재화
-                Debug.Log("업글후: " + GameManager.BuildingArray[j].Reward[building.Level - 1]);
+                UpgradeTextAfter.text = GameManager.Instance.BuildingInfo[building.Building_Image].Reward[building.Level].ToString();                       //업글 후 획득 재화
+                Debug.Log("업글후: " + GameManager.Instance.BuildingInfo[building.Building_Image].Reward[building.Level - 1]);
 
                 UpgradeTextCost.text = "얼음: " + MoneyCost.ToString() + ",   빛나는 얼음: " + ShinMoneyCost.ToString() + " 이 소모됩니다.";
-                break;
+       
 
-            }
-        }
+            
+        
 
        
     }

@@ -11,7 +11,7 @@ using Firebase.Firestore;
 using Firebase.Extensions;
 using Firebase.Functions;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.AddressableAssets;
 
 public class FirebaseLogin : MonoBehaviour
 {	// Auth 용 instance
@@ -164,13 +164,12 @@ public class FirebaseLogin : MonoBehaviour
                 GameManager.Instance.PlayerUserInfo = JsonUtility.FromJson<UserInfo>((string)task.Result.Data);     //유저 정보 세팅
                    
                 GameManager.Instance.PlayerUserInfo.Uid = idToken;
-                    for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
-                    {
-                        if (GameManager.AllNuniArray[i].Image.name != GameManager.Instance.PlayerUserInfo.Image)
-                            continue;
-               
-                        GameManager.Instance.ProfileImage.Value = GameManager.AllNuniArray[i].Image;
-                    }
+                
+                         Addressables.LoadAssetAsync<Sprite>(GameManager.Instance.PlayerUserInfo.Image).Completed += (image) =>
+                        {            //어드레서블로 이미지 불러서 넣기
+                            GameManager.Instance.ProfileImage.Value = image.Result;
+                        }; ;
+                    
 
                     GetGameData().ContinueWithOnMainThread((task) => {
                         Debug.Log("res: " + task.Result);
@@ -186,7 +185,36 @@ public class FirebaseLogin : MonoBehaviour
 
                             Debug.Log("id: "+GameManager.Instance.AchieveInfos[achieveInfo.Id].Id);
                             }
-                            //내 업적 넣기
+
+
+                        Newtonsoft.Json.Linq.JArray BuildingData = Newtonsoft.Json.Linq.JArray.Parse(Result[1].ToString());  //빌딩 정보 넣기
+                        foreach (var achieve in BuildingData)//건물
+                        {
+                            BuildingParse buildingInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
+                            GameManager.Instance.BuildingInfo.Add(buildingInfo.Building_Image, buildingInfo);
+
+                            Debug.Log("Building_Image: " + GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].Building_Image);
+                        }
+
+                        Newtonsoft.Json.Linq.JArray StrData = Newtonsoft.Json.Linq.JArray.Parse(Result[2].ToString());  //설치물 정보 넣기
+                        foreach (var achieve in StrData)//설치물
+                        {
+                            BuildingParse strInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
+                            GameManager.Instance.StrInfo.Add(strInfo.Building_Image, strInfo);
+
+                            Debug.Log("StrData: " + GameManager.Instance.StrInfo[strInfo.Building_Image].Building_Image);
+                        }
+
+                        Newtonsoft.Json.Linq.JArray NuniData = Newtonsoft.Json.Linq.JArray.Parse(Result[3].ToString());  //누니 정보 넣기
+                        foreach (var achieve in NuniData)//누니
+                        {
+                            Card nuniInfo = JsonUtility.FromJson<Card>(achieve.ToString());
+                            GameManager.Instance.NuniInfo.Add(nuniInfo.cardImage, nuniInfo);
+
+                            Debug.Log("nuniData: " + GameManager.Instance.NuniInfo[nuniInfo.cardImage].cardImage);
+                        }
+
+                        //내 업적 넣기
                         GetMyAchieveInfo(GameManager.Instance.PlayerUserInfo.Uid).ContinueWithOnMainThread((task)=> {
                             if (task.IsCompleted)
                             {
@@ -223,7 +251,9 @@ public class FirebaseLogin : MonoBehaviour
 
                             }
                         });
-                            //  Debug.Log(item.Value<string>("Id") + "    "+item.Children.);
+
+                  
+                        //  Debug.Log(item.Value<string>("Id") + "    "+item.Children.);
 
                         //GameManager.Instance.GameDataInfos.Add("AchieveData", Newtonsoft.Json.Linq.JArray.Parse(Result[0].ToString()).ToString());
 
@@ -231,7 +261,7 @@ public class FirebaseLogin : MonoBehaviour
 
                         //정보 다 넣은 다음에 씬 로드
 
-                        
+
                     });
 
                     //return true;   

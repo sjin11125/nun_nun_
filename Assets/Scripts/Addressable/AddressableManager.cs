@@ -14,17 +14,20 @@ public class AddressableManager : MonoBehaviour
         {
             if (opSize.Status == AsyncOperationStatus.Succeeded && opSize.Result > 0)
             {
-                Addressables.DownloadDependenciesAsync(key, true).Completed += (opDownload) => {
+                Addressables.DownloadDependenciesAsync(key, true).Completed += (opDownload) =>
+                {
                     if (opDownload.Status != AsyncOperationStatus.Succeeded)
                     {
                         return;
                     }
 
-                }
+                };
             };
         };
 
-        Addressables.LoadAssetAsync<GameObject>().Completed += handle => { });
+      
 
     }
+
+
 }

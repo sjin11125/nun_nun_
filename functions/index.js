@@ -18,13 +18,19 @@ var message={
 exports.getGameData=functions.https.onCall(async(req,res)=>{
   const db=admin.firestore();
   const gameData=[];
+
   const achieveDataColor = await db.collection('gameData').doc("achieve").collection('Color').get();
   const achieveDataEct = await db.collection('gameData').doc("achieve").collection('Ect').get();
   const achieveDataShape = await db.collection('gameData').doc("achieve").collection('Shape').get();
-  // buildingData = await db.collection('gameData').doc("achieve").collection('Color').get();
-  //const nuniData = await db.collection('gameData').doc("achieve").collection('Color').get();
+ 
+  const buildingData = await db.collection('gameData').doc("building").collection('Building').get();
+  const strData = await db.collection('gameData').doc("building").collection('Str').get();
+  const nuniData = await db.collection('gameData').doc("nuni").collection('Nuni').get();
 
   const achieveDatas=[];
+  const buildingDatas=[];
+  const strDatas=[];
+  const nuniDatas=[];
 
 
   for (var i in achieveDataColor.docs) {
@@ -39,8 +45,24 @@ exports.getGameData=functions.https.onCall(async(req,res)=>{
     const element = achieveDataShape.docs[i].data();
     achieveDatas.push(element);
   }
+  for (var i in buildingData.docs) {
+    const element = buildingData.docs[i].data();
+    buildingDatas.push(element);
+  }
+  for (var i in strData.docs) {
+    const element = strData.docs[i].data();
+    strDatas.push(element);
+  }
+  for (var i in nuniData.docs) {
+    const element = nuniData.docs[i].data();
+    nuniDatas.push(element);
+  }
   
   gameData.push(achieveDatas);
+  gameData.push(buildingDatas);
+  gameData.push(strDatas);
+  gameData.push(nuniDatas);
+
   console.log(JSON.stringify(gameData));
   
 return JSON.stringify(gameData);

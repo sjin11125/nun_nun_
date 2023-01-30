@@ -213,10 +213,10 @@ public class ChaButtonScript : MonoBehaviour
                 }
 
             }
-            int pay = building.Cost[0];
-            int shinPay = building.ShinCost[0];
+            //int pay = building.Cost[0];
+            //int shinPay = building.ShinCost[0];
 
-            if (int.Parse( GameManager.Instance.PlayerUserInfo.Money)< pay || int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney) < shinPay)      //돈이나 자원이 모자르면 거절 메세지 띄움
+          /*  if (int.Parse( GameManager.Instance.PlayerUserInfo.Money)< pay || int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney) < shinPay)      //돈이나 자원이 모자르면 거절 메세지 띄움
             {
                 UIManager.isSetMoney = -1;
             }
@@ -227,16 +227,16 @@ public class ChaButtonScript : MonoBehaviour
                 Debug.Log("Before Money: " + GameManager.Instance.PlayerUserInfo.Money + "   ShinMoney:" + GameManager.Instance.PlayerUserInfo.ShinMoney);
 
                 int Money =int.Parse( GameManager.Instance.PlayerUserInfo.Money);
-                Money -= pay;       //자원빼기
+               // Money -= pay;       //자원빼기
                 GameManager.Instance.PlayerUserInfo.Money = Money.ToString();
 
                 int ShinMoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-                ShinMoney -= shinPay;
+               // ShinMoney -= shinPay;
                 GameManager.Instance.PlayerUserInfo.ShinMoney = ShinMoney.ToString();
 
                 UIManager.isSetMoney = 1;
 
-                Debug.Log("pay: " + pay + "   shinPay:" + shinPay);
+               // Debug.Log("pay: " + pay + "   shinPay:" + shinPay);
                 Debug.Log("Money: " + Money.ToString() + "   ShinMoney:" + ShinMoney.ToString());
 
                 Debug.Log("Money: " + GameManager.Instance.PlayerUserInfo.Money + "   ShinMoney:" + GameManager.Instance.PlayerUserInfo.ShinMoney);
@@ -267,7 +267,7 @@ public class ChaButtonScript : MonoBehaviour
                 parent.parent.gameObject.SetActive(false);
                 //isEdit = true;
                 
-            }
+            }*/
 
         }
 

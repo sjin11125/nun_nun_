@@ -436,13 +436,8 @@ public class GoogleSheetManager : MonoBehaviour
         GameManager.NickName = nickname;
        // GameManager.Id = id;
 
-        for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
-        {
-            if (GameManager.AllNuniArray[i].Image.name != GD.profile_image)
-                continue;
-            //GameManager.Instance.ProfileImage = GameManager.AllNuniArray[i].Image;
-        }
-
+       
+       
         if (GD.isUpdate == "null")            //업데이트를 안한 상태인가
         {
             Debug.Log("업뎃안함");

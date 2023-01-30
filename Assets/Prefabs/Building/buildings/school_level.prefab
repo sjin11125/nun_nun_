@@ -335,7 +335,7 @@ SpriteRenderer:
   m_Size: {x: 1.3, y: 1.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!210 &3593868729384145476
@@ -506,6 +506,10 @@ MonoBehaviour:
   - buildUIType: 3
     btn: {fileID: 1152526360569995005}
     prefab: {fileID: 0}
+  VisitorBookBtn:
+    buildUIType: 0
+    btn: {fileID: 0}
+    prefab: {fileID: 0}
   UIPanels:
   - {fileID: 8670738209561198717, guid: efb072454993492408b8e047d75d4ff7, type: 3}
   - {fileID: 5544224975788530128, guid: a6518bce09e224449be850da3a762f64, type: 3}
@@ -514,20 +518,14 @@ MonoBehaviour:
   BuildingPosition: {x: 0, y: 0}
   isLock: T
   Building_name: school_level(Clone)
-  Reward: 000000000000000000000000
-  Info: 
-  Building_Image: school_level(Clone)
-  Cost: 000000000000000000000000
-  ShinCost: 000000000000000000000000
+  Building_Image: school_level
   Level: 1
   isFliped: F
-  BuildingPosiiton_x: 
-  BuildingPosiiton_y: 
+  BuildingPosition_x: 
+  BuildingPosition_y: 
   Id: 
-  str: 
   layer_y: 0
   Type: 4
-  save: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
 --- !u!114 &-2284381711254009516
 MonoBehaviour:
@@ -874,7 +872,7 @@ SpriteRenderer:
   m_Size: {x: 2.5, y: 2.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!210 &3482048221201586497
@@ -1753,7 +1751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4857489314253230606, guid: f44607720b74f04448f17f7256c3b80b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.697
+      value: 0.981
       objectReference: {fileID: 0}
     - target: {fileID: 6755535324461756542, guid: f44607720b74f04448f17f7256c3b80b, type: 3}
       propertyPath: m_Name
@@ -1764,9 +1762,13 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9076188558761188474, guid: f44607720b74f04448f17f7256c3b80b, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076188558761188474, guid: f44607720b74f04448f17f7256c3b80b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: b23aac0d7f31ab74e8bc8c0f81141fe2, type: 3}
+      objectReference: {fileID: 21300000, guid: c7a3ae82465d4f64fadc51caa1fe2b28, type: 3}
     - target: {fileID: 9076188558761188474, guid: f44607720b74f04448f17f7256c3b80b, type: 3}
       propertyPath: m_Color.a
       value: 1

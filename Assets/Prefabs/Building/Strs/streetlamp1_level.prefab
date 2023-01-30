@@ -215,26 +215,24 @@ MonoBehaviour:
   - buildUIType: 3
     btn: {fileID: 3515237718007820635}
     prefab: {fileID: 0}
+  VisitorBookBtn:
+    buildUIType: 0
+    btn: {fileID: 0}
+    prefab: {fileID: 0}
   UIPanels: []
   VisitorBookUIPanel: {fileID: 0}
   isStr: 1
   BuildingPosition: {x: 0, y: 0}
   isLock: T
   Building_name: flower_level(Clone)0
-  Reward: 
-  Info: 
-  Building_Image: streetlamp1_level(Clone)
-  Cost: 
-  ShinCost: 
+  Building_Image: streetlamp1_level
   Level: 1
   isFliped: F
-  BuildingPosiiton_x: 
-  BuildingPosiiton_y: 
+  BuildingPosition_x: 
+  BuildingPosition_y: 
   Id: 
-  str: 
   layer_y: 0
   Type: 0
-  save: {fileID: 0}
   pos: {x: 0, y: 0, z: 0}
 --- !u!1 &2132867819840144645
 GameObject:
@@ -679,7 +677,7 @@ SpriteRenderer:
   m_Size: {x: 1.3, y: 1.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8254078342471368783

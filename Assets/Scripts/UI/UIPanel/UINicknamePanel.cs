@@ -33,12 +33,13 @@ public class UINicknamePanel : UIBase
                 Debug.Log("´Ð³ÛÀº "+(string)task.Result);
                 UnityMainThreadDispatcher.Instance().Enqueue(()=> {
 
-                    SendMessage itemFriend = JsonUtility.FromJson<SendMessage>(task.Result.ToString());
+                    SendMessage Res = JsonUtility.FromJson<SendMessage>(task.Result.ToString());
 
-                    switch (itemFriend.message)
+                    switch (Res.message)
                     {
                         case "Success":
-
+                            GameManager.Instance.PlayerUserInfo.NickName = NickInputField.text;
+                            FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
                             LoadingSceneController.Instance.LoadScene(SceneName.Main);
                             Destroy(this.gameObject);
                             break;

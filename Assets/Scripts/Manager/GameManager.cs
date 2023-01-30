@@ -19,14 +19,13 @@ public class GameManager : MonoBehaviour
     public static bool parse = false;
 
 
-
-    public Sprite[] DogamChaImageInspector;     //인스펙터에서 받아 온 건물 이미지
+    [Header("건물")]
+    //public Sprite[] DogamChaImageInspector;     //인스펙터에서 받아 온 건물 이미지
 
     public static Sprite[] DogamChaImage;       //
     public static Dictionary<string, Sprite> DogamChaImageData;     //건물 이미지 딕셔너리
 
 
-    public static Building[] BuildingArray;         //모든 빌딩들 정보
     public static Building[] StrArray;         //모든 구조물들 정보
 
     public GameObject[] BuildingPrefabInspector;    //인스펙터에서 받아 온 건물 프리팹 배열    
@@ -37,11 +36,11 @@ public class GameManager : MonoBehaviour
     public static bool isEdit = false;
     public static bool isInvenEdit = false;
     public static Button InvenButton;
-
+    
     public static List<string> IDs;        //건물 아이디
-    public static bool isUpdate = false;        //건물 목록 강제로 업데이트
 
-    public static bool isLoading = false;           //건물 다 로딩됐는지
+    public Dictionary<string, BuildingParse> BuildingInfo = new Dictionary<string, BuildingParse>();        //건물 정보
+    public Dictionary<string, BuildingParse> StrInfo = new Dictionary<string, BuildingParse>();        //설치물 정보
     //----------------------------------------------------이까지 건물----------------------------------------------------
 
 
@@ -54,6 +53,7 @@ public class GameManager : MonoBehaviour
     public static Dictionary<string, GameObject> CharacterPrefab;       //모든 캐릭터 누니 딕셔너리
 
     public static Card[] AllNuniArray;              //엑셀에서 받아 온 모든 누니 정보 배열
+    public Dictionary<string, Card> NuniInfo = new Dictionary<string, Card>();
 
     public Dictionary<string,Card> CharacterList;      //현재가지고 있는 누니 리스트
     //public static Card[] CharacterArray;               //현재 가지고 있는 캐릭터 배열
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
     public static string NickName;      //플레이어 닉네임
     public static string StateMessage;      //플레이어 상태메세지
-    public static string SheetsNum;     //플레이어 건물 정보 들어있는 스프레드 시트 id
+
     public ReactiveProperty< Sprite> ProfileImage=new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
     public ReactiveProperty<int> sadfa=new ReactiveProperty<int>();       //플레이어 프로필 이미지
 
@@ -175,10 +175,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        for (int i = 0; i < DogamChaImageInspector.Length; i++)     // 빌딩 이미지 불러오기
-        {
-            DogamChaImageData.Add(DogamChaImageInspector[i].name, DogamChaImageInspector[i]);
-        }
+        
         for (int i = 0; i < CharacterImageInspector.Length; i++)        //캐릭터 
         {
             CharacterImageData.Add(CharacterImageInspector[i].name, CharacterImageInspector[i]);
@@ -198,7 +195,6 @@ public class GameManager : MonoBehaviour
 
         DicParsingManager DPManager = new DicParsingManager();
         AllNuniArray = DPManager.Parse_character(1);            //누니 정보 파싱
-        BuildingArray = DPManager.Parse(0);    //도감 정보 파싱
 
 
     }

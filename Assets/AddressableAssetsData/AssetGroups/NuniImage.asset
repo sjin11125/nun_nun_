@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: NuniImage
+  m_EditorClassIdentifier: 
+  m_GroupName: NuniImage
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d933047ab6f75b04cacd0039d0ffeb5e
+  m_SerializeEntries:
+  - m_GUID: a0b8ebbef541b0c4c84f4f07c3412a3b
+    m_Address: snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9fab61a37d99de94bb439b1fdff5cb60
+    m_Address: elder_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 432689eea74c1cf438d7fc97cbaab89e
+    m_Address: child_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 18b40cda964ad5946a5d8d775edffe4c
+    m_Address: flower_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 742a28876842bdc42b2c6299c409a8e8
+    m_Address: chef_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bbdc3f61b05a65148857d67c9716cd56
+    m_Address: student_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 76d55c26179803d418ee1b96e7cb2a55
+    m_Address: fashion_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1ced702e4c3d12c4c8186e8a7c17b546
+    m_Address: cheeky_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b83bebfc5474fd64e91cd7bfe3d02d43
+    m_Address: repair_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bc24ec3c31503424ba436f040d591564
+    m_Address: paint_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 48912d903d973e2419b85a8ebdf3ce6c
+    m_Address: pang_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 50cc356c96355444391073f5a35e86b8
+    m_Address: tam_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0e83d90516ca34944996e50b0bcab730
+    m_Address: clean_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 96b838029bef64f4094efeed2a730879
+    m_Address: emperor_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 02098c6189617994bbf824d732d66325
+    m_Address: develope_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: abeed8797b93996468fe2902a722ec52
+    m_Address: minam_snow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e91345750d263af4498e71946c3bd34e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 99ba4c1a91079fa4e9f08d835a3e465b, type: 2}
+    - {fileID: 11400000, guid: ed855ec0a6bec9d4e96d14164aafe734, type: 2}

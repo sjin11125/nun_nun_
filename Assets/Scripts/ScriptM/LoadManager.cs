@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine.Networking;
 using System;
 using UniRx;
+using UnityEngine.AddressableAssets;
 
 public class LoadManager : MonoBehaviour
 {
@@ -307,16 +308,20 @@ public class LoadManager : MonoBehaviour
             //string BuildingName = LoadBuilding.Building_Image;        //���� ������ �ִ� ���� ����Ʈ���� ���� �̸� �θ���
             try
             {
+                InstantiateBuilding(item.Value,()=> {
+                    Building g_Building = MyBuildingsPrefab[item.Value.Id].GetComponent<Building>();       //건물 Instatiate
 
-            Building g_Building = InstantiateBuilding(item.Value);         //건물 Instatiate
 
-                
-            g_Building.Type = BuildType.Load;
-            g_Building.Place_Initial(g_Building.Type);
 
-            MyBuildings[g_Building.Id].SetValue(g_Building); 
-            MyBuildings[g_Building.Id].area = g_Building.area;
-            GameManager.IDs.Add(g_Building.Id);
+                    g_Building.Type = BuildType.Load;
+                    g_Building.Place_Initial(g_Building.Type);
+
+                    MyBuildings[g_Building.Id].SetValue(g_Building);
+                    MyBuildings[g_Building.Id].area = g_Building.area;
+                    GameManager.IDs.Add(g_Building.Id);
+                });
+
+               
                 // g_Building.Rotation();
 
             }
@@ -329,72 +334,48 @@ public class LoadManager : MonoBehaviour
         Debug.Log("건물 로드 끝");
       //  UILoadingPanel.DestroyGameObject();
     }
-    public Building InstantiateBuilding(Building building)
+    public void InstantiateBuilding(Building building,Action callback)
     {
         try
         {
 
-        GameObject BuildingPrefab = GameManager.BuildingPrefabData[building.Building_Image];           // �ش� �ǹ� ������
-        if (building.Type != BuildType.Make)
-        {
-                Currnetbuildings = Instantiate(BuildingPrefab, new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
-        }
-        else
-        {
-          Currnetbuildings=  Instantiate(BuildingPrefab, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
-        }
-        if (building.Type != BuildType.Make)
-        {
+            //  GameObject BuildingPrefab = GameManager.BuildingPrefabData[building.Building_Image];           // �ش� �ǹ� ������
+
+            if (building.Type != BuildType.Make)
+            {
+                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
+                {            //어드레서블로 부르기
+                    //GameObject BuildingPrefab = gameobject.Result;
 
 
-            MyBuildingsPrefab.Add(building.Id, Currnetbuildings);                   //내 건물 프리팹 딕셔너리에 추가
+                    Currnetbuildings = Instantiate(gameobject.Result, new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
+                    MyBuildingsPrefab.Add(building.Id, Currnetbuildings);                   //내 건물 프리팹 딕셔너리에 추가
+               
 
-            Building g_Building = Currnetbuildings.GetComponent<Building>();
+
+                Building g_Building = MyBuildingsPrefab[building.Id].GetComponent<Building>();
                 if (g_Building.isStr)       //건축물이라면
                     building.isStr = true;
 
-                g_Building.SetValue(building);      //���� ������ �������� ���� ��ũ��Ʈ value ���� ������ �ִ� ��ũ��Ʈ value�� ����
-                
+                g_Building.SetValue(building);
 
-            for (int j = 0; j < GameManager.BuildingArray.Length; j++)
-            {
-                if (g_Building.Building_Image.Equals(GameManager.BuildingArray[j].Building_Image))
-                {
 
-                    if (GameManager.BuildingArray[j].Cost.Length != 0)
-                    {
-                        //g_Building.Reward = GameManager.BuildingArray[j].Reward;
-                        for (int p = 0; p < GameManager.BuildingArray[j].Reward.Length; p++)
-                        {
-                            g_Building.Reward[p] = GameManager.BuildingArray[j].Reward[p];
-                        }
+                    Currnetbuildings.name = g_Building.Id;
 
-                        g_Building.Cost = GameManager.BuildingArray[j].Cost;
-                        g_Building.ShinCost = GameManager.BuildingArray[j].ShinCost;
-                    }
-
-                }
-
+                    callback.Invoke();
+                    // return g_Building;
+                };
             }
-
-            for (int j = 0; j < GameManager.StrArray.Length; j++)
+            else
             {
-                if (g_Building.Building_Image.Equals(GameManager.StrArray[j].Building_Image))
+                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
                 {
-                    if (GameManager.StrArray[j].Reward[0] != 0)
-                    {
-                        g_Building.Reward = GameManager.StrArray[j].Reward;
-                        g_Building.Cost = GameManager.StrArray[j].Cost;
-                        g_Building.ShinCost = GameManager.StrArray[j].ShinCost;
-                    }
+                    //GameObject BuildingPrefab = gameobject.Result;
+                    Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
 
-                }
-
+                    callback.Invoke();
+                };
             }
-                Currnetbuildings.name = g_Building.Id;          //�̸� �缳��
-
-            return g_Building;
-        }
 
         }
         catch (Exception e)
@@ -402,7 +383,7 @@ public class LoadManager : MonoBehaviour
             Debug.LogError(e.Message);
             throw;
         }
-        return null;
+       // return null;
 
     }
     public void RemoveBuilding(string Id)
@@ -431,15 +412,9 @@ public class LoadManager : MonoBehaviour
         {
 
 
-            for (int j = 0; j < GameManager.BuildingArray.Length; j++)
-            {
-                if (item.Value.Building_Image.Equals(GameManager.BuildingArray[j].Building_Image))
-                {
-                    MyReward += GameManager.BuildingArray[j].Reward[item.Value.Level - 1];
+          
+                    MyReward += GameManager.Instance.BuildingInfo[item.Value.Building_Image].Reward[item.Value.Level - 1];
 
-                }
-
-            }
             foreach (var nuni in GameManager.Instance.CharacterList)
             {
                 if (item.Value.Building_Image.Equals(nuni.Value.Building[0])
