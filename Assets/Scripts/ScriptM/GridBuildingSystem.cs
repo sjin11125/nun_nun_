@@ -77,15 +77,14 @@ public class GridBuildingSystem : MonoBehaviour
 
         string tilePath = @"Tiles\";
 
-        if (GameManager.isStart.Equals(true))      //tileBases에 아무것도 없으면
-        {
+      
             tileBases.Add(TileType.Empty, null);
             tileBases.Add(TileType.White, Resources.Load<TileBase>(tilePath + "white"));
             tileBases.Add(TileType.Green, Resources.Load<TileBase>(tilePath + "green"));
             tileBases.Add(TileType.Red, Resources.Load<TileBase>(tilePath + "red"));
             GameManager.isStart = false;
 
-        }
+        
 
         Grid = GameObject.Find("back_down");
         Canvas= GameObject.Find("Canvas");

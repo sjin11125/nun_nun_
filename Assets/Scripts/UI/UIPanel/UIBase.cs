@@ -42,8 +42,7 @@ public class UIBase :MonoBehaviour
 
             UICloseBtn.onClick.AsObservable().Subscribe(_ =>
             {
-                this.gameObject.transform.parent.gameObject.SetActive(false);
-                Destroy(this.gameObject);
+                ClosePanel();
             }).AddTo(this);
         }
     }
@@ -61,5 +60,9 @@ public class UIBase :MonoBehaviour
         }
            
     }
-
+    public void ClosePanel()
+    {
+        this.gameObject.transform.parent.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+    }
 }

@@ -231,12 +231,15 @@ public class LoadManager : MonoBehaviour
                 Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
             }
         }
+        if (MyHomeBtn!=null)
+        {
 
-        MyHomeBtn.OnClickAsObservable().Subscribe(_=> {
+            MyHomeBtn.OnClickAsObservable().Subscribe(_ => {
 
-            LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                LoadingSceneController.Instance.LoadScene(SceneName.Main);
 
-        });
+            });
+        }
 
     }
     public void NuniLoad()
@@ -330,7 +333,8 @@ public class LoadManager : MonoBehaviour
 
                     Currnetbuildings.name = g_Building.Id;
 
-                    callback.Invoke();
+                    if (callback != null)
+                        callback.Invoke();
                     // return g_Building;
                 };
             }
@@ -341,7 +345,9 @@ public class LoadManager : MonoBehaviour
                     //GameObject BuildingPrefab = gameobject.Result;
                     Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
 
-                    callback.Invoke();
+                    if (callback != null)
+                        callback.Invoke();
+                    
                 };
             }
 

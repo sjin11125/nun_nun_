@@ -1,12 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Pool;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UniRx;
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+{
+    private static T _instance;
 
-public class GameManager : MonoBehaviour
+    public static T Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType(typeof(T)) as T;
+                if (_instance == null)
+                {
+                    Debug.LogError("There's no active " + typeof(T) + " in this scene");
+                }
+            }
+
+            return _instance;
+        }
+    }
+}
+public class GameManager : Singleton<GameManager>
 {
    public static string NewVersion = "";                   //최신버전
     public static string CurVersion = "1.4.6";                    //현재버전
@@ -129,21 +150,20 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, AchieveInfo> AchieveInfos = new Dictionary<string, AchieveInfo>();      //업적 정보 딕셔너리
     public Dictionary<string, MyAchieveInfo> MyAchieveInfos=new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
 
-
     private void Awake()
     {
         //PlayerPrefs.DeleteAll();
-        if (_Instance == null)
-        {
-            _Instance = this;
-            isStart = true;
-        }
-        else if (_Instance != this) // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-        {
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
-
+        /* if (_Instance == null)
+         {
+             _Instance = this;
+             isStart = true;
+         }
+         else if (_Instance != this) // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
+         {
+             Destroy(gameObject);
+         }
+         DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        */
     }
 
     public void LoadScene(string SceneName)
@@ -152,7 +172,9 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+
+
         //
         DogamChaImageData = new Dictionary<string, Sprite>();       //전체 캐릭터 리스트(가지고 있지 않은것도 포함)
         BuildingPrefabData = new Dictionary<string, GameObject>();      //전체 빌딩 프리팹 리스트 (가지고 있지 않은 것도 포함)
@@ -191,7 +213,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public static GameManager Instance
+    /*public static GameManager Instance
     {
         get
         {
@@ -201,7 +223,7 @@ public class GameManager : MonoBehaviour
             }
             return _Instance;
         }
-    }
+    }*/
     
     public static Sprite GetDogamChaImage(string ImageName)
     {

@@ -19,6 +19,7 @@ public class LoadingSceneController : MonoBehaviour
                 if(obj != null)
                 {
                     instance = obj;
+
                 }
                 else
                 {
