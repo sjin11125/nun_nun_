@@ -10,7 +10,7 @@ public class CardInfo
     public string cardImage;
     public int Cost;
     public int Item;        //무슨 아이템인지(0~4)
-    public string isLock;
+    //public string isLock;
     //public string Level;        //레벨
     //public string Star;     //별
     //public string Gauge;        //게이지
@@ -81,10 +81,26 @@ public class Card : MonoBehaviour
         Gold = c.Gold;
         Weight = c.Weight;
     }
+    public  Card(CardInfo c)
+    {
+        cardName = c.cardName;
+        cardImage = c.cardImage;
+        Cost = c.Cost;
+        Item = c.Item;
+        //Level = c.Level;
+        //Star = c.Star;
+        //Gauge = c.Gauge;
+        Info = c.Info;
+        Effect = c.Effect;
+        Building = c.Building;
+        Gold = c.Gold;
+        Weight = c.Weight;
+
+    }
     //public int Weight;
     //잠금    /   이름  /  아이템 /   이미지 /  가격  /  레벨  /  별   /  게이지 /  설명  / 보유효과  / 건물  / 골드 획득량/가중치
 
-    public Card(string islock, string cardname, string item, string cardimage, string cost, string level,
+  /*  public Card(string islock, string cardname, string item, string cardimage, string cost, string level,
        string star, string gauge, string info, string effect, string building, string gold,string Weight)
     {
         isLock = islock;
@@ -104,6 +120,6 @@ public class Card : MonoBehaviour
         Gold = gold;
         this.Weight = Weight;
     }
-
+  */
 
 }

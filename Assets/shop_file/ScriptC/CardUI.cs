@@ -12,7 +12,6 @@ public class CardUI : MonoBehaviour
     // 카드의 정보를 초기화
     public Card CardUISet(Card card)  //변경
     {       
-        Debug.Log(GameManager.AllNuniArray.Length);
         for (int i = 0; i <GameManager.AllNuniArray.Length; i++)
         {
             if (GameManager.AllNuniArray[i].cardName==card.cardName)

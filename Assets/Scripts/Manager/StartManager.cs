@@ -96,14 +96,12 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
             }
             else
             {
-                for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
+                foreach (var item in GameManager.Instance.NuniInfo)
                 {
-                    if (GameManager.AllNuniArray[i].Item == ChaIndex)
-                    {
-                        ItemInfo.text = GameManager.AllNuniArray[i].Effect;
-                    }
+                    if (item.Value.Item == ChaIndex)
+                        ItemInfo.text = item.Value.Effect;
+                    
                 }
-
             }
         }
 

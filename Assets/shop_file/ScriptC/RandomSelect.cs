@@ -17,18 +17,19 @@ public class RandomSelect : MonoBehaviour
     void Start()
     {
         deck = new List<Card>();
-        for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
+        foreach (var item in GameManager.Instance.NuniInfo)
         {
-            total += int.Parse(GameManager.AllNuniArray[i].Weight);
+            total += int.Parse(item.Value.Weight);
+            deck.Add(new Card(item.Value));
         }
 
-        for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
+       /* for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
         {
             // deck[i] = GameManager.AllNuniArray[i];
             Card c = new Card(GameManager.AllNuniArray[i]);
             c.SetValue(GameManager.AllNuniArray[i]);
             deck.Add(c);
-        }
+        }*/
         ShopBuyScript.isfirst = true;
     }
 
@@ -96,14 +97,13 @@ public class RandomSelect : MonoBehaviour
       
     }
 
-    // 가중치 랜덤의 설명은 영상을 참고.
     public Card RandomCard()
     {
         // 이렇게하면 가중치 랜덤함수 (확률이 다름)
 
         if (isTuto .Equals( 0))
         {
-            return GameManager.AllNuniArray[6];
+            return new Card(GameManager.Instance.NuniInfo["snow"]);
         }
         else
         {
@@ -111,7 +111,17 @@ public class RandomSelect : MonoBehaviour
             int selectNum = 0;
             selectNum = Mathf.RoundToInt(total * Random.Range(0.0f, 1.0f));
 
-            for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
+            foreach (var item in GameManager.Instance.NuniInfo)
+            {
+                weight += int.Parse(item.Value.Weight);
+
+                if (selectNum <= weight)
+                {
+                    Card temp = new Card(item.Value);
+                    return temp;
+                }
+            }
+           /* for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
             {
                 weight += int.Parse(GameManager.AllNuniArray[i].Weight);
                 if (selectNum <= weight)
@@ -120,17 +130,10 @@ public class RandomSelect : MonoBehaviour
                     return temp;
                 }
 
-            }
+            }*/
             return null;
-            // 이렇게하면 가중치 랜덤함수 (확률이 다름)
-            //원래는 return deck[Random.Range(0,deck.Count)];
         }
     }
 
 }
-
-//동일확률로
-//1. 눈(지우개효과) 2. 폭탄눈(자기기준 세로로 3개 터짐) 3. 폭탄눈2(자기기준 가로로3개 터짐)
-// 4. 장로눈( 타이머 줄어드는 속도감소), 5. 무지개눈 ( 아무대나 놓아도 인정) 
-// 이 친구들은 강화를 할때마다 사용할 수 있는 횟수가 증가함 ex) 1레벨 : 1번 > 이친구를 10번 뽑으면 레벨업 > 2레벨 : 2번 사용가능
 
