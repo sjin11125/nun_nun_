@@ -93,13 +93,9 @@ public class GameManager : Singleton<GameManager>
     public UserInfo PlayerUserInfo;         //플레이어 유저 정보
 
     public static string NickName;      //플레이어 닉네임
-    public static string StateMessage;      //플레이어 상태메세지
 
     public ReactiveProperty< Sprite> ProfileImage=new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
 
-    public static FriendInfo[] Friends;       //친구 목록(닉네임)
-
-    public static string friend_nickname;       //현재 들어가있는 친구닉넴
 
 
     public static bool isReward;        //일괄수확 가능한지
@@ -126,9 +122,8 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
 
     //--------------------------------------------------------------------퀘스트---------------------------------------------------
-    [Header("퀘스트")]
 
-    public static bool isStrEdit = false;
+
 
     public static bool gameMusicOn = true;
     public static bool mainMusicOn = true;
@@ -144,11 +139,6 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<string, MyAchieveInfo> MyAchieveInfos=new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
 
  
-
-    public void LoadScene(string SceneName)
-    {
-        SceneManager.LoadScene(SceneName);
-    }
     void Start()
     {
         DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.

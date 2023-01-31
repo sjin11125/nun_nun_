@@ -44,7 +44,6 @@ public class GridBuildingSystem : MonoBehaviour
     public static ReactiveProperty<bool> isEditing=new ReactiveProperty<bool>();             //건설모드
         //------------------------세이브 관련 변수들--------------------------------------
     public static bool isSave = false;          //건물 건설이나 삭제했을 때 건물들 저장하는 변수
-    public BuildingSave BSave;
 
     float second = 0;
     bool isGrid = false;
