@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using UniRx;
+using UnityEngine.AddressableAssets;
+
 public class UIUpgradePanel : UIBase
 {
     public Text UpgradeTextCost;
@@ -149,7 +151,12 @@ public class UIUpgradePanel : UIBase
             GameManager.Instance.PlayerUserInfo.Money = Money.ToString();
 
             building.Level += 1;
-            building.BuildingImage.sprite = GameManager.GetDogamChaImage(building.Building_Image + building.Level.ToString());//건물이미지 바꿈
+            Addressables.LoadAssetAsync<Sprite>(building.Building_Image + building.Level.ToString()).Completed += (image) =>
+            {            //어드레서블로 이미지 불러서 넣기
+                building.BuildingImage.sprite = image.Result;
+
+            };
+          //  building.BuildingImage.sprite = GameManager.GetDogamChaImage(building.Building_Image + building.Level.ToString());//건물이미지 바꿈
         }
         else                                             //재화가 없음
         {

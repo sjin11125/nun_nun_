@@ -198,7 +198,7 @@ public class ChaButtonScript : MonoBehaviour
 
         if (gameObject.tag != "Lock")       //건물이 안잠겨있고
         {
-            for (int i = 0; i < DogamManager.BuildingInformation.Length; i++)
+            /*for (int i = 0; i < DogamManager.BuildingInformation.Length; i++)
             {
                 if (DogamManager.BuildingInformation[i].Building_name == buildingName)
                 {
@@ -212,7 +212,7 @@ public class ChaButtonScript : MonoBehaviour
                     building.SetValue(GameManager.StrArray[i]);
                 }
 
-            }
+            }*/
             //int pay = building.Cost[0];
             //int shinPay = building.ShinCost[0];
 

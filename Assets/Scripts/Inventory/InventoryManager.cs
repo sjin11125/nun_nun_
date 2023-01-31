@@ -105,8 +105,12 @@ public class InventoryManager : MonoBehaviour
 
 
                     InventoryButton inventoryBtn = inven.GetComponent<InventoryButton>();
+                Addressables.LoadAssetAsync<Sprite>(item.Value.Building_Image).Completed += (image) =>
+                {            //어드레서블로 이미지 불러서 넣기
+                    inventoryBtn.SetButtonImage(image.Result);
 
-                    inventoryBtn.SetButtonImage(GameManager.GetDogamChaImage(item.Value.Building_Image));   //버튼 이미지 설정
+                };
+                //inventoryBtn.SetButtonImage(GameManager.GetDogamChaImage(item.Value.Building_Image));   //버튼 이미지 설정
                 if (LoadManager.Instance.MyBuildings[item.Value.Id].isLock=="T")
                 {
 

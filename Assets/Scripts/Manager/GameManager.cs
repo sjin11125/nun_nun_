@@ -43,13 +43,6 @@ public class GameManager : Singleton<GameManager>
     [Header("건물")]
     //public Sprite[] DogamChaImageInspector;     //인스펙터에서 받아 온 건물 이미지
 
-    public static Sprite[] DogamChaImage;       //
-    public static Dictionary<string, Sprite> DogamChaImageData;     //건물 이미지 딕셔너리
-
-
-    public static Building[] StrArray;         //모든 구조물들 정보
-
-    public GameObject[] BuildingPrefabInspector;    //인스펙터에서 받아 온 건물 프리팹 배열    
 
     public static Dictionary<string, GameObject> BuildingPrefabData;    //모든 빌딩 프리팹 딕셔너리
 
@@ -150,21 +143,7 @@ public class GameManager : Singleton<GameManager>
     public Dictionary<string, AchieveInfo> AchieveInfos = new Dictionary<string, AchieveInfo>();      //업적 정보 딕셔너리
     public Dictionary<string, MyAchieveInfo> MyAchieveInfos=new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
 
-    private void Awake()
-    {
-        //PlayerPrefs.DeleteAll();
-        /* if (_Instance == null)
-         {
-             _Instance = this;
-             isStart = true;
-         }
-         else if (_Instance != this) // 인스턴스가 존재하는 경우 새로생기는 인스턴스를 삭제한다.
-         {
-             Destroy(gameObject);
-         }
-         DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
-        */
-    }
+ 
 
     public void LoadScene(string SceneName)
     {
@@ -176,7 +155,6 @@ public class GameManager : Singleton<GameManager>
 
 
         //
-        DogamChaImageData = new Dictionary<string, Sprite>();       //전체 캐릭터 리스트(가지고 있지 않은것도 포함)
         BuildingPrefabData = new Dictionary<string, GameObject>();      //전체 빌딩 프리팹 리스트 (가지고 있지 않은 것도 포함)
 
         CharacterPrefab = new Dictionary<string, GameObject>();
@@ -186,14 +164,7 @@ public class GameManager : Singleton<GameManager>
         NuniDialog = new List<NuniDialog>();
 
 
-        for (int i = 0; i < BuildingPrefabInspector.Length; i++)        //빌딩 프리팹 정보 불러오기
-        {
-            BuildingPrefabData.Add(BuildingPrefabInspector[i].name + "(Clone)", BuildingPrefabInspector[i]);
-
-
-        }
-
-
+      
         for (int i = 0; i < CharaterPrefabInspector.Length; i++)
         {
             CharacterPrefab.Add(CharaterPrefabInspector[i].name, CharaterPrefabInspector[i]);
@@ -225,11 +196,7 @@ public class GameManager : Singleton<GameManager>
         }
     }*/
     
-    public static Sprite GetDogamChaImage(string ImageName)
-    {
-        return DogamChaImageData[ImageName.Trim()];
 
-    }
 
     public string IDGenerator()
     {
@@ -264,27 +231,7 @@ public class GameManager : Singleton<GameManager>
 
     public void GameSave()
     {
-        /* PlayerPrefs.SetInt("Money", Money);
-         PlayerPrefs.SetInt("ShinMoney", ShinMoney);
-         PlayerPrefs.Save();
-         print("save");
-
-         WWWForm form2 = new WWWForm();
-         //isMe = true;                 
-         form2.AddField("order", "setMoney");
-         form2.AddField("version", GameManager.CurVersion);
-
-         form2.AddField("achieve", string.Join(",", CanvasManger.currentAchieveSuccess));
-         form2.AddField("index", string.Join(",", CanvasManger.achieveContNuniIndex));
-         form2.AddField("count", string.Join(",", CanvasManger.achieveCount));
-
-         form2.AddField("shopbuy", string.Join(",", ShopBuyScript.Achieve12));
-         form2.AddField("achieveMoney", string.Join(",", CanvasManger.AchieveMoney));
-         form2.AddField("achieveShinMoney", string.Join(",", CanvasManger.AchieveShinMoney));
-         form2.AddField("achieveNuniName", string.Join(",", CardUI.AchieveNuniName));
-         form2.AddField("achieveFriendCount", string.Join(",", CanvasManger.AchieveFriendCount));
-
-         form2.AddField("player_nickname", NickName);  */
+      
         FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
     }
  public void UpdateMyAchieveInfo(string id,int count)

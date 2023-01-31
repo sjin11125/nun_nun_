@@ -291,7 +291,8 @@ public class Building : MonoBehaviour
             case 1:
                 break;
             case 2:
-                BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
+              
+               // BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
                 Addressables.LoadAssetAsync<Sprite>(Building_Image+Level.ToString()).Completed += (image) => {            //어드레서블로 이미지 불러서 넣기
                     BuildingImage.sprite = image.Result;
 

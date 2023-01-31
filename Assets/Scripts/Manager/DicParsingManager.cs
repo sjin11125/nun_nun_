@@ -95,7 +95,6 @@ public class DicParsingManager : MonoBehaviour
             }
 
         }
-        GameManager.StrArray = DictionaryStrList.ToArray();
      
         return DictionaryList.ToArray();
     }
