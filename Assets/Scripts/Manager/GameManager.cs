@@ -6,30 +6,45 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UniRx;
+using System;
+
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _instance;
-
+    private static T instance;
     public static T Instance
     {
         get
         {
-            if (_instance == null)
+            if (instance == null)
             {
-                _instance = FindObjectOfType(typeof(T)) as T;
-                if (_instance == null)
+                instance = FindObjectOfType<T>();
+                if (instance == null)
                 {
-                    Debug.LogError("There's no active " + typeof(T) + " in this scene");
+                    GameObject obj = new GameObject();
+                    obj.name = typeof(T).Name;
+                    instance = obj.AddComponent<T>();
                 }
             }
+            return instance;
+        }
+    }
 
-            return _instance;
+    public virtual void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this as T;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }
 public class GameManager : Singleton<GameManager>
 {
-   public static string NewVersion = "";                   //최신버전
+    public static string NewVersion = "";                   //최신버전
     public static string CurVersion = "1.4.6";                    //현재버전
     public static bool isUpdateDone = false;                    //업데이트를 완료했냐
 
@@ -50,7 +65,7 @@ public class GameManager : Singleton<GameManager>
     public static bool isEdit = false;
     public static bool isInvenEdit = false;
     public static Button InvenButton;
-    
+
     public static List<string> IDs;        //건물 아이디
 
     public Dictionary<string, BuildingParse> BuildingInfo = new Dictionary<string, BuildingParse>();        //건물 정보
@@ -67,12 +82,12 @@ public class GameManager : Singleton<GameManager>
     public static Card[] AllNuniArray;              //엑셀에서 받아 온 모든 누니 정보 배열
     public Dictionary<string, CardInfo> NuniInfo = new Dictionary<string, CardInfo>();
 
-    public Dictionary<string,Card> CharacterList;      //현재가지고 있는 누니 리스트
-    //public static Card[] CharacterArray;               //현재 가지고 있는 캐릭터 배열
-    
-    
-    public static bool[] Items=new bool[10];     //현재 가지고 잇는 아이템 유무
-    public static int items=0;
+    public Dictionary<string, Card> CharacterList;      //현재가지고 있는 누니 리스트
+                                                        //public static Card[] CharacterArray;               //현재 가지고 있는 캐릭터 배열
+
+
+    public static bool[] Items = new bool[10];     //현재 가지고 잇는 아이템 유무
+    public static int items = 0;
     public static bool isStore = false;
 
     public GameObject Dont;
@@ -94,7 +109,7 @@ public class GameManager : Singleton<GameManager>
 
     public static string NickName;      //플레이어 닉네임
 
-    public ReactiveProperty< Sprite> ProfileImage=new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
+    public ReactiveProperty<Sprite> ProfileImage = new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
 
 
 
@@ -136,12 +151,13 @@ public class GameManager : Singleton<GameManager>
 
     //--------------------------------------------업적---------------------------------------
     public Dictionary<string, AchieveInfo> AchieveInfos = new Dictionary<string, AchieveInfo>();      //업적 정보 딕셔너리
-    public Dictionary<string, MyAchieveInfo> MyAchieveInfos=new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
+    public Dictionary<string, MyAchieveInfo> MyAchieveInfos = new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
 
- 
+
+   
     void Start()
     {
-        DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
+        //DontDestroyOnLoad(gameObject);  // 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
 
 
         //
@@ -154,7 +170,7 @@ public class GameManager : Singleton<GameManager>
         NuniDialog = new List<NuniDialog>();
 
 
-      
+
         for (int i = 0; i < CharaterPrefabInspector.Length; i++)
         {
             CharacterPrefab.Add(CharaterPrefabInspector[i].name, CharaterPrefabInspector[i]);
@@ -174,24 +190,11 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    /*public static GameManager Instance
-    {
-        get
-        {
-            if (_Instance ==null)
-            {
-                return null;
-            }
-            return _Instance;
-        }
-    }*/
-    
-
 
     public string IDGenerator()
     {
-        string alpha= "qwertyuipoasdfjkl123456789!@#$%^&*()";
-        string id="";
+        string alpha = "qwertyuipoasdfjkl123456789!@#$%^&*()";
+        string id = "";
 
         bool isCount = false;
         do
@@ -199,11 +202,11 @@ public class GameManager : Singleton<GameManager>
 
             for (int i = 0; i < 5; i++)
             {
-                id += alpha[Random.Range(0, 24)];
+                id += alpha[UnityEngine.Random.Range(0, 24)];
             }
             for (int i = 0; i < IDs.Count; i++)
             {
-                if (IDs[i] .Equals( id))
+                if (IDs[i].Equals(id))
                 {
                     isCount = false;
                 }
@@ -213,44 +216,51 @@ public class GameManager : Singleton<GameManager>
                     IDs.Add(id);
                 }
             }
-        } while (isCount .Equals( true));
+        } while (isCount.Equals(true));
         return id;
     }
 
-    
+
 
     public void GameSave()
     {
-      
+
         FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
     }
- public void UpdateMyAchieveInfo(string id,int count)
+    public void UpdateMyAchieveInfo(string id, int count)
     {
         if (GameManager.Instance.MyAchieveInfos.ContainsKey(id))      //클리어한 업적 중에 해당 업적 Id가 있으면
         {
             GameManager.Instance.MyAchieveInfos[id].Count += count;
-            if (GameManager.Instance.MyAchieveInfos[id].Count 
-                >= GameManager.Instance.AchieveInfos[id].Count[GameManager.Instance.MyAchieveInfos[id].Index] )
+            if (GameManager.Instance.MyAchieveInfos[id].Count
+                >= GameManager.Instance.AchieveInfos[id].Count[GameManager.Instance.MyAchieveInfos[id].Index])
             {
                 GameManager.Instance.MyAchieveInfos[id].isReward[GameManager.Instance.MyAchieveInfos[id].Index] = "true";
-            }  
+            }
         }
         else
         {
             MyAchieveInfo NewMyAchieveInfo = new MyAchieveInfo(new string[] { "false", "false", "false", "false", "false" },
-                                                                id, 0, count,GameManager.Instance.PlayerUserInfo.Uid);
+                                                                id, 0, count, GameManager.Instance.PlayerUserInfo.Uid);
 
             GameManager.Instance.MyAchieveInfos.Add(id, NewMyAchieveInfo);
 
             // GameManager.Instance.MyAchieveInfos[achieveId[0][i]].CountRP.Value += 5;
         }
     }
-   
+
     void OnApplicationPause(bool pause)
     {
         if (pause)//비활성화
         {
             GameSave();
         }
+    }
+    public IObservable<int> CreateCountDownObservable(int countTime)
+    {
+        return Observable
+            .Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)) // 0초 이후 1초 간격으로 실행
+            .Select(x => (int)(countTime - x)) // x는 시작하고 나서의 시간(초)
+            .TakeWhile(x => x > 0); // 0초 초과 동안 OnNext 0이 되면 OnComplete
     }
 }

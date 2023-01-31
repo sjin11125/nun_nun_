@@ -39,6 +39,7 @@ public class UINicknamePanel : UIBase
                     {
                         case "Success":
                             GameManager.Instance.PlayerUserInfo.NickName = NickInputField.text;
+                            GameManager.Instance.PlayerUserInfo.CurrentTime = DateTime.Now.ToString(("yyyy-MM-dd"));
                             FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
                             LoadingSceneController.Instance.LoadScene(SceneName.Main);
                             Destroy(this.gameObject);

@@ -45,6 +45,7 @@ public class UserInfo               //유저정보
     public string BestScore;
     public string Tuto;
     public string Version;
+    public string CurrentTime;      //접속한 날짜('년도.월.일' 까지)
 }
 [System.Serializable]
 public class SendMessage

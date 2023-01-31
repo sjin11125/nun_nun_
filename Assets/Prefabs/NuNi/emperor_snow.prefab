@@ -51,16 +51,16 @@ MonoBehaviour:
   Cost: 0
   Item: 0
   isLock: 
-  Level: 
-  Star: 
-  Gauge: 
   Info: 
   Effect: 
+  Id: 
   Building: []
   Gold: 
-  weight: 
-  Image: {fileID: 0}
+  Weight: 
   isDialog: 0
+  NuniBtn: {fileID: 37378744523246176}
+  DialogObject: {fileID: 5864903304321056500}
+  DialogTxt: {fileID: 4774775563974925277}
 --- !u!1 &746954067222833950
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,8 +565,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20bd76a17bfdb84468127bfee2b8758b, type: 3}
+--- !u!114 &37378744523246176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3790029504012210676, guid: 20bd76a17bfdb84468127bfee2b8758b, type: 3}
+  m_PrefabInstance: {fileID: 3754920194608241556}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2244598961444079467 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3114875592986942719, guid: 20bd76a17bfdb84468127bfee2b8758b, type: 3}
+  m_PrefabInstance: {fileID: 3754920194608241556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4774775563974925277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8529607782467387465, guid: 20bd76a17bfdb84468127bfee2b8758b, type: 3}
+  m_PrefabInstance: {fileID: 3754920194608241556}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &5864903304321056500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7311728679162389856, guid: 20bd76a17bfdb84468127bfee2b8758b, type: 3}
   m_PrefabInstance: {fileID: 3754920194608241556}
   m_PrefabAsset: {fileID: 0}

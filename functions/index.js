@@ -102,7 +102,8 @@ exports.findUser=functions.https.onCall(async (req, res) => {
       Tuto:"0",
       Version:"1.3.6",
       Id:"",
-      NickName:""
+      NickName:"",
+      CurrentTime:"",
     };
 
     const res =await user.set(data);
@@ -203,10 +204,11 @@ exports.setUser=functions.https.onCall(async (req, res) => {
     ShinMoney:userData.ShinMoney,
     Tuto:userData.Tuto,
     Version:userData.Version,
-    NickName:userData.NickName
+    NickName:userData.NickName,
+    CurrentTime:userData.CurrentTime
   };
 
-  if (!doc.exists) {        //문서가 존재하지 않으면
+  /*if (!doc.exists) {        //문서가 존재하지 않으면
     console.log('No such document!');
     
     const res =await user.set(data);
@@ -215,12 +217,12 @@ exports.setUser=functions.https.onCall(async (req, res) => {
     return JSON.stringify(message);
   
   } else {                  //문서가 존재한다면
-
+*/
     const res =await user.set(data);
     message.name="setUser";
     message.message="Success";
     return JSON.stringify(message);
-  }
+ // }
 });
 
 //=====누니 관련=========

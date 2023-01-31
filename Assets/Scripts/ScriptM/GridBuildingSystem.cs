@@ -32,12 +32,6 @@ public class GridBuildingSystem : MonoBehaviour
     GameObject Grid;
     public Button StartButton;
 
-
-
-    
- 
-   
-
     public GameObject Dialog;           //대화창
     //추가 1110
     public GameObject temp_gameObject;

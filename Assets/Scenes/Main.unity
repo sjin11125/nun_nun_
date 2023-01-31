@@ -5074,7 +5074,7 @@ Transform:
   - {fileID: 1757191155}
   - {fileID: 1021359893}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1165918913
 MonoBehaviour:
@@ -5571,11 +5571,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260063799}
   m_CullTransparentMesh: 1
---- !u!1 &1273120717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7600644544497402944, guid: 2b1e0b382f545724789c13b18a878bf2, type: 3}
-  m_PrefabInstance: {fileID: 458228922158482052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1274636050
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,11 +5650,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274636050}
   m_CullTransparentMesh: 1
---- !u!1 &1293634395 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 458228921268849119, guid: 2b1e0b382f545724789c13b18a878bf2, type: 3}
-  m_PrefabInstance: {fileID: 458228922158482052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1312111778
 GameObject:
   m_ObjectHideFlags: 0
@@ -10273,6 +10263,7 @@ MonoBehaviour:
   MoneyText: {fileID: 2090181323}
   ShinMoneyText: {fileID: 1575319416}
   FriendUid: 
+  MyHomeBtn: {fileID: 0}
 --- !u!4 &2084656256
 Transform:
   m_ObjectHideFlags: 0
@@ -10312,53 +10303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2109893498
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2109893500}
-  - component: {fileID: 2109893499}
-  m_Layer: 0
-  m_Name: NuniDogamManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2109893499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109893498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2067ca7192cd705449bb4b16c868a9a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NuniPannelPrefab: {fileID: 6327648163769899962, guid: 88c15be4e683dcf48a16cce80b3fa7bd, type: 3}
-  Scroll: {fileID: 1293634395}
-  NuniInfoPanel: {fileID: 1273120717}
---- !u!4 &2109893500
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2109893498}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.17597647, y: -4.0520225, z: -5.676774}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2112392288
 GameObject:
   m_ObjectHideFlags: 0
@@ -10943,7 +10887,7 @@ PrefabInstance:
     - target: {fileID: 458228922375130822, guid: 2b1e0b382f545724789c13b18a878bf2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 2109893499}
+      objectReference: {fileID: 0}
     - target: {fileID: 8649011703338029286, guid: 2b1e0b382f545724789c13b18a878bf2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -11103,7 +11047,7 @@ Transform:
   - {fileID: 70978640}
   - {fileID: 93889458}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1071548352103726186
 GameObject:

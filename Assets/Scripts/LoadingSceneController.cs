@@ -115,6 +115,13 @@ public class LoadingSceneController : MonoBehaviour
             {
                 case "Main":
                     GetBuildingNuniInfo(GameManager.Instance.PlayerUserInfo.Uid);
+                    if (int.Parse(GameManager.Instance.PlayerUserInfo.Tuto) > 13)       //보상 받기
+                    {
+
+
+
+
+                    }
                     break;
                 case "FriendMain":
                     LoadManager.Instance.FriendUid = uid;

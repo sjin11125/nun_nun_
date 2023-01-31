@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UniRx;
+using System;
 
 [System.Serializable]
 public class CardInfo
@@ -22,6 +24,8 @@ public class CardInfo
     public string Weight;       //가중치
 
     public string Path;
+
+    public string[] Dialog;
 }
 public class Card : MonoBehaviour
 {
@@ -42,6 +46,10 @@ public class Card : MonoBehaviour
     public string Weight;       //가중치
 
     public bool isDialog;               //대사 말하고 있나
+
+    public Button NuniBtn;
+    public GameObject DialogObject;
+    public Text DialogTxt;
     public Card(Cardsave cardSave)
     {
         cardImage = cardSave.cardImage;
@@ -97,29 +105,27 @@ public class Card : MonoBehaviour
         Weight = c.Weight;
 
     }
-    //public int Weight;
-    //잠금    /   이름  /  아이템 /   이미지 /  가격  /  레벨  /  별   /  게이지 /  설명  / 보유효과  / 건물  / 골드 획득량/가중치
-
-  /*  public Card(string islock, string cardname, string item, string cardimage, string cost, string level,
-       string star, string gauge, string info, string effect, string building, string gold,string Weight)
+    public IObservable<int> CountDownObservable => _countDownObservable.AsObservable<int>();
+    public IConnectableObservable<int> _countDownObservable;
+    private void Start()
     {
-        isLock = islock;
-        this.cardName = cardname;
-        this.cardImage = cardimage;
-        Cost = int.Parse(cost);
-        Item = int.Parse(item);
-       // Level = level;
-       // Star = star;
-        //Gauge = gauge;
-        Info = info;
-        Effect = effect;
+        NuniBtn.OnClickAsObservable().Subscribe(_=> {
+            if (!isDialog)
+            {
+                isDialog = true;
+                _countDownObservable = GameManager.Instance.CreateCountDownObservable(3).Publish();     //Hot으로 변환
 
-        Building = building.Split( ' ' );
+                CountDownObservable.Subscribe(time =>
+                {
+                    DialogObject.SetActive(true); //대화창 생성
+                    DialogTxt.text = GameManager.Instance.NuniInfo[cardImage].Dialog[UnityEngine.Random.Range(0, GameManager.Instance.NuniInfo[cardImage].Dialog.Length - 1)];
 
+                }, () =>
+                {
 
-        Gold = gold;
-        this.Weight = Weight;
+                    DialogObject.SetActive(false); //대화창 생성
+                });//3초후 꺼짐
+            }
+        });
     }
-  */
-
 }
