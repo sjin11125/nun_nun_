@@ -45,11 +45,14 @@ public class Card : MonoBehaviour
     public string Gold;   //보유효과
     public string Weight;       //가중치
 
-    public bool isDialog;               //대사 말하고 있나
+    public bool isDialog = false;               //대사 말하고 있나
 
     public Button NuniBtn;
     public GameObject DialogObject;
     public Text DialogTxt;
+    public IObservable<int> CountDownObservable => _countDownObservable.AsObservable<int>();
+    public IConnectableObservable<int> _countDownObservable;
+    readonly Subject<int> TimerStreams = new Subject<int>();
     public Card(Cardsave cardSave)
     {
         cardImage = cardSave.cardImage;
@@ -89,7 +92,7 @@ public class Card : MonoBehaviour
         Gold = c.Gold;
         Weight = c.Weight;
     }
-    public  Card(CardInfo c)
+    public Card(CardInfo c)
     {
         cardName = c.cardName;
         cardImage = c.cardImage;
@@ -105,27 +108,32 @@ public class Card : MonoBehaviour
         Weight = c.Weight;
 
     }
-    public IObservable<int> CountDownObservable => _countDownObservable.AsObservable<int>();
-    public IConnectableObservable<int> _countDownObservable;
+   
+
+
     private void Start()
     {
-        NuniBtn.OnClickAsObservable().Subscribe(_=> {
+        NuniBtn.OnClickAsObservable().Subscribe(_ =>
+        {
             if (!isDialog)
             {
                 isDialog = true;
-                _countDownObservable = GameManager.Instance.CreateCountDownObservable(3).Publish();     //Hot으로 변환
+                DialogObject.SetActive(true); //대화창 생성
+                DialogTxt.text = GameManager.Instance.NuniInfo[cardImage].Dialog[UnityEngine.Random.Range(0, GameManager.Instance.NuniInfo[cardImage].Dialog.Length - 1)];
 
-                CountDownObservable.Subscribe(time =>
-                {
-                    DialogObject.SetActive(true); //대화창 생성
-                    DialogTxt.text = GameManager.Instance.NuniInfo[cardImage].Dialog[UnityEngine.Random.Range(0, GameManager.Instance.NuniInfo[cardImage].Dialog.Length - 1)];
+                // _countDownObservable.Connect();
+                StartCoroutine(Wait(3));
 
-                }, () =>
-                {
 
-                    DialogObject.SetActive(false); //대화창 생성
-                });//3초후 꺼짐
             }
-        });
+        }).AddTo(this);
+       
+    }
+
+    IEnumerator Wait(int time)
+    {
+        yield return new WaitForSecondsRealtime(3.0f);
+        isDialog = false;
+        DialogObject.SetActive(false); //대화창 생성
     }
 }
