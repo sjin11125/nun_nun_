@@ -228,10 +228,10 @@ public class LoadingSceneController : MonoBehaviour
                                             LoadManager.Instance.MyNuniPrefab.Clear();
                         foreach (var item in Result)
                         {
-                            Debug.Log("item: " + item.ToString());
                             Buildingsave itemBuilding = JsonUtility.FromJson<Buildingsave>(item.ToString());
                             //Debug.Log("item: " + JsonUtility.ToJson(item));
                             Building tempBuilding = new Building(itemBuilding);
+
                             LoadManager.Instance.MyBuildings.Add(tempBuilding.Id, tempBuilding);
                         }
 

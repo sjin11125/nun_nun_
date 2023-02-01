@@ -92,6 +92,33 @@ public class FirebaseLogin : MonoBehaviour
             return (string)task.Result.Data;
         });
     }
+    public Task<string>SetAllMyBuilding()
+    {
+        functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);
+        // Create the arguments to the callable function.
+        // Buildingsave test = new Buildingsave("7.349999", "6.875","T", "bunsu_level(Clone)0", "bunsu_level(Clone)","1","F","sd25hr");
+        if (LoadManager.Instance.MyBuildings.Count == 0)
+            return null;
+
+
+        //building.Uid = GameManager.Instance.PlayerUserInfo.Uid;
+        List<Buildingsave> BuildingSaveList = new List<Buildingsave>();
+        //LoadManager.Instance.MyBuildings.ToList();
+        foreach (var item in LoadManager.Instance.MyBuildings)
+        {
+            BuildingSaveList.Add(item.Value.BuildingToJson());
+        }
+           // var data = JsonUtility.ToJson(BuildingSaveList);
+
+            var function = functions.GetHttpsCallable("setAllBuilding");
+        
+            return function.CallAsync(JsonHelper.ToJson<Buildingsave>(BuildingSaveList.ToArray())).ContinueWithOnMainThread((task) =>
+            {
+                Debug.Log("task.Result: " + task.Result);
+                return (string)task.Result.Data;
+            });
+        
+    }
     public Task<string>RemoveBuilding(Buildingsave building)
     {
         functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);

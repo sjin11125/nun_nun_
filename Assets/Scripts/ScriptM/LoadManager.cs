@@ -245,10 +245,10 @@ public class LoadManager : MonoBehaviour
                     building.isStr = true;
 
                 g_Building.SetValue(building);
-
+                    Debug.Log(g_Building.Id+ "의 남은 보상 시간은 " + g_Building.RemainTime);
 
                     Currnetbuildings.name = g_Building.Id;
-
+                    MyBuildings[g_Building.Id] = g_Building;
                     if (callback != null)
                         callback.Invoke();
                     // return g_Building;

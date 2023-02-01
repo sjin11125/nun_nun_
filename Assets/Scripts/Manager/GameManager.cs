@@ -226,6 +226,7 @@ public class GameManager : Singleton<GameManager>
     {
 
         FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
+        FirebaseLogin.Instance.SetAllMyBuilding();
     }
     public void UpdateMyAchieveInfo(string id, int count)
     {

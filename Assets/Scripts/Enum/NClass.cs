@@ -61,7 +61,6 @@ public class SendMessage
 [System.Serializable]
 public class Buildingsave
 {
-    public string order, result, msg;
 
     public string Uid;              //플레이어 UID
 
@@ -78,8 +77,8 @@ public class Buildingsave
     public string Level;       //건물 레벨
     public string isFliped;        //뒤집어졌는지
     public string Id;
-
-    public Buildingsave(string buildingPosition_x, string buildingPosition_y, string isLock, string building_name, string building_Image, string level, string isFlied, string id)
+    public int RemainTime;
+    public Buildingsave(string buildingPosition_x, string buildingPosition_y, string isLock, string building_name, string building_Image, string level, string isFlied, string id,int remainTime)
     {
         BuildingPosition_x = buildingPosition_x;
         BuildingPosition_y = buildingPosition_y;
@@ -89,6 +88,8 @@ public class Buildingsave
         Level = level;
         this.isFliped = isFlied;
         Id = id;
+        this.RemainTime = remainTime;
+
     }
 }
 [Serializable]

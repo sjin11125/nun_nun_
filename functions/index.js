@@ -106,7 +106,7 @@ exports.findUser=functions.https.onCall(async (req, res) => {
       CurrentTime:"",
     };
 
-    const res =await user.set(data);
+    const datares =await user.set(data);
     return JSON.stringify(data);
   
     console.log('New document!');
@@ -153,6 +153,7 @@ exports.addBuilding=functions.https.onCall(async(req,res)=>{
       isFliped:buildingData.isFliped,
       isLock:buildingData.isLock,
       Id:buildingData.Id,
+      RemainTime:buildingData.RemainTime,
     });
 });
 
@@ -186,6 +187,30 @@ exports.getBuilding=functions.https.onCall(async(req,res)=>{
 return JSON.stringify( buildingData);
 });
 
+exports.setAllBuilding=functions.https.onCall(async(req,res)=>{
+
+  const myBuilding=JSON.parse(req);
+  console.log("idToken: "+JSON.stringify( myBuilding));
+  const db=admin.firestore();
+  
+  console.log("sfaf: "+JSON.stringify(myBuilding.Items));
+
+  for (var index = 0; index < myBuilding.Items.length; index++) {
+    console.log("index: "+JSON.stringify(myBuilding.Items[index]));
+    const element = myBuilding.Items[index];
+    const buildingRef = db.collection('user').doc(element.Uid).collection('building').doc(element.Id).set({
+      BuildingPosition_x:element.BuildingPosition_x,
+      BuildingPosition_y:element.BuildingPosition_y,
+      Building_Image:element.Building_Image,
+      Level:element.Level,
+      isFliped:element.isFliped,
+      isLock:element.isLock,
+      Id:element.Id,
+      RemainTime:element.RemainTime,
+      });
+  }
+//return JSON.stringify( buildingData);
+});
 exports.setUser=functions.https.onCall(async (req, res) => {
   const db=admin.firestore();
   console.log("req: "+req);
@@ -218,7 +243,7 @@ exports.setUser=functions.https.onCall(async (req, res) => {
   
   } else {                  //문서가 존재한다면
 */
-    const res =await user.set(data);
+    const userres =await user.set(data);
     message.name="setUser";
     message.message="Success";
     return JSON.stringify(message);
@@ -398,12 +423,12 @@ console.log("friendInfo: "+JSON.stringify( friendInfo));
     if(doc.exists)
     {
       console.log(doc.data());
-      const res={
+      const friendRes={
         FriendName:doc.id,
         FriendImage:doc.data().Image,
         FriendMessage:doc.data().Message
       }
-      return JSON.stringify(res);
+      return JSON.stringify(friendRes);
     }
     else
       return null;
@@ -421,12 +446,12 @@ exports.deleteFriend=functions.https.onCall(async(req,res)=>{         //친구 �
       if(doc.exists)
       {
         console.log(doc.data());
-        const res={
+        const resp={
           FriendName:doc.id,
           FriendImage:doc.data().Image,
           FriendMessage:doc.data().Message
         }
-        return JSON.stringify(res);
+        return JSON.stringify(resp);
       }
       else
         return null;

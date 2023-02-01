@@ -15,7 +15,6 @@ using UnityEngine.AddressableAssets;
 [Serializable]
 public class BuildingParse
 {
-    //-------------------------파싱정보------------------------------
     public string isLock;               //잠금 유무
     public string Building_name;            //건물 이름
     public string Info;                 //건물 설명
@@ -30,8 +29,9 @@ public class BuildingParse
     public string Id;
     public string str;      //설치물인지
     public string Path;
-    //-----------------------------------------------------------
-    
+
+    public int RewardTime;          //건물 보상 시간
+
 }
 public class Building : MonoBehaviour
 {
@@ -81,7 +81,8 @@ public class Building : MonoBehaviour
     public string BuildingPosition_x;
     public string BuildingPosition_y;
     public string Id;
-                            //-----------------------------------------------------------
+    public int RemainTime;              //남은 보상 시간
+    //-----------------------------------------------------------
 
     [Header("건물 레이어")]
     public int layer_y;   // 건물 레이어
@@ -89,10 +90,9 @@ public class Building : MonoBehaviour
     [Header("건물 상태")]
     public BuildType Type;
 
-    
-    bool isUp;
+    [Header("보상버튼")]
+    public Button RewardBtn;
 
-    
 
     float second = 0;
     IDisposable longClickStream;
@@ -166,6 +166,7 @@ public class Building : MonoBehaviour
         BuildingPosition_y = getBuilding.BuildingPosition_y;
         //Reward = getBuilding.Reward;
         Id = getBuilding.Id;
+        RemainTime = getBuilding.RemainTime;
     }
     public void SetValueParse(BuildingParse parse)
     {
@@ -194,6 +195,7 @@ public class Building : MonoBehaviour
         BuildingPosition_y = parse.BuildingPosition_y;
         BuildingPosition = new Vector2(float.Parse(parse.BuildingPosition_x), float.Parse(parse.BuildingPosition_y));
         Id = parse.Id;
+        RemainTime = parse.RemainTime;
     }
     public Building DeepCopy()
     {
@@ -221,9 +223,8 @@ public class Building : MonoBehaviour
     }
     public Buildingsave BuildingToJson()
     {
-        Buildingsave BuildingCopy = new Buildingsave(this.BuildingPosition_x,this.BuildingPosition_y,isLock,Building_name,Building_Image,Level.ToString(),isFliped,Id);
-       
-
+        Buildingsave BuildingCopy = new Buildingsave(this.BuildingPosition_x,this.BuildingPosition_y,isLock,Building_name,Building_Image,Level.ToString(),isFliped,Id,RemainTime);
+        BuildingCopy.Uid = GameManager.Instance.PlayerUserInfo.Uid;
         return BuildingCopy;
     }
     #endregion
@@ -452,9 +453,56 @@ public class Building : MonoBehaviour
 
             }).AddTo(this);
         }
+       
+        //보상을 받을 수 있는지 체크
+        if (RemainTime>1) //보상을 받을 수 없으면
+        {
+            StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+            if (RewardBtn != null)
+                RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
+        }
+        else                    //보상을 받을 수 있으면
+        {
+            if (RewardBtn != null)
+                RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
+        }
+        if (RewardBtn != null)
+        {
+            RewardBtn.OnClickAsObservable().Subscribe(_ =>
+            {
+                Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
 
+                int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
+                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level-1];
+                GameManager.Instance.PlayerUserInfo.Money = money.ToString();
 
+                RewardBtn.gameObject.SetActive(false);
+
+                Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
+
+                Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
+                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
+
+                StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+            }).AddTo(this);
+        }
     }
+    IEnumerator RewardTimer(int remainTime)
+    {
+        while (RemainTime>1)
+        {
+
+            yield return new WaitForSecondsRealtime(1.0f);
+            RemainTime -= 1;
+            Debug.Log("시간은 "+RemainTime);
+        
+        }
+        if (RemainTime==1)
+        {
+            RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
+        }
+    }
+
     IEnumerator BuildingEditTimer()
     {
         while (true)
@@ -540,6 +588,9 @@ public class Building : MonoBehaviour
                 BuildingPosition_x = gameObject.transform.position.x.ToString();
                 BuildingPosition_y = gameObject.transform.position.y.ToString();
                 Debug.Log("아이디는 "+Id);
+
+                
+
                 FirebaseLogin.Instance.AddBuilding(this.BuildingToJson());
                 break;
 
@@ -552,10 +603,16 @@ public class Building : MonoBehaviour
                 //GameManager.BuildingNumber[Building_Image]++; //해당 건물의 갯수 추가
                 Id = GameManager.Instance.IDGenerator();         //건물 id 생성
                 gameObject.name = Id;      //이름 재설정
+
                 BuildingListAdd();      //현재 가지고 있는 건물 리스트에 추가
+
                 Type = BuildType.Empty;
                 BuildingPosition_x =gameObject.transform.position.x.ToString();
                 BuildingPosition_y =gameObject.transform.position.y.ToString();
+                //LoadManager.Instance.MyBuildings.Add(Id, this);
+                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
+                RewardBtn.gameObject.SetActive(false);
+                StartCoroutine(RewardTimer(RemainTime)); //보상 받는 코루틴 시작
                 FirebaseLogin.Instance.AddBuilding(this.BuildingToJson());
 
                 Debug.Log("새로만듬");
