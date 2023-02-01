@@ -1064,29 +1064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b54a94ff355974ea42be88b5adf11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GD:
-    order: 
-    result: 
-    msg: 
-    value: 
-    nickname: 
-    state: 
-    profile_image: 
-    isUpdate: 
-    LoginResult: 
-  IDInput: {fileID: 402700002}
-  PassInput: {fileID: 539740431}
-  NicknameInput: {fileID: 2070751357}
-  QuestManager: {fileID: 1980512270}
-  NuniManager: {fileID: 853950860}
-  MyBuildingLoad: {fileID: 281042276}
-  WarningPannel: {fileID: 1895708895}
-  ifISign: 1
-  LogInBtn: {fileID: 0}
-  SignInBtn: {fileID: 1171930901}
-  bestScoreKey_: bsdat
-  VersionCheckPrefab: {fileID: 0}
-  UpdatePanel: {fileID: 0}
 --- !u!114 &281042276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2131,11 +2108,6 @@ PrefabInstance:
 --- !u!224 &414311815 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5608801280941879196, guid: 0fb2351d800451c47b983ae45d803c1e, type: 3}
-  m_PrefabInstance: {fileID: 414311814}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &414311816 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5608801280941879187, guid: 0fb2351d800451c47b983ae45d803c1e, type: 3}
   m_PrefabInstance: {fileID: 414311814}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &447605333
@@ -3723,11 +3695,6 @@ PrefabInstance:
 --- !u!224 &876128990 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2304730029839554027, guid: 722276e85c6a58646b7f4471c90ff5ef, type: 3}
-  m_PrefabInstance: {fileID: 876128989}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &876128991 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2304730029839554028, guid: 722276e85c6a58646b7f4471c90ff5ef, type: 3}
   m_PrefabInstance: {fileID: 876128989}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &900836456
@@ -5904,29 +5871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b54a94ff355974ea42be88b5adf11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GD:
-    order: 
-    result: 
-    msg: 
-    value: 
-    nickname: 
-    state: 
-    profile_image: 
-    isUpdate: 
-    LoginResult: 
-  IDInput: {fileID: 1672243902}
-  PassInput: {fileID: 867282685}
-  NicknameInput: {fileID: 0}
-  QuestManager: {fileID: 1980512270}
-  NuniManager: {fileID: 853950860}
-  MyBuildingLoad: {fileID: 1572906190}
-  WarningPannel: {fileID: 1895708895}
-  ifISign: 0
-  LogInBtn: {fileID: 900836458}
-  SignInBtn: {fileID: 1171930904}
-  bestScoreKey_: bsdat
-  VersionCheckPrefab: {fileID: 876128991}
-  UpdatePanel: {fileID: 414311816}
 --- !u!114 &1572906190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6873,9 +6817,9 @@ MonoBehaviour:
   MiddleCanvas: {fileID: 0}
   BottomCanvas: {fileID: 0}
   UICanvas:
-  - {fileID: 9010576536294490201, guid: 084daaf3a9b3ace47bd21ac79af5d669, type: 3}
-  - {fileID: 9010576536294490201, guid: e86fd83d34ec4954196df372594a019a, type: 3}
-  - {fileID: 9010576536294490201, guid: 021e213455a0b074e81d1e32ecc41455, type: 3}
+  - {fileID: 4940997704176425856, guid: 47841493ce620dc4885666ee3538d1e3, type: 3}
+  - {fileID: 4940997704176425856, guid: cd04d9de91b57f74080c9ee9c06371d0, type: 3}
+  - {fileID: 4940997704176425856, guid: 021e213455a0b074e81d1e32ecc41455, type: 3}
 --- !u!1 &1927121257
 GameObject:
   m_ObjectHideFlags: 0

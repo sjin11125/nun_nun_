@@ -31,7 +31,7 @@ public class CanvasBase : MonoBehaviour
     {
         if (BottomCanvas == null)
         {
-            BottomCanvas = Instantiate(UICanvas[0]) as GameObject;
+            BottomCanvas = Instantiate(UICanvas[0],this.gameObject.transform) as GameObject;
             return BottomCanvas;
         }
         else
@@ -45,7 +45,7 @@ public class CanvasBase : MonoBehaviour
 
             if (MiddleCanvas == null)
             {
-                MiddleCanvas = Instantiate(UICanvas[1]) as GameObject;
+                MiddleCanvas = Instantiate(UICanvas[1], this.gameObject.transform) as GameObject;
                 return MiddleCanvas;
             }
             else
@@ -58,7 +58,7 @@ public class CanvasBase : MonoBehaviour
                 }
                 if (TopCanvas = null)
                 {
-                    TopCanvas = Instantiate(UICanvas[2]) as GameObject;
+                    TopCanvas = Instantiate(UICanvas[2], this.gameObject.transform) as GameObject;
                     return TopCanvas;
                 }
                 else
