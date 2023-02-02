@@ -24,14 +24,32 @@ public class UIAchievePanel : UIBase
     override public void Start()
     {
         base.Start();
+        //처음에 업적 창 열면 색깔 업적 부터 뜨게함
         LoadingPanel.SetActive(true);
+        foreach (var info in GameManager.Instance.AchieveInfos)
+        {
+            if (info.Value.Id[0] != 'C')
+                continue;
+
+            GameObject AchieveInfoObj = Instantiate(AchieveMenus[0].Prefab, Content.transform) as GameObject;
+            AchieveScroll AchieveInfo = AchieveInfoObj.GetComponent<AchieveScroll>();
+
+
+
+            AchieveInfo.SetData(info.Value);
+        }
+        LoadingPanel.SetActive(false);
+
+       
         foreach (var item in AchieveMenus)
         {
             item.Btn.OnClickAsObservable().Subscribe(_=> {
                 Exit();
+                LoadingPanel.SetActive(true);
                 switch (item.Type)
                 {
                     case AchieveMenuType.Color:
+                        LoadingPanel.SetActive(true);
                         foreach (var info in GameManager.Instance.AchieveInfos)
                         {
                             if (info.Value.Id[0] != 'C')
@@ -44,10 +62,11 @@ public class UIAchievePanel : UIBase
 
                             AchieveInfo.SetData(info.Value);
                         }
-                      
+                        LoadingPanel.SetActive(false);
                         break;
 
                     case AchieveMenuType.Ect:
+                        LoadingPanel.SetActive(true);
                         foreach (var info in GameManager.Instance.AchieveInfos)
                         {
                             if (info.Value.Id[0] != 'E')
@@ -58,9 +77,11 @@ public class UIAchievePanel : UIBase
 
                             AchieveInfo.SetData(info.Value);
                         }
+                        LoadingPanel.SetActive(false);
                         break;
 
                     case AchieveMenuType.Shape:
+                        LoadingPanel.SetActive(true);
                         foreach (var info in GameManager.Instance.AchieveInfos)
                         {
                             if (info.Value.Id[0] != 'S')
@@ -71,6 +92,7 @@ public class UIAchievePanel : UIBase
 
                             AchieveInfo.SetData(info.Value);
                         }
+                        LoadingPanel.SetActive(false);
                         break;
 
                     default:

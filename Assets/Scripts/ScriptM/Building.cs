@@ -466,7 +466,7 @@ public class Building : MonoBehaviour
             if (RewardBtn != null)
                 RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
         }
-        if (RewardBtn != null)
+        if (RewardBtn != null&&SceneManager.GetActiveScene().name!="FriendMain")
         {
             RewardBtn.OnClickAsObservable().Subscribe(_ =>
             {
