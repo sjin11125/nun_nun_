@@ -273,9 +273,9 @@ public class Building : MonoBehaviour
     void Start()
     {
 
-        if (Type .Equals( BuildType.Make))
+        if (Type.Equals(BuildType.Make))
         {
-            gameObject.name= Building_Image  ;       //이름 설정
+            gameObject.name = Building_Image;       //이름 설정
         }
 
 
@@ -292,9 +292,10 @@ public class Building : MonoBehaviour
             case 1:
                 break;
             case 2:
-              
-               // BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
-                Addressables.LoadAssetAsync<Sprite>(Building_Image+Level.ToString()).Completed += (image) => {            //어드레서블로 이미지 불러서 넣기
+
+                // BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
+                Addressables.LoadAssetAsync<Sprite>(Building_Image + Level.ToString()).Completed += (image) =>
+                {            //어드레서블로 이미지 불러서 넣기
                     BuildingImage.sprite = image.Result;
 
                 };
@@ -316,42 +317,42 @@ public class Building : MonoBehaviour
         longClickStream = BuildingBtn.OnPointerDownAsObservable().    //건물 버튼을 꾹 누르는 상태에서 마우스 다운 스트림
                               Subscribe(_ =>
                               {
-                               
-                                      if(!GridBuildingSystem.isEditing.Value)                       //현재 건설모드가 아니라면
-                                          {
-                                              timerStream = Observable.FromCoroutine(BuildingEditTimer).Subscribe(_ =>      //일정 시간 지난 후 건설모드 On
-                                              {
+
+                                  if (!GridBuildingSystem.isEditing.Value)                       //현재 건설모드가 아니라면
+                                  {
+                                      timerStream = Observable.FromCoroutine(BuildingEditTimer).Subscribe(_ =>      //일정 시간 지난 후 건설모드 On
+                                      {
                                                   //GameManager.isEdit = true;
                                                   //Debug.Log("건설모드 ON");
                                                   Type = BuildType.Move;
-                                                  Placed = false;
-                                                  GridBuildingSystem.OnEditMode.OnNext(this);       //이 건물의 정보를 넘겨줌
-                                                  if (BuildEditBtn.Count!=0)
-                                                  {
-                                                      foreach (var item in BuildEditBtn)        //건축모드 버튼들 다 활성화
+                                          Placed = false;
+                                          GridBuildingSystem.OnEditMode.OnNext(this);       //이 건물의 정보를 넘겨줌
+                                                  if (BuildEditBtn.Count != 0)
+                                          {
+                                              foreach (var item in BuildEditBtn)        //건축모드 버튼들 다 활성화
                                                       {
-                                                          item.btn.gameObject.SetActive(true);
+                                                  item.btn.gameObject.SetActive(true);
 
-                                                          if (item.buildUIType==BuildUIType.Upgrade
-                                                          &&Level==2)        //최대 레벨인 경우 업그레이드 버튼 활성화 X                                                     
-                                                          item.btn.interactable = false;
-                                                      }
-                                                  }
-                                              }).AddTo(this);
+                                                  if (item.buildUIType == BuildUIType.Upgrade
+                                                  && Level == 2)        //최대 레벨인 경우 업그레이드 버튼 활성화 X                                                     
+                                                              item.btn.interactable = false;
+                                              }
                                           }
-                                     
-                                      // longClickStream.Dispose();          //타이머 구독해지
+                                      }).AddTo(this);
+                                  }
 
-                                      //1.3초
-                                  
-                               }).AddTo(this);
-       
-        var longClickUpStream = BuildingBtn.OnPointerUpAsObservable().Subscribe(_=>     //마우스 업 스트림
+                                  // longClickStream.Dispose();          //타이머 구독해지
+
+                                  //1.3초
+
+                              }).AddTo(this);
+
+        var longClickUpStream = BuildingBtn.OnPointerUpAsObservable().Subscribe(_ =>     //마우스 업 스트림
             {
                 second = 0;
 
-                if (timerStream!=null)
-                timerStream.Dispose();
+                if (timerStream != null)
+                    timerStream.Dispose();
 
                 if (!GridBuildingSystem.isEditing.Value)        //건축모드가 아니라면
                 {
@@ -362,7 +363,7 @@ public class Building : MonoBehaviour
                             break;
 
                         case BuildingName.Village:      //마을회관을 클릭했을 때
-                           Instantiate(VisitorBookUIPanel, GridBuildingSystem.Canvas.transform);
+                            Instantiate(VisitorBookUIPanel, GridBuildingSystem.Canvas.transform);
 
                             break;
                         default:
@@ -384,7 +385,7 @@ public class Building : MonoBehaviour
                     }
                 }
 
-        }).AddTo(this);
+            }).AddTo(this);
 
         if (BuildEditBtn.Count != 0)
         {
@@ -394,7 +395,7 @@ public class Building : MonoBehaviour
             {
                 item.btn.OnClickAsObservable().Subscribe(_ =>
                 {
-                   
+
                     switch (item.buildUIType)
                     {
                         case BuildUIType.Make:          //확정 버튼을 눌렀는지
@@ -402,7 +403,7 @@ public class Building : MonoBehaviour
                             {
                                 if (Type == BuildType.Move)           //건축모드일때(옮기기)
                                 {
-                                    
+
                                     Place(Type);
 
                                     GridBuildingSystem.OnEditModeOff.OnNext(this);
@@ -426,7 +427,7 @@ public class Building : MonoBehaviour
                             }
                             break;
                         case BuildUIType.Remove:          //제거 버튼을 눌렀는지
-                            UISellPanel uiSellPanel = new UISellPanel(UIPanels[0],this);
+                            UISellPanel uiSellPanel = new UISellPanel(UIPanels[0], this);
                             break;
 
                         case BuildUIType.Rotation:          //회전 버튼을 눌렀는지
@@ -435,8 +436,8 @@ public class Building : MonoBehaviour
                             break;
 
                         case BuildUIType.Upgrade:          //업그레이드 버튼을 눌렀는지
-                            UIUpgradePanel uiUpgradePanel = new UIUpgradePanel(UIPanels[1],this);
-                            
+                            UIUpgradePanel uiUpgradePanel = new UIUpgradePanel(UIPanels[1], this);
+
                             break;
 
                         default:
@@ -445,9 +446,10 @@ public class Building : MonoBehaviour
                 }).AddTo(this);
             }
         }
-        if (VisitorBookBtn.btn!=null)
+        if (VisitorBookBtn.btn != null)
         {
-            VisitorBookBtn.btn.OnClickAsObservable().Subscribe(_=> {
+            VisitorBookBtn.btn.OnClickAsObservable().Subscribe(_ =>
+            {
 
                 UIVisitorBookPanel VisitorBookPanel = new UIVisitorBookPanel(VisitorBookBtn.prefab);
 
@@ -455,42 +457,44 @@ public class Building : MonoBehaviour
         }
 
         //보상을 받을 수 있는지 체크
-        if (Type != BuildType.Make)
+
+
+        if (RemainTime > 1) //보상을 받을 수 없으면
         {
-
-
-            if (RemainTime > 1) //보상을 받을 수 없으면
+            StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+            if (RewardBtn != null)
+                RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
+        }
+        else                    //보상을 받을 수 있으면
+        {
+            if (Type != BuildType.Make)
             {
-                StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
-                if (RewardBtn != null)
-                    RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
-            }
-            else                    //보상을 받을 수 있으면
-            {
+
                 if (RewardBtn != null)
                     RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
             }
-            if (RewardBtn != null && SceneManager.GetActiveScene().name != "FriendMain")
-            {
-                RewardBtn.OnClickAsObservable().Subscribe(_ =>
-                {
-                    Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
-
-                    int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
-                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
-                    GameManager.Instance.PlayerUserInfo.Money = money.ToString();
-
-                    RewardBtn.gameObject.SetActive(false);
-
-                    Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
-
-                    Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
-                    RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
-
-                    StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
-            }).AddTo(this);
-            }
         }
+        if (RewardBtn != null && SceneManager.GetActiveScene().name != "FriendMain")
+        {
+            RewardBtn.OnClickAsObservable().Subscribe(_ =>
+            {
+                Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
+
+                int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
+                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
+                GameManager.Instance.PlayerUserInfo.Money = money.ToString();
+
+                RewardBtn.gameObject.SetActive(false);
+
+                Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
+
+                Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
+                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
+
+                StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+            }).AddTo(this);
+        }
+
     }
     IEnumerator RewardTimer(int remainTime)
     {
