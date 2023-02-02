@@ -453,38 +453,43 @@ public class Building : MonoBehaviour
 
             }).AddTo(this);
         }
-       
+
         //보상을 받을 수 있는지 체크
-        if (RemainTime>1) //보상을 받을 수 없으면
+        if (Type != BuildType.Make)
         {
-            StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
-            if (RewardBtn != null)
-                RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
-        }
-        else                    //보상을 받을 수 있으면
-        {
-            if (RewardBtn != null)
-                RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
-        }
-        if (RewardBtn != null&&SceneManager.GetActiveScene().name!="FriendMain")
-        {
-            RewardBtn.OnClickAsObservable().Subscribe(_ =>
+
+
+            if (RemainTime > 1) //보상을 받을 수 없으면
             {
-                Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
-
-                int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
-                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level-1];
-                GameManager.Instance.PlayerUserInfo.Money = money.ToString();
-
-                RewardBtn.gameObject.SetActive(false);
-
-                Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
-
-                Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
-                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
-
                 StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+                if (RewardBtn != null)
+                    RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
+            }
+            else                    //보상을 받을 수 있으면
+            {
+                if (RewardBtn != null)
+                    RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
+            }
+            if (RewardBtn != null && SceneManager.GetActiveScene().name != "FriendMain")
+            {
+                RewardBtn.OnClickAsObservable().Subscribe(_ =>
+                {
+                    Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
+
+                    int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
+                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
+                    GameManager.Instance.PlayerUserInfo.Money = money.ToString();
+
+                    RewardBtn.gameObject.SetActive(false);
+
+                    Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
+
+                    Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
+                    RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
+
+                    StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
             }).AddTo(this);
+            }
         }
     }
     IEnumerator RewardTimer(int remainTime)

@@ -921,7 +921,6 @@ GameObject:
   - component: {fileID: 6327648163769899958}
   - component: {fileID: 6327648163769899959}
   - component: {fileID: 6327648163769899956}
-  - component: {fileID: 1594807041623522499}
   - component: {fileID: 8592839791741222604}
   m_Layer: 5
   m_Name: StoreButtonPrefab
@@ -1040,30 +1039,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1594807041623522499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6327648163769899962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8afe11d9dd10e54f830d20bf9ca765c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChaPanel2: {fileID: 0}
-  LockPanel: {fileID: 3490812451173609109, guid: 7a4214655631d0243a1a9ff15d01123d, type: 3}
-  Check: {fileID: 0}
-  ItemImages: []
-  isCheck: 0
-  ButtonText: {fileID: 1594807043711417091}
-  CancleText: {fileID: 0}
-  DowngradeBuilding: {fileID: 0}
-  isUpgrade: 0
-  NuniInfoPannel: {fileID: 0}
-  WindowClose: {fileID: 0}
-  NuniUpgradeButton: {fileID: 0}
 --- !u!114 &8592839791741222604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1084,7 +1059,13 @@ MonoBehaviour:
   BuyBtn: {fileID: 1594807042313501073}
   MoneyText: {fileID: 1594807043711417091}
   ShinMoneyText: {fileID: 4198736929096655267}
-  Building_Name: 
+  Building_Image: 
+  StoreNuniInfo:
+    InfoPanel: {fileID: 0}
+    NuniName: {fileID: 0}
+    NuniInfo: {fileID: 0}
+    NuniEffect: {fileID: 0}
+    NuniImage: {fileID: 0}
 --- !u!1 &6627544648632161141
 GameObject:
   m_ObjectHideFlags: 0

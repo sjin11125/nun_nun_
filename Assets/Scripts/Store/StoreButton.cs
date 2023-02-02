@@ -47,42 +47,6 @@ public class StoreButton : MonoBehaviour
             Image.sprite = image.Result;
 
         };
-       /* if (BuyBtn != null)
-        {
-            BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼
-                int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-                int shinmoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-
-                if (GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].Cost[0] <= money //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
-                && GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].ShinCost[0] <= shinmoney)
-                {
-                    money -= GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].Cost[0]; //결제
-                    shinmoney -= GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].ShinCost[0];
-
-
-                    Addressables.LoadAssetAsync<GameObject>(buildingInfo.Path).Completed += (gameobject) =>
-                    {            //어드레서블로 이미지 불러서 넣기
-                        Building Newbuilding = gameobject.Result.GetComponent<Building>();
-
-                        Newbuilding.Placed = false;
-                        Newbuilding.Type = BuildType.Make;
-                        Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
-
-
-                        LoadManager.Instance.InstantiateBuilding(Newbuilding,()=> {
-
-                            GridBuildingSystem.OnEditMode.OnNext(Newbuilding);
-                            this.gameObject.transform.parent.gameObject.SetActive(false);
-                            Destroy(this.gameObject);
-                        });
-                    };  //어드레서블에서 건물 프리팹 불러와 Instantiate함
-                }
-                else
-                {
-                    //돈부족 패널 뜨기
-                }
-            }).AddTo(this);
-        }*/
     }
 
     public void SetNuniData(CardInfo nuniInfo)
