@@ -540,6 +540,22 @@ public class FirebaseLogin : MonoBehaviour
             Firebase.Auth.FirebaseUser newUser = task.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
+
+           /* newUser.DeleteAsync().ContinueWith(task => {
+                if (task.IsCanceled)
+                {
+                    Debug.LogError("DeleteAsync was canceled.");
+                    return;
+                }
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
+                    return;
+                }
+
+                Debug.Log("User deleted successfully.");
+            });*/
+            GetUserInfo(task.Result.UserId);
         });
     }
     private void OnSignOut()

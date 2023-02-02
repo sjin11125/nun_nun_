@@ -9,26 +9,7 @@ public class GameExitController : MonoBehaviour
     public GameObject TutoManager;
     public GameObject ExitPanel;
 
-    public void Awake()
-    {
-        if (int.Parse(GameManager.Instance.PlayerUserInfo.Tuto) < 14)
-        {
-            TutoManager.SetActive(true);
-            if (TutorialsManager.itemIndex > 9)//게임갔다오고난 후
-            {
-                RandomSelect.isTuto = 1;
-            }
-            else
-            {
-                RandomSelect.isTuto = 0;//게임튜토 실행
-            }
-        }
-        else//튜토 다 끝낸 상태
-        {
-            TutoManager.SetActive(false);
-            RandomSelect.isTuto = 1;
-        }
-    }
+ 
 
    /* public void GameSave()
     {

@@ -43,6 +43,7 @@ public class LoadManager : MonoBehaviour
 
     public Button MyHomeBtn;
 
+    public GameObject TutoManager;
     private void FixedUpdate()
     {
         if (SceneManager.GetActiveScene().name == "Main")
@@ -89,22 +90,7 @@ public class LoadManager : MonoBehaviour
 
    
     
-    void Reward_response(string json)
-    {
-        
-        string time = json;
-        Debug.Log("보상 "+time);
-        if (time != DateTime.Now.ToString("yyyy.MM.dd"))     //���ó�¥�� �ƴϳ� �ϰ���Ȯ ����
-        {
-            GameManager.isReward = true;
-            
-            GetReward();
-        }
-        else
-        {
-            GameManager.isReward = false;               //���ó�¥�� ��Ȯ �Ұ���
-        }
-    }
+   
     //��ȭ�ε�
     //ĳ���� �ε�
     void Start()
@@ -129,25 +115,7 @@ public class LoadManager : MonoBehaviour
             MyBuildings.Add(building.Id, building);
         }).AddTo(this);
         Debug.Log("튜토는 " + GameManager.Instance.PlayerUserInfo.Tuto);
-        if (SceneManager.GetActiveScene().name.Equals("Main"))          //메인씬이면
-        {
-
-          
-            
-           /* Action action ;
-            LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.getMyBuilding,null,action=()=> {
-                StartCoroutine(RewardStart());
-                }
-            );          //오늘 재화 받을 수 있는지}) ;*/
-
-
-
-                if (int.Parse(GameManager.Instance.PlayerUserInfo.Tuto) > 3)
-            {
-                Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
-            }
-        }
-        if (MyHomeBtn!=null)
+        if (MyHomeBtn != null)
         {
 
             MyHomeBtn.OnClickAsObservable().Subscribe(_ => {
@@ -156,6 +124,45 @@ public class LoadManager : MonoBehaviour
 
             });
         }
+        if (SceneManager.GetActiveScene().name.Equals("Main"))          //메인씬이면
+        {
+
+
+
+            /* Action action ;
+             LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.getMyBuilding,null,action=()=> {
+                 StartCoroutine(RewardStart());
+                 }
+             );          //오늘 재화 받을 수 있는지}) ;*/
+
+            if (GameManager.Instance.PlayerUserInfo.Tuto < 14)
+            {
+                if (TutoManager==null)
+                
+                    return;
+                
+                TutoManager.SetActive(true);
+                if (GameManager.Instance.PlayerUserInfo.Tuto > 9)//게임갔다오고난 후
+                {
+                    RandomSelect.isTuto = 1;
+                }
+                else
+                {
+                    RandomSelect.isTuto = 0;//게임튜토 실행
+                }
+            }
+            else//튜토 다 끝낸 상태
+            {
+                TutoManager.SetActive(false);
+                RandomSelect.isTuto = 1;
+            }
+
+            if (GameManager.Instance.PlayerUserInfo.Tuto > 3)
+            {
+                Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
+            }
+        }
+  
 
     }
     public void NuniLoad()
@@ -290,73 +297,5 @@ public class LoadManager : MonoBehaviour
         MyNuniPrefab.Remove(Id);
 
     }
-    
-    public void GetReward()
-    {
-        GameManager.isReward = false;
-        int MyReward = 0;
-
-        List<string> RewardedNuni = new List<string>();         //보상받은 누니
-
-        foreach (var item in MyBuildings)
-        {
-
-
-          
-                    MyReward += GameManager.Instance.BuildingInfo[item.Value.Building_Image].Reward[item.Value.Level - 1];
-
-            foreach (var nuni in GameManager.Instance.CharacterList)
-            {
-                if (item.Value.Building_Image.Equals(nuni.Value.Building[0])
-                    && nuni.Value.Gold != "X"
-                    && nuni.Value.cardName != RewardedNuni.Find(x => x == nuni.Value.cardName))//건물 보상 받는 누니인가
-                {
-                    MyReward += int.Parse(nuni.Value.Gold);
-                    RewardedNuni.Add(nuni.Value.cardName);
-
-                }
-            }
-            for (int y = 0; y < GameManager.Instance.CharacterList.Count; y++)
-            {
-                
-
-            }
-
-        }
-
-        /*for (int i = 0; i < GameManager.Instance.CharacterList.Count; i++)
-        {
-
-            if (GameManager.Instance.CharacterList[i].cardName== "꾸러기누니"||
-                GameManager.Instance.CharacterList[i].cardName == "꽃단누니" ||
-                GameManager.Instance.CharacterList[i].cardName == "어린이누니" ||
-                GameManager.Instance.CharacterList[i].cardName == "학생누니" )
-            {
-                nuni50++;
-            }
-            if (GameManager.Instance.CharacterList[i].cardName == "셰프누니" ||
-                GameManager.Instance.CharacterList[i].cardName == "패션누니" )
-            {
-                nuni30++;
-            }
-            MyReward += nuni50 * 50 + nuni30 * 30;
-
-        }*/
-        GameManager.Money += MyReward;
-        CanvasManger.AchieveMoney += MyReward;
-
-
-        WWWForm form1 = new WWWForm();
-        form1.AddField("order", "questSave");
-        form1.AddField("player_nickname", GameManager.NickName);
-        form1.AddField("time", DateTime.Now.ToString("yyyy.MM.dd"));
-
-       
-        if (TutorialsManager.itemIndex > 13)//Ʃ�丮���� ��������
-        {
-            RewardPannel.SetActive(true);
-            Text[] rewardText = RewardPannel.GetComponentsInChildren<Text>();
-            rewardText[1].text = MyReward.ToString();
-        }
-    }
+ 
 }

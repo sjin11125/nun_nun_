@@ -358,7 +358,7 @@ public class Building : MonoBehaviour
                     switch (BuildingNameEnum)
                     {
                         case BuildingName.NuniTree:         //생명의나무을 클릭했을 때
-                            SceneManager.LoadScene("Shop");
+                            LoadingSceneController.Instance.LoadScene(SceneName.Shop);
                             break;
 
                         case BuildingName.Village:      //마을회관을 클릭했을 때

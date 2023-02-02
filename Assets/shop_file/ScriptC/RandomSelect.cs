@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+
 public class RandomSelect : MonoBehaviour
 {
     public List<Card> deck;  // 카드 덱
@@ -12,7 +15,9 @@ public class RandomSelect : MonoBehaviour
     public List<Card> result = new List<Card>();  // 랜덤하게 선택된 카드를 담을 리스트
 
     public Transform parent;
-    public GameObject cardprefab;
+    public GameObject BuyResultObject;
+    public Text ResultText;
+    public Image ResultImage;
 
     void Start()
     {
@@ -35,24 +40,39 @@ public class RandomSelect : MonoBehaviour
 
     public void ResultSelect()
     {
+
         //셀력결과
         // 가중치 랜덤을 돌리면서 결과 리스트에 넣어줍니다.
-        result.Add(RandomCard());
-        // 비어 있는 카드를 생성하고
-        CardUI cardUI = Instantiate(cardprefab, parent).GetComponent<CardUI>();
-        // 생성 된 카드에 결과 리스트의 정보를 넣어줍니다.
-        Card Nuni = cardUI.CardUISet(RandomCard());
-        Nuni.isLock = "T";          //누니 잠금 품
-        Nuni.Id = GameManager.Instance.IDGenerator();
-        GameManager.Instance.CharacterList.Add(Nuni.Id, Nuni);     //나온 결과를 리스트에 반영
-                                                          //전체 누니 배열을 수정
-        Cardsave cardsave = new Cardsave(GameManager.Instance.PlayerUserInfo.Uid, Nuni.cardImage, Nuni.isLock, Nuni.Id);
+        Card resultNuni = RandomCard();
 
-        cardsave.Uid = GameManager.Instance.PlayerUserInfo.Uid;
+        Addressables.LoadAssetAsync<Sprite>(resultNuni.cardImage).Completed += (image) =>
+        {            //어드레서블로 이미지 불러서 넣기
 
-        FirebaseLogin.Instance.SetNuni(cardsave);//파이어베이스에 업데이트
+            result.Add(resultNuni);
+            // 비어 있는 카드를 생성하고
+            //CardUI cardUI = Instantiate(cardprefab, parent).GetComponent<CardUI>();
+            // 생성 된 카드에 결과 리스트의 정보를 넣어줍니다.
+            //Card Nuni = cardUI.CardUISet(RandomCard());
 
-        ShopBuyScript.isfirst = false;
+            ResultText.text = resultNuni.cardName;
+            ResultImage.sprite = image.Result;
+
+            BuyResultObject.SetActive(true);
+
+            resultNuni.isLock = "T";          //누니 잠금 품
+            resultNuni.Id = GameManager.Instance.IDGenerator();
+            GameManager.Instance.CharacterList.Add(resultNuni.Id, resultNuni);     //나온 결과를 리스트에 반영
+                                                                                   //전체 누니 배열을 수정
+
+
+            Cardsave cardsave = new Cardsave(GameManager.Instance.PlayerUserInfo.Uid, resultNuni.cardImage, resultNuni.isLock, resultNuni.Id);
+
+            cardsave.Uid = GameManager.Instance.PlayerUserInfo.Uid;
+
+            FirebaseLogin.Instance.SetNuni(cardsave);//파이어베이스에 업데이트
+
+            ShopBuyScript.isfirst = false;
+        };
     }
    /* IEnumerator NuniSave(Card nuni)                //누니 구글 스크립트에 저장
     {

@@ -115,13 +115,7 @@ public class LoadingSceneController : MonoBehaviour
             {
                 case "Main":
                     GetBuildingNuniInfo(GameManager.Instance.PlayerUserInfo.Uid);
-                    if (int.Parse(GameManager.Instance.PlayerUserInfo.Tuto) > 13)       //보상 받기
-                    {
-
-
-
-
-                    }
+                 
                     break;
                 case "FriendMain":
                     LoadManager.Instance.FriendUid = uid;
@@ -176,6 +170,7 @@ public class LoadingSceneController : MonoBehaviour
                     break;
 
                 default:
+                    StartCoroutine(Fade(false));
                     break;
             }
 
@@ -203,7 +198,6 @@ public class LoadingSceneController : MonoBehaviour
         //LoadManager.Instance.MyBuildings.Clear();
         FirebaseLogin.Instance.GetBuilding(uid).ContinueWith((task) =>      //건물 불러오기
         {
-            Debug.Log("task.Result: " + task.Result);
             if (!task.IsFaulted)
             {
                 if (task.Result != null)//건물 넣기

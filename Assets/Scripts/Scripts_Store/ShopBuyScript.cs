@@ -10,6 +10,8 @@ public class ShopBuyScript : MonoBehaviour
     public static bool isfirst;
     public static int Achieve12;
 
+    public GameObject ResultObject;
+
     public void NuniBuy()
     {
         if (int.Parse(GameManager.Instance.PlayerUserInfo.Money) < 2000)
@@ -21,7 +23,7 @@ public class ShopBuyScript : MonoBehaviour
         {
             if (!isfirst)
             {
-                Destroy(GameObject.FindGameObjectWithTag("Card").gameObject);
+                ResultObject.SetActive(false);
             }
             Water.SetActive(true);
             gameObject.transform.GetChild(0).gameObject.SetActive(false);

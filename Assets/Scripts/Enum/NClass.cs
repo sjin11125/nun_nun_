@@ -43,7 +43,7 @@ public class UserInfo               //유저정보
     public string ShinMoney;
     public string Zem;
     public string BestScore;
-    public string Tuto;
+    public int Tuto;
     public string Version;
     public string CurrentTime;      //접속한 날짜('년도.월.일' 까지)
 }
@@ -245,7 +245,7 @@ public class MyAchieveInfo
        // CountRP.Value =int.Parse( count);
     }
 }
-
+[Serializable]
 public class LoginMenu {
     public LoginType Type;
     public Button LoginBtn;

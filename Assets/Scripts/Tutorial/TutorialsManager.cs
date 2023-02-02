@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TutorialsManager : MonoBehaviour
 {
-    [SerializeField] [Header("Tutorials items")] TutorialsItemControl[] items;
-    public static int itemIndex;
+    [SerializeField] 
+    [Header("Tutorials items")] 
+    TutorialsItemControl[] items;
     public GameObject bunsu;
     
     void Start()
@@ -25,7 +26,7 @@ public class TutorialsManager : MonoBehaviour
 
     private void Update()
     {
-        if (itemIndex < 4)
+        if (GameManager.Instance.PlayerUserInfo.Tuto < 4)
         {
             if (bunsu != null)
             {
@@ -43,22 +44,22 @@ public class TutorialsManager : MonoBehaviour
 
     public void ActiveNextItem()
     {
-        if (items.Length .Equals( itemIndex))
+        if (items.Length .Equals( GameManager.Instance.PlayerUserInfo.Tuto))
         {
             RandomSelect.isTuto = 1;
-            PlayerPrefs.SetInt("TutorialsDone", itemIndex);
+            PlayerPrefs.SetInt("TutorialsDone", GameManager.Instance.PlayerUserInfo.Tuto);
         }
         else
         {
-            if (itemIndex - 1 > -1 && itemIndex - 1 < items.Length)
+            if (GameManager.Instance.PlayerUserInfo.Tuto - 1 > -1 && GameManager.Instance.PlayerUserInfo.Tuto - 1 < items.Length)
             {
-                items[itemIndex - 1].gameObject.SetActive(false);// �� ������ ��Ȱ��ȭ
+                items[GameManager.Instance.PlayerUserInfo.Tuto - 1].gameObject.SetActive(false);// �� ������ ��Ȱ��ȭ
             }
-            if (itemIndex > -1 && itemIndex < items.Length)
+            if (GameManager.Instance.PlayerUserInfo.Tuto > -1 && GameManager.Instance.PlayerUserInfo.Tuto < items.Length)
             {
-                items[itemIndex].gameObject.SetActive(true);// ������ Ȱ��ȭ
+                items[GameManager.Instance.PlayerUserInfo.Tuto].gameObject.SetActive(true);// ������ Ȱ��ȭ
 
-                if (itemIndex.Equals(1))
+                if (GameManager.Instance.PlayerUserInfo.Tuto.Equals(1))
                 {
                     bunsu = GameObject.FindWithTag("bunsu"); //ii1y1
                     if (bunsu != null)
@@ -66,9 +67,9 @@ public class TutorialsManager : MonoBehaviour
                         bunsu.SetActive(false);
                     }
                 }
-                if (itemIndex.Equals(10))
+                if (GameManager.Instance.PlayerUserInfo.Tuto.Equals(10))
                 {
-                
+                    
                     if (int.Parse(GameManager.Instance.PlayerUserInfo.Money) < 100 
                         || int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney) < 1)
                     {
@@ -83,8 +84,8 @@ public class TutorialsManager : MonoBehaviour
                     }
                 }
             }
-            PlayerPrefs.SetInt("TutorialsDone", itemIndex);
-            itemIndex++;
+            PlayerPrefs.SetInt("TutorialsDone", GameManager.Instance.PlayerUserInfo.Tuto);
+            GameManager.Instance.PlayerUserInfo.Tuto++;
         }
     }
 }
