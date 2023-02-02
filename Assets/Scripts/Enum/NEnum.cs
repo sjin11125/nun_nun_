@@ -157,3 +157,11 @@ public enum StoreMenuType
    Str,
    Nuni
 }
+
+public enum LoginType { 
+
+    Google,
+    Anonymously,
+
+
+}

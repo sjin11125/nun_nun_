@@ -227,6 +227,10 @@ public class FirebaseLogin : MonoBehaviour
 
     public void SignInWithGoogle() { OnSignIn(); }
     public void SignOutFromGoogle() { OnSignOut(); }
+
+    public void SignInWithAnonyMously() {
+        OnSignInAnon();
+    }
     public void WirteButton()
     {
         Write();
@@ -504,6 +508,7 @@ public class FirebaseLogin : MonoBehaviour
             return (string)task.Result.Data;
         });
     }
+    //-------------------------·Î±×ÀÎ-----------------------------------
     private void OnSignIn()
     {
         Debug.Log("OnSignIn Start ");
@@ -517,7 +522,26 @@ public class FirebaseLogin : MonoBehaviour
         
         Debug.Log("OnSignIn End ");
     }
+    void OnSignInAnon()
+    {
+        auth.SignInAnonymouslyAsync().ContinueWith(task=> {
 
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAnonymouslyAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            Firebase.Auth.FirebaseUser newUser = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                newUser.DisplayName, newUser.UserId);
+        });
+    }
     private void OnSignOut()
     {
         //AddToInformation("Calling SignOut");
@@ -598,6 +622,7 @@ public class FirebaseLogin : MonoBehaviour
                 //    GameManager.Instance.StateList.Add("Login");
             }
         });
+        
     }
    
     public void OnSignInSilently()

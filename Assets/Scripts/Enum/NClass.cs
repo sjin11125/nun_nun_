@@ -245,3 +245,9 @@ public class MyAchieveInfo
        // CountRP.Value =int.Parse( count);
     }
 }
+
+public class LoginMenu {
+    public LoginType Type;
+    public Button LoginBtn;
+
+}
