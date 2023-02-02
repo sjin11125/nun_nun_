@@ -11,6 +11,7 @@ public class UIAchievePanel : UIBase
     [SerializeField]
     public List<AchieveMenu> AchieveMenus;
 
+    public GameObject LoadingPanel;
     public GameObject Content;
     public UIAchievePanel(GameObject UIPrefab)
     {
@@ -23,6 +24,7 @@ public class UIAchievePanel : UIBase
     override public void Start()
     {
         base.Start();
+        LoadingPanel.SetActive(true);
         foreach (var item in AchieveMenus)
         {
             item.Btn.OnClickAsObservable().Subscribe(_=> {
@@ -77,6 +79,7 @@ public class UIAchievePanel : UIBase
 
             }).AddTo(this);
         }
+        LoadingPanel.SetActive(false);
        //Newtonsoft.Json.dese
     }
     public void Exit()

@@ -494,7 +494,6 @@ public class Building : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(1.0f);
             RemainTime -= 1;
-            Debug.Log("시간은 "+RemainTime);
         
         }
         if (RemainTime==1)

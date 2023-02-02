@@ -3160,6 +3160,7 @@ MonoBehaviour:
   infoText: {fileID: 1927121259}
   webClientId: 494831558708-2dq0fqt5ut11d37l24139nad54it8h04.apps.googleusercontent.com
   NickNamePanelPrefab: {fileID: -1136479446299908012, guid: f85a03e91a6e56b409b201027f6f269b, type: 3}
+  LoginPanel: {fileID: 1676398627}
 --- !u!1 &802382104
 GameObject:
   m_ObjectHideFlags: 0

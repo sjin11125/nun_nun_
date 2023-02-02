@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R3CR200WR9F",
         "name": "com.SoMa.NuNNuN",
-        "processId": 22830,
+        "processId": 30125,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,12 +42,6 @@
             "deviceId": "R3CR200WR9F",
             "name": "com.SoMa.NuNNuN",
             "processId": 30125,
-            "exited": false
-        },
-        {
-            "deviceId": "R3CR200WR9F",
-            "name": "com.SoMa.NuNNuN",
-            "processId": 22830,
             "exited": false
         }
     ],

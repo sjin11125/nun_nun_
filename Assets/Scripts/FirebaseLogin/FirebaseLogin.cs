@@ -26,6 +26,8 @@ public class FirebaseLogin : MonoBehaviour
 
     public GameObject NickNamePanelPrefab;
 
+    public GameObject LoginPanel;
+
     public static FirebaseLogin _Instance;
     public static FirebaseLogin Instance
     {
@@ -244,7 +246,11 @@ public class FirebaseLogin : MonoBehaviour
     }
     public void GetUserInfo(string idToken)
     {
-        functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);
+        UnityMainThreadDispatcher.Instance().Enqueue(() =>
+        {
+            LoginPanel.SetActive(false);
+        });
+            functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);
         var function = functions.GetHttpsCallable("findUser");
 
         SendMessage IdToken = new SendMessage("Send IdToken",idToken);
@@ -281,6 +287,7 @@ public class FirebaseLogin : MonoBehaviour
                                 Debug.Log("My id: " + GameManager.Instance.MyAchieveInfos[achieveInfo.Id].Id);
                             }
                             UnityMainThreadDispatcher.Instance().Enqueue(() => {
+
                                 if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
                                 {
                                     // Debug.Log("");
@@ -315,7 +322,12 @@ public class FirebaseLogin : MonoBehaviour
             }
             else
             {
-                Debug.LogError(task.Result);
+                UnityMainThreadDispatcher.Instance().Enqueue(() => {
+
+                    LoginPanel.SetActive(true);
+                    Debug.LogError(task.Result);
+                });
+                
             }
         });
     }
@@ -495,6 +507,7 @@ public class FirebaseLogin : MonoBehaviour
     private void OnSignIn()
     {
         Debug.Log("OnSignIn Start ");
+        LoginPanel.SetActive(false);
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.Configuration.UseGameSignIn = false;
         GoogleSignIn.Configuration.RequestIdToken = true;
@@ -564,6 +577,7 @@ public class FirebaseLogin : MonoBehaviour
     }
     private void SignInWithGoogleOnFirebase(string idToken)
     {
+       ;
         Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
 
         auth.SignInWithCredentialAsync(credential).ContinueWith(task =>

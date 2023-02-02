@@ -13,7 +13,6 @@ public class UINicknamePanel : UIBase
     public GameObject ExistNickNameTxt;
     public InputField NickInputField;
 
-
     public UINicknamePanel(GameObject UIPrefab)
     {
         UINicknamePanel r = UIPrefab.GetComponent<UINicknamePanel>();
