@@ -77,6 +77,10 @@ MonoBehaviour:
     m_Address: Assets/Prefabs/UI/UIPanel/VisitorBookPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: d488a424053db334ab2e68075b470dce
+    m_Address: Assets/Prefabs/UI/UIPanel/LoadingPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e91345750d263af4498e71946c3bd34e, type: 2}
   m_SchemaSet:

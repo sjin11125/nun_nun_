@@ -41,6 +41,7 @@ public class FirebaseLogin : MonoBehaviour
 
     private void Awake()
     {
+       
         //PlayerPrefs.DeleteAll();
         if (_Instance == null)
         {
@@ -57,12 +58,8 @@ public class FirebaseLogin : MonoBehaviour
 
         CheckFirebaseDependencies();
 
-        
-
+       
     }
-
-  
-
 
     public Task<string> GetBuilding(string uid)
     {
@@ -144,16 +141,86 @@ public class FirebaseLogin : MonoBehaviour
                 if (task.Result == DependencyStatus.Available)
                     auth = FirebaseAuth.DefaultInstance;
                 //else
-                   // AddToInformation("Could not resolve all Firebase dependencies: " + task.Result.ToString());
+                // AddToInformation("Could not resolve all Firebase dependencies: " + task.Result.ToString());
             }
             else
             {
                 //AddToInformation("Dependency check was not completed. Error : " + task.Exception.Message);
             }
-            //AddToInformation("왜안돼");
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+                Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/UI/UIPanel/LoadingPanel.prefab").Completed += (gameobject) =>
+                {
+
+                    UIYesNoPanel LoadingPanel = new UIYesNoPanel(gameobject.Result);
+
+
+
+
+                    GetGameData().ContinueWithOnMainThread((task) =>
+                    {
+                        Debug.Log("res: " + task.Result);
+                        Newtonsoft.Json.Linq.JArray Result = Newtonsoft.Json.Linq.JArray.Parse(task.Result.ToString());
+
+
+                        Newtonsoft.Json.Linq.JArray AchieveData = Newtonsoft.Json.Linq.JArray.Parse(Result[0].ToString());
+
+                        foreach (var achieve in AchieveData)//업적
+                        {
+                            AchieveInfo achieveInfo = JsonUtility.FromJson<AchieveInfo>(achieve.ToString());
+                            GameManager.Instance.AchieveInfos.Add(achieveInfo.Id, achieveInfo);
+
+                            Debug.Log("id: " + GameManager.Instance.AchieveInfos[achieveInfo.Id].Id);
+                        }
+
+
+                        Newtonsoft.Json.Linq.JArray BuildingData = Newtonsoft.Json.Linq.JArray.Parse(Result[1].ToString());  //빌딩 정보 넣기
+                        foreach (var achieve in BuildingData)//건물
+                        {
+                            BuildingParse buildingInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
+                            GameManager.Instance.BuildingInfo.Add(buildingInfo.Building_Image, buildingInfo);
+
+                            Debug.Log("Building_Image: " + GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].Building_Image);
+                        }
+
+                        Newtonsoft.Json.Linq.JArray StrData = Newtonsoft.Json.Linq.JArray.Parse(Result[2].ToString());  //설치물 정보 넣기
+                        foreach (var achieve in StrData)//설치물
+                        {
+                            BuildingParse strInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
+                            GameManager.Instance.StrInfo.Add(strInfo.Building_Image, strInfo);
+
+                            Debug.Log("StrData: " + GameManager.Instance.StrInfo[strInfo.Building_Image].Building_Image);
+                        }
+
+                        Newtonsoft.Json.Linq.JArray NuniData = Newtonsoft.Json.Linq.JArray.Parse(Result[3].ToString());  //누니 정보 넣기
+                        foreach (var achieve in NuniData)//누니
+                        {
+                            CardInfo nuniInfo = JsonUtility.FromJson<CardInfo>(achieve.ToString());
+                            GameManager.Instance.NuniInfo.Add(nuniInfo.cardImage, nuniInfo);
+
+                            Debug.Log("nuniData: " + GameManager.Instance.NuniInfo[nuniInfo.cardImage].cardImage);
+                        }
+
+                        Destroy(LoadingPanel.UIPrefab);
+                        //.ClosePanel();
+                        //  Debug.Log(item.Value<string>("Id") + "    "+item.Children.);
+
+                        //GameManager.Instance.GameDataInfos.Add("AchieveData", Newtonsoft.Json.Linq.JArray.Parse(Result[0].ToString()).ToString());
+
+                        //Debug.Log(GameManager.Instance.GameDataInfos["AchieveData"]);
+
+                        //정보 다 넣은 다음에 씬 로드
+
+
+                    });
+
+
+
+                };
+            });
             Debug.Log("Done " + task.Result.ToString());
         });
-       
+
     }
 
     public void SignInWithGoogle() { OnSignIn(); }
@@ -196,100 +263,47 @@ public class FirebaseLogin : MonoBehaviour
                         {            //어드레서블로 이미지 불러서 넣기
                             GameManager.Instance.ProfileImage.Value = image.Result;
                         }; ;
-                    
+                    //내 업적 넣기
+                    GetMyAchieveInfo(GameManager.Instance.PlayerUserInfo.Uid).ContinueWithOnMainThread((task) => {
+                        if (task.IsCompleted)
+                        {
+                            Newtonsoft.Json.Linq.JArray Result = Newtonsoft.Json.Linq.JArray.Parse(task.Result.ToString());
 
-                    GetGameData().ContinueWithOnMainThread((task) => {
-                        Debug.Log("res: " + task.Result);
-                        Newtonsoft.Json.Linq.JArray Result = Newtonsoft.Json.Linq.JArray.Parse(task.Result.ToString());
-
-                     
-                            Newtonsoft.Json.Linq.JArray AchieveData = Newtonsoft.Json.Linq.JArray.Parse(Result[0].ToString());
-
-                            foreach (var achieve in AchieveData)//업적
+                            foreach (var achieve in Result)//업적
                             {
-                                AchieveInfo achieveInfo = JsonUtility.FromJson<AchieveInfo>(achieve.ToString());
-                                GameManager.Instance.AchieveInfos.Add(achieveInfo.Id, achieveInfo);
+                                MyAchieveInfo achieveInfo = JsonUtility.FromJson<MyAchieveInfo>(achieve.ToString());
+                                achieveInfo.Uid = GameManager.Instance.PlayerUserInfo.Uid;
+                                //achieveInfo.CountRP.Value =int.Parse( achieveInfo.Count);
+                                GameManager.Instance.MyAchieveInfos.Add(achieveInfo.Id, achieveInfo);
 
-                            Debug.Log("id: "+GameManager.Instance.AchieveInfos[achieveInfo.Id].Id);
+
+
+                                Debug.Log("My id: " + GameManager.Instance.MyAchieveInfos[achieveInfo.Id].Id);
                             }
-
-
-                        Newtonsoft.Json.Linq.JArray BuildingData = Newtonsoft.Json.Linq.JArray.Parse(Result[1].ToString());  //빌딩 정보 넣기
-                        foreach (var achieve in BuildingData)//건물
-                        {
-                            BuildingParse buildingInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
-                            GameManager.Instance.BuildingInfo.Add(buildingInfo.Building_Image, buildingInfo);
-
-                            Debug.Log("Building_Image: " + GameManager.Instance.BuildingInfo[buildingInfo.Building_Image].Building_Image);
-                        }
-
-                        Newtonsoft.Json.Linq.JArray StrData = Newtonsoft.Json.Linq.JArray.Parse(Result[2].ToString());  //설치물 정보 넣기
-                        foreach (var achieve in StrData)//설치물
-                        {
-                            BuildingParse strInfo = JsonUtility.FromJson<BuildingParse>(achieve.ToString());
-                            GameManager.Instance.StrInfo.Add(strInfo.Building_Image, strInfo);
-
-                            Debug.Log("StrData: " + GameManager.Instance.StrInfo[strInfo.Building_Image].Building_Image);
-                        }
-
-                        Newtonsoft.Json.Linq.JArray NuniData = Newtonsoft.Json.Linq.JArray.Parse(Result[3].ToString());  //누니 정보 넣기
-                        foreach (var achieve in NuniData)//누니
-                        {
-                            CardInfo nuniInfo = JsonUtility.FromJson<CardInfo>(achieve.ToString());
-                            GameManager.Instance.NuniInfo.Add(nuniInfo.cardImage, nuniInfo);
-
-                            Debug.Log("nuniData: " + GameManager.Instance.NuniInfo[nuniInfo.cardImage].cardImage);
-                        }
-
-                        //내 업적 넣기
-                        GetMyAchieveInfo(GameManager.Instance.PlayerUserInfo.Uid).ContinueWithOnMainThread((task)=> {
-                            if (task.IsCompleted)
-                            {
-                                Newtonsoft.Json.Linq.JArray Result = Newtonsoft.Json.Linq.JArray.Parse(task.Result.ToString());
-
-                                foreach (var achieve in Result)//업적
+                            UnityMainThreadDispatcher.Instance().Enqueue(() => {
+                                if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
                                 {
-                                    MyAchieveInfo achieveInfo = JsonUtility.FromJson<MyAchieveInfo>(achieve.ToString());
-                                    achieveInfo.Uid = GameManager.Instance.PlayerUserInfo.Uid;
-                                    //achieveInfo.CountRP.Value =int.Parse( achieveInfo.Count);
-                                    GameManager.Instance.MyAchieveInfos.Add(achieveInfo.Id, achieveInfo);
+                                    // Debug.Log("");
+                                    UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
 
+                                    //SetUserInfo(GameManager.Instance.PlayerUserInfo);
 
-
-                                    Debug.Log("My id: " + GameManager.Instance.MyAchieveInfos[achieveInfo.Id].Id);
+                                    //  NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
                                 }
-                                UnityMainThreadDispatcher.Instance().Enqueue(()=> {
-                                    if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
-                                    {
-                                        // Debug.Log("");
-                                        UINicknamePanel NicknamePanel = new UINicknamePanel(NickNamePanelPrefab);
+                                else
+                                {
+                                    LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                                }
 
-                                        //SetUserInfo(GameManager.Instance.PlayerUserInfo);
-
-                                      //  NicknamePanel.Callback = () => LoadingSceneController.Instance.LoadScene(SceneName.Main);
-                                    }
-                                    else
-                                    {
-                                        LoadingSceneController.Instance.LoadScene(SceneName.Main);
-                                    }
-
-                                });
-                               
-
-                            }
-                        });
-
-                  
-                        //  Debug.Log(item.Value<string>("Id") + "    "+item.Children.);
-
-                        //GameManager.Instance.GameDataInfos.Add("AchieveData", Newtonsoft.Json.Linq.JArray.Parse(Result[0].ToString()).ToString());
-
-                        //Debug.Log(GameManager.Instance.GameDataInfos["AchieveData"]);
-
-                        //정보 다 넣은 다음에 씬 로드
+                            });
 
 
+                        }
                     });
+
+
+
+                   
 
                     //return true;   
                 }

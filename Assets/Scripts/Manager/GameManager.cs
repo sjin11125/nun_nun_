@@ -145,10 +145,6 @@ public class GameManager : Singleton<GameManager>
     public static bool gameSoundOn = true;
     public static bool mainSoundOn = true;
 
-    //--------------------------------------------공지----------------------------------------
-    [Header("공지")]
-    public static Notice[] Notice;
-
     //--------------------------------------------업적---------------------------------------
     public Dictionary<string, AchieveInfo> AchieveInfos = new Dictionary<string, AchieveInfo>();      //업적 정보 딕셔너리
     public Dictionary<string, MyAchieveInfo> MyAchieveInfos = new Dictionary<string, MyAchieveInfo>();      //내 업적 정보 딕셔너리
@@ -256,12 +252,5 @@ public class GameManager : Singleton<GameManager>
         {
             GameSave();
         }
-    }
-    public IObservable<int> CreateCountDownObservable(int countTime)
-    {
-        return Observable
-            .Timer(TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(1)) // 0초 이후 1초 간격으로 실행
-            .Select(x => (int)(countTime - x)) // x는 시작하고 나서의 시간(초)
-            .TakeWhile(x => x > 0); // 0초 초과 동안 OnNext 0이 되면 OnComplete
     }
 }

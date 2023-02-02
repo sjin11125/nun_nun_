@@ -180,7 +180,7 @@ public class ChaButtonScript : MonoBehaviour
 
         settigPanel.GetComponent<AudioController>().Sound[0].Play();
     }
-    public void LockChaButtonClick()        //캐릭터 살려고 할 때 클릭하는
+    /*public void LockChaButtonClick()        //캐릭터 살려고 할 때 클릭하는
     {
         DogamManager.ChaIndex = int.Parse(gameObject.name);
 
@@ -189,7 +189,7 @@ public class ChaButtonScript : MonoBehaviour
         DogamCha.transform.SetParent(StartManager.Canvas.transform);
         DogamCha.GetComponent<RectTransform>().localPosition = new Vector3(0, 0, 0);
         GameManager.isMoveLock = false;
-    }
+    }*/
 
     public void LockChaButtonClick2()       //빌딩 살려고 구매버튼 클릭할 때
     {
@@ -279,7 +279,7 @@ public class ChaButtonScript : MonoBehaviour
        // LoadManager.Instance.InstantiateBuilding(building);
     }
 
-    public void NoticeClick()           //보상수령
+   /* public void NoticeClick()           //보상수령
     {
         Notice notice_info = new Notice();
         for (int i = 0; i < GameManager.Notice.Length; i++)
@@ -310,7 +310,7 @@ public class ChaButtonScript : MonoBehaviour
             }
         }
     }
-
+   */
     
 }
 
