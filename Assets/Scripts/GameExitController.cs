@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameExitController : MonoBehaviour
 {
-    public GameObject TutoManager;
     public GameObject ExitPanel;
 
  

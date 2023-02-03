@@ -134,7 +134,8 @@ public class GameManager : Singleton<GameManager>
      * 8: 모든 대체할수 있는 말(유니콘)
      * 9: 말의 색깔을 바꾼다   (마법사)
      */
-    // Start is called before the first frame update
+
+    public bool isTuto=false;
 
     //--------------------------------------------------------------------퀘스트---------------------------------------------------
 

@@ -532,6 +532,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 15811275}
+  Button: {fileID: 0}
   goNext: 0
   isGame: 1
 --- !u!1 &18096632
@@ -669,6 +670,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1885934235}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &18544106
@@ -1062,6 +1064,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1138886469}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &53161493
@@ -1264,6 +1267,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 496423030}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &77537157
@@ -5334,6 +5338,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 15422173}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &379659785
@@ -7284,7 +7289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transferMapName: Main
-  builinSave: {fileID: 0}
 --- !u!1 &518975840
 GameObject:
   m_ObjectHideFlags: 0
@@ -8810,6 +8814,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 767713867}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &694161793
@@ -14918,6 +14923,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 566960798}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1193088778
@@ -16439,6 +16445,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1665707427}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1294653212
@@ -16489,6 +16496,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1308967632}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1302747630
@@ -17397,6 +17405,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1353637415}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1353637417
@@ -17986,6 +17995,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1103765983}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1432204169
@@ -19035,6 +19045,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 196807350}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1511544129
@@ -19512,6 +19523,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1537258411}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!1 &1540329936
@@ -19646,6 +19658,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 2014273457}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1543731166
@@ -20516,6 +20529,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1886691005}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1616822608
@@ -20646,6 +20660,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1485036407}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1620563384
@@ -20755,6 +20770,7 @@ MonoBehaviour:
   exchangeSquare: {fileID: 890465767}
   shapeColor: 
   shapeShape: 
+  shapeAchieveId: []
   currentIndexSave: 0
 --- !u!1 &1644672740
 GameObject:
@@ -21841,6 +21857,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 116463840}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1714220293
@@ -23833,6 +23850,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 270532074}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &1850951704
@@ -25850,6 +25868,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 1341139499}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!1 &1979264006
@@ -27518,6 +27537,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 257267301}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &2047165196
@@ -27982,6 +28002,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 252766773}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &2102091635
@@ -30065,7 +30086,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transferMapName: Main
-  builinSave: {fileID: 0}
 --- !u!114 &1607583774821605147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31977,7 +31997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transferMapName: Main
-  builinSave: {fileID: 0}
 --- !u!114 &3963172756575290001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35058,6 +35077,7 @@ MonoBehaviour:
   itemType: 0
   timeToInput: 1
   gameObjectToShow: {fileID: 8797584635989760664}
+  Button: {fileID: 0}
   goNext: 1
   isGame: 1
 --- !u!4 &8797584635989760670

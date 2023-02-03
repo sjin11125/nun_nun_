@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TutorialsItemControl : MonoBehaviour
@@ -13,6 +14,8 @@ public class TutorialsItemControl : MonoBehaviour
     [SerializeField] [Header("따라하기 아이템 종류")] ItemType itemType;
     [SerializeField] [Header("사용자 입력 대기까지 진행시간")] float timeToInput;
     [SerializeField] [Header("사용자 입력 대기시 표시할 게임오브젝트")] GameObject gameObjectToShow;
+    [SerializeField] [Header("사용자 입력 대기시 클릭해야할 게임오브젝트")] Button Button;
+
 
     bool isReadyToInput = false;
     public bool goNext;
@@ -21,6 +24,14 @@ public class TutorialsItemControl : MonoBehaviour
     private void OnEnable()
     {
         Invoke("ShowGameObject", timeToInput);
+        if (Button != null)
+        {
+            Button.onClick.AddListener(() =>
+            {
+                goNext = true;
+                Run();
+            });
+        }
     }
 
     void Update()
@@ -31,6 +42,11 @@ public class TutorialsItemControl : MonoBehaviour
             if (itemType == ItemType.touch)
             {
                 // 입력을 하면 계속 진행
+                if (TutorialsManager.IsGoNext)
+                {
+                    goNext = true;
+                    TutorialsManager.IsGoNext = false;
+                }
                 if (Input.GetMouseButtonDown(0) && goNext)
                 {
                     Run();                  

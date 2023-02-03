@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System;
 using UniRx;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Events;
 
 public class LoadManager : MonoBehaviour
 {
@@ -142,6 +143,7 @@ public class LoadManager : MonoBehaviour
                     return;
                 
                 TutoManager.SetActive(true);
+                GameManager.Instance.isTuto = true;
                 if (GameManager.Instance.PlayerUserInfo.Tuto > 9)//게임갔다오고난 후
                 {
                     RandomSelect.isTuto = 1;
@@ -228,7 +230,7 @@ public class LoadManager : MonoBehaviour
         Debug.Log("건물 로드 끝");
       //  UILoadingPanel.DestroyGameObject();
     }
-    public void InstantiateBuilding(Building building,Action callback)
+    public void InstantiateBuilding(Building building,UnityAction callback)
     {
         try
         {

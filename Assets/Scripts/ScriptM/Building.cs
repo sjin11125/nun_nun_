@@ -417,6 +417,10 @@ public class Building : MonoBehaviour
                                 if (Type == BuildType.Make)           //상점모드일때(사기)
                                 {
                                     Place(Type);
+                                    if (GameManager.Instance.isTuto)
+                                    {
+                                        TutorialsManager.IsGoNext = true;
+                                    }
                                     GridBuildingSystem.OnEditModeOff.OnNext(this);
                                     foreach (var item in BuildEditBtn)        //건축모드 버튼들 다 비활성화
                                     {

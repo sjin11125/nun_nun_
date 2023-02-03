@@ -204,6 +204,25 @@ public class FirebaseLogin : MonoBehaviour
                         }
 
                         Destroy(LoadingPanel.UIPrefab);
+                        if (PlayerPrefs.HasKey("Uid"))      //로그인한 기록이 있으면
+                        {
+
+                            switch (PlayerPrefs.GetString("SignMethod"))
+                            {
+                                case "Anonymous":
+                                    OnSignInAnon();
+                                    break;
+
+                                case "Google":
+                                    OnSignIn();
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+                            //자동로그인
+
                         //.ClosePanel();
                         //  Debug.Log(item.Value<string>("Id") + "    "+item.Children.);
 
@@ -546,20 +565,29 @@ public class FirebaseLogin : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
 
-           /* newUser.DeleteAsync().ContinueWith(task => {
-                if (task.IsCanceled)
-                {
-                    Debug.LogError("DeleteAsync was canceled.");
-                    return;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
-                    return;
-                }
+            /* newUser.DeleteAsync().ContinueWith(task => {
+                 if (task.IsCanceled)
+                 {
+                     Debug.LogError("DeleteAsync was canceled.");
+                     return;
+                 }
+                 if (task.IsFaulted)
+                 {
+                     Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
+                     return;
+                 }
 
-                Debug.Log("User deleted successfully.");
-            });*/
+                 Debug.Log("User deleted successfully.");
+             });*/
+            UnityMainThreadDispatcher.Instance().Enqueue(() =>
+            {
+
+                if (!PlayerPrefs.HasKey("Uid"))
+                {
+                    PlayerPrefs.SetString("Uid", newUser.UserId);
+                    PlayerPrefs.SetString("SignMethod", "Anonymous");
+                }
+            });
             GetUserInfo(task.Result.UserId);
         });
     }
@@ -638,7 +666,13 @@ public class FirebaseLogin : MonoBehaviour
                 Debug.Log("IDToken: "+task.Result.UserId);
                 Debug.Log("Sign In Successful.");
 
-                
+                if (!PlayerPrefs.HasKey("Uid"))
+                {
+                    PlayerPrefs.SetString("Uid", task.Result.UserId);
+                    PlayerPrefs.SetString("SignMethod", "Google");
+                }
+
+                PlayerPrefs.SetString("SignMethod", "Google");
                 GetUserInfo(task.Result.UserId);
                 //    GameManager.Instance.StateList.Add("Login");
             }

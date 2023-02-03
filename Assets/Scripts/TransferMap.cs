@@ -10,7 +10,15 @@ public class TransferMap : MonoBehaviour
     public void OnClick()
     {
         //SceneManager.LoadSceneAsync(transferMapName);
-        //LoadingSceneController.Instance.LoadScene(transferMapName);
+        switch (transferMapName)
+        {
+            case "Main":
+
+                LoadingSceneController.Instance.LoadScene(SceneName.Main);
+                break;
+            default:
+                break;
+        }
         //builinSave.BuildingLoad();
     }
 }

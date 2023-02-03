@@ -76,6 +76,11 @@ public class UIInventoryPanel : UIBase
             }
             Inventory_Exit();
 
+            if (GameManager.Instance.isTuto)
+            {
+                TutorialsManager.IsGoNext = true;
+            }
+
             this.gameObject.transform.parent.gameObject.SetActive(false);
             Destroy(this.gameObject);
         }).AddTo(this);

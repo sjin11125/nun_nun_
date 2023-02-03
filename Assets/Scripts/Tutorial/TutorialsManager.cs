@@ -8,6 +8,7 @@ public class TutorialsManager : MonoBehaviour
     [Header("Tutorials items")] 
     TutorialsItemControl[] items;
     public GameObject bunsu;
+    public static bool IsGoNext = false;
     
     void Start()
     {
@@ -79,7 +80,7 @@ public class TutorialsManager : MonoBehaviour
 
                         int ShinMoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
                         ShinMoney +=1;
-                        GameManager.Instance.PlayerUserInfo.Money = ShinMoney.ToString();
+                        GameManager.Instance.PlayerUserInfo.ShinMoney = ShinMoney.ToString();
 
                     }
                 }
