@@ -210,7 +210,7 @@ public class FirebaseLogin : MonoBehaviour
                             switch (PlayerPrefs.GetString("SignMethod"))
                             {
                                 case "Anonymous":
-                                    OnSignInAnon();
+                                    SignInAnon();
                                     break;
 
                                 case "Google":
@@ -245,10 +245,9 @@ public class FirebaseLogin : MonoBehaviour
     }
 
     public void SignInWithGoogle() { OnSignIn(); }
-    public void SignOutFromGoogle() { OnSignOut(); }
 
     public void SignInWithAnonyMously() {
-        OnSignInAnon();
+        SignInAnon();
     }
     public void WirteButton()
     {
@@ -546,7 +545,7 @@ public class FirebaseLogin : MonoBehaviour
         
         Debug.Log("OnSignIn End ");
     }
-    void OnSignInAnon()
+    void SignInAnon()
     {
         auth.SignInAnonymouslyAsync().ContinueWith(task=> {
 
@@ -565,20 +564,7 @@ public class FirebaseLogin : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
 
-            /* newUser.DeleteAsync().ContinueWith(task => {
-                 if (task.IsCanceled)
-                 {
-                     Debug.LogError("DeleteAsync was canceled.");
-                     return;
-                 }
-                 if (task.IsFaulted)
-                 {
-                     Debug.LogError("DeleteAsync encountered an error: " + task.Exception);
-                     return;
-                 }
-
-                 Debug.Log("User deleted successfully.");
-             });*/
+  
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
 
@@ -588,13 +574,8 @@ public class FirebaseLogin : MonoBehaviour
                     PlayerPrefs.SetString("SignMethod", "Anonymous");
                 }
             });
-            GetUserInfo(task.Result.UserId);
+            GetUserInfo(task.Result.UserId);            //유저 정보 불러오기
         });
-    }
-    private void OnSignOut()
-    {
-        //AddToInformation("Calling SignOut");
-        GoogleSignIn.DefaultInstance.SignOut();
     }
 
     public void OnDisconnect()
@@ -630,7 +611,7 @@ public class FirebaseLogin : MonoBehaviour
             Debug.Log("Email = " + task.Result.Email);
             Debug.Log("Google ID Token = " + task.Result.IdToken);
             Debug.Log("Email = " + task.Result.Email);
-            SignInWithGoogleOnFirebase(task.Result.IdToken);
+            SignInWithGoogle(task.Result.IdToken);
             
         }
     }
@@ -648,9 +629,9 @@ public class FirebaseLogin : MonoBehaviour
             throw;
         }
     }
-    private void SignInWithGoogleOnFirebase(string idToken)
+    private void SignInWithGoogle(string idToken)
     {
-       ;
+       
         Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
 
         auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
@@ -666,7 +647,7 @@ public class FirebaseLogin : MonoBehaviour
                 Debug.Log("IDToken: "+task.Result.UserId);
                 Debug.Log("Sign In Successful.");
 
-                if (!PlayerPrefs.HasKey("Uid"))
+                if (!PlayerPrefs.HasKey("Uid"))                         //로그인한 기록이 있으면 자동 로그인
                 {
                     PlayerPrefs.SetString("Uid", task.Result.UserId);
                     PlayerPrefs.SetString("SignMethod", "Google");
@@ -674,7 +655,6 @@ public class FirebaseLogin : MonoBehaviour
 
                 PlayerPrefs.SetString("SignMethod", "Google");
                 GetUserInfo(task.Result.UserId);
-                //    GameManager.Instance.StateList.Add("Login");
             }
         });
         
@@ -701,21 +681,5 @@ public class FirebaseLogin : MonoBehaviour
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
     }
 
-    private void AddToInformation(string str) { infoText.text += "\n" + str; }
-    public void LoginLink(LoginState _t)
-    {
-        switch (_t)
-        {
-            case LoginState.GOOGLE_ACCOUNT:
-                //GooleLogin();
-                break;
-            case LoginState.APPLE_ACCOUNT:
-                break;
-            case LoginState.EMAIL_ACCOUNT:
-                break;
-            default:
-                break;
-        }
-    }
     
 }
