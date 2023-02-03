@@ -60,7 +60,7 @@ public class FirebaseLogin : MonoBehaviour
 
         CheckFirebaseDependencies();
 
-       
+        
     }
 
     public Task<string> GetBuilding(string uid)
@@ -268,11 +268,16 @@ public class FirebaseLogin : MonoBehaviour
                 GameManager.Instance.PlayerUserInfo = JsonUtility.FromJson<UserInfo>((string)task.Result.Data);     //유저 정보 세팅
                    
                 GameManager.Instance.PlayerUserInfo.Uid = idToken;
-                
-                         Addressables.LoadAssetAsync<Sprite>(GameManager.Instance.PlayerUserInfo.Image).Completed += (image) =>
-                        {            //어드레서블로 이미지 불러서 넣기
-                            GameManager.Instance.ProfileImage.Value = image.Result;
-                        }; ;
+                    Addressables.InitializeAsync().Completed += (result) =>
+                    {
+                        if (result.IsDone)
+                            Addressables.LoadAssetAsync<Sprite>(GameManager.Instance.PlayerUserInfo.Image).Completed += (image) =>
+                            {            //어드레서블로 이미지 불러서 넣기
+                                GameManager.Instance.ProfileImage.Value = image.Result;
+                            };
+
+                    };
+                       
                     //내 업적 넣기
                     GetMyAchieveInfo(GameManager.Instance.PlayerUserInfo.Uid).ContinueWithOnMainThread((task) => {
                         if (task.IsCompleted)

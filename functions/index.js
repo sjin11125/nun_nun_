@@ -96,7 +96,7 @@ exports.findUser=functions.https.onCall(async (req, res) => {
     const data={
       BestScore:"0",
       Message:"",
-      Image:"",
+      Image:"snow",
       Money:"2000",
       ShinMoney:"0",
       Tuto:"0",

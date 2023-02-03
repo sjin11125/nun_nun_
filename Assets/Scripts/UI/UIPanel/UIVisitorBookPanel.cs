@@ -13,10 +13,10 @@ public class UIVisitorBookPanel : UIBase
     public InputField MessageInputField;
     public GameObject MessagePrefab;
     public Transform Content;
+    public GameObject LoadingPanel;
 
     string Uid;
 
-    public Dictionary<string, VisitorBookInfo> VisitorBookMessages;
     public UIVisitorBookPanel(GameObject UIPrefab)
     {
         UIVisitorBookPanel r = UIPrefab.GetComponent<UIVisitorBookPanel>();
@@ -29,9 +29,9 @@ public class UIVisitorBookPanel : UIBase
     override public void Start()
     {
         base.Start();
-        VisitorBookMessages = new Dictionary<string, VisitorBookInfo>();
+        LoadingPanel.SetActive(true);
 
-        
+
         if (SceneManager.GetActiveScene().name=="Main")             //내 마을 씬 이라면
             Uid = GameManager.Instance.PlayerUserInfo.Uid;
         else                //친구씬이라면
@@ -52,15 +52,17 @@ public class UIVisitorBookPanel : UIBase
                         {
 
                             VisitorMessage Message = Instantiate(MessagePrefab, Content).GetComponent<VisitorMessage>();
-                            /*  VisitorBookMessages.Add(JsonUtility.FromJson<VisitorBookInfo>(item.ToString()).FriendTime,
-                                  JsonUtility.FromJson<VisitorBookInfo>(item.ToString()));*/
+        
 
                             VisitorBookInfo TempInfo = JsonUtility.FromJson<VisitorBookInfo>(item.ToString());
 
                             Message.SetMessage(TempInfo.FriendName, TempInfo.FriendMessage, TempInfo.FriendTime, TempInfo.FriendImage);
 
                         }
+
+                        LoadingPanel.SetActive(false);
                     });
+
                 }
             }
 
