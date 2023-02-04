@@ -240,61 +240,6 @@ public class GridBuildingSystem : MonoBehaviour
         }
 
 
-        /*if (EventSystem.current.IsPointerOverGameObject(0))      //UI를 클릭했냐
-        {
-            return;
-        }*/
-        if (!CameraMovement.isTouch && Input.GetMouseButtonUp(0) && SceneManager.GetActiveScene().name .Equals( "Main"))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-
-            if (hit.transform != null)          // 오브젝트를 클릭 했을 때
-            {
-                Transform Building = hit.transform.parent;
-              
-              
-                
-               
-                if (hit.transform.CompareTag("Nuni"))        //누니 클릭
-                {
-
-                    GameObject nuni = hit.transform.parent.gameObject;
-                    Card nuni_card = nuni.GetComponent<Card>();
-                    if (nuni_card.isDialog==false)                                               //누니 대사 안겹치게
-                    {
-                        nuni_card.isDialog=true; 
-
-                           NuniDialog nuni_dialog = new NuniDialog();
-
-                        for (int i = 0; i < GameManager.NuniDialog.Count; i++)
-                        {
-                            Debug.Log(GameManager.NuniDialog[i].Nuni);
-                            if (nuni_card.cardName.Equals(GameManager.NuniDialog[i].Nuni))
-                            {
-                                Debug.Log(nuni_card.cardName);
-                                nuni_dialog = GameManager.NuniDialog[i];
-                            }
-                        }
-
-                        GameObject dialo_window = Instantiate(Dialog);
-                        //child[2]
-                        dialo_window.transform.SetAsFirstSibling();
-                        dialo_window.GetComponent<NuniDialogParsing>().nuni = nuni_card;
-                        dialo_window.GetComponentInChildren<Text>().text = nuni_dialog.Dialog[UnityEngine.Random.Range(0, nuni_dialog.Dialog.Length - 1)];
-
-                        dialo_window.GetComponent<NuniDialogParsing>().nuniObject = hit.transform.parent.gameObject;
-                        dialo_window.GetComponent<NuniDialogParsing>().isMove = true;
-                        //dialo_windowi
-
-                        settigPanel.GetComponent<AudioController>().Sound[0].Play();
-
-                        StartCoroutine(isDialog_done(nuni_card, dialo_window));
-                    }
-                    
-                }
-            }
-        }
 
           
 

@@ -59,9 +59,6 @@ public class GameManager : Singleton<GameManager>
     //public Sprite[] DogamChaImageInspector;     //인스펙터에서 받아 온 건물 이미지
 
 
-    public static Dictionary<string, GameObject> BuildingPrefabData;    //모든 빌딩 프리팹 딕셔너리
-
-
     public static bool isEdit = false;
     public static bool isInvenEdit = false;
     public static Button InvenButton;
@@ -69,6 +66,10 @@ public class GameManager : Singleton<GameManager>
     public static List<string> IDs;        //건물 아이디
 
     public Dictionary<string, BuildingParse> BuildingInfo = new Dictionary<string, BuildingParse>();        //건물 정보
+
+    public static Dictionary<string, GameObject> BuildingPrefabData;    //모든 빌딩 프리팹 딕셔너리
+
+    public Dictionary<string, Image> BuildingNuniImage = new Dictionary<string, Image>();
     public Dictionary<string, BuildingParse> StrInfo = new Dictionary<string, BuildingParse>();        //설치물 정보
     //----------------------------------------------------이까지 건물----------------------------------------------------
 
@@ -76,11 +77,12 @@ public class GameManager : Singleton<GameManager>
     //----------------------------------------------------여기서부터 누니--------------------------------------------------
     [Header("누니")]
 
-    public GameObject[] CharaterPrefabInspector;        // 인스펙터에서 받아 온 모든 누니들의 프리팹
     public static Dictionary<string, GameObject> CharacterPrefab;       //모든 캐릭터 누니 딕셔너리
 
     public static Card[] AllNuniArray;              //엑셀에서 받아 온 모든 누니 정보 배열
     public Dictionary<string, CardInfo> NuniInfo = new Dictionary<string, CardInfo>();
+    public Dictionary<string, Image> NuniImage= new Dictionary<string, Image>();
+    public Dictionary<string, GameObject> NuniPrefab= new Dictionary<string, GameObject>();
 
     public Dictionary<string, Card> CharacterList;      //현재가지고 있는 누니 리스트
                                                         //public static Card[] CharacterArray;               //현재 가지고 있는 캐릭터 배열
@@ -93,7 +95,6 @@ public class GameManager : Singleton<GameManager>
     public GameObject Dont;
     public static bool nuniDialogParse = false;
 
-    public static List<NuniDialog> NuniDialog;          //누니 상호작용 대화 
     public Card CurrentNuni;
     //-----------------------------------여기서부터 재화---------------------------------
     public static int Money;            //재화
@@ -164,25 +165,6 @@ public class GameManager : Singleton<GameManager>
 
         CharacterList = new Dictionary<string, Card>();
         IDs = new List<string>();                   //퀘스트 
-        NuniDialog = new List<NuniDialog>();
-
-
-
-        for (int i = 0; i < CharaterPrefabInspector.Length; i++)
-        {
-            CharacterPrefab.Add(CharaterPrefabInspector[i].name, CharaterPrefabInspector[i]);
-        }
-
-        if (SceneManager.GetActiveScene().name.Equals("Main"))
-        {
-            //Dont.SetActive(true);
-        }
-
-        //게임 시작했을 때 엑셀에서 모든 누니 정보들 파싱해 배열에 넣기
-
-
-        DicParsingManager DPManager = new DicParsingManager();
-        AllNuniArray = DPManager.Parse_character(1);            //누니 정보 파싱
 
 
     }
