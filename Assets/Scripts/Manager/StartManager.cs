@@ -67,8 +67,8 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
     {
         if (isParsing .Equals( false))
         {
-            DicParsingManager DPManager = new DicParsingManager();
-            NuNiInformation = DPManager.Parse_character(1);    //도감 정보 파싱
+           // DicParsingManager DPManager = new DicParsingManager();
+           // NuNiInformation = DPManager.Parse_character(1);    //도감 정보 파싱
             isParsing = true;
         }
         Canvas = GameObject.Find("Canvas");

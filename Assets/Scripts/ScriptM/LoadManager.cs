@@ -74,20 +74,6 @@ public class LoadManager : MonoBehaviour
         }
 
     }
-    //public GameObject 
-    Component CopyComponent(Component original, GameObject destination)
-    {
-        System.Type type = original.GetType();
-
-        Component copy = destination.AddComponent(type);
-        // Copied fields can be restricted with BindingFlags
-        FieldInfo[] fields = type.GetFields();
-        foreach (FieldInfo field in fields)
-        {
-            field.SetValue(copy, field.GetValue(original));
-        }
-        return copy;
-    }
 
    
     

@@ -70,11 +70,14 @@ public class GridBuildingSystem : MonoBehaviour
 
         string tilePath = @"Tiles\";
 
-      
+        if (!tileBases.ContainsKey(TileType.Empty))
+        {
             tileBases.Add(TileType.Empty, null);
             tileBases.Add(TileType.White, Resources.Load<TileBase>(tilePath + "white"));
             tileBases.Add(TileType.Green, Resources.Load<TileBase>(tilePath + "green"));
             tileBases.Add(TileType.Red, Resources.Load<TileBase>(tilePath + "red"));
+        }
+          
             GameManager.isStart = false;
 
         
