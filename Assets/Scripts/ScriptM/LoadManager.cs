@@ -174,21 +174,26 @@ public class LoadManager : MonoBehaviour
             if (item.Value.isLock.Equals("T"))
             {
                 Debug.Log(item.Value.cardImage) ;
-                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.NuniInfo[item.Value.cardImage].Path).Completed += (gameobject) =>
+                Addressables.InstantiateAsync(GameManager.Instance.NuniInfo[item.Value.cardImage].Path).Completed += (gameobject) =>
                 {
                     //GameObject BuildingPrefab = gameobject.Result;
-                   // Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
+                    // Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
 
                     //callback.Invoke();
-              
-                GameObject nuni = Instantiate(gameobject.Result, nunis.transform);
 
-                nuni.name = item.Value.Id;
-                Card nuni_card = nuni.GetComponent<Card>();
+                    gameobject.Result.transform.SetParent( nunis.transform);
+
+                    gameobject.Result.name = item.Value.Id;
+
+                Card nuni_card = gameobject.Result.GetComponent<Card>();
+
                 nuni_card.SetValue(item.Value);
 
+                    nuni_card._AddressableObj = gameobject.Result;
 
-                MyNuniPrefab.Add(item.Value.Id, nuni);         //현재 가지고 있는 누니 오브젝트 딕셔너리에 추가
+                    if (!MyNuniPrefab.ContainsKey(item.Value.Id))
+                MyNuniPrefab.Add(item.Value.Id, gameobject.Result);         //현재 가지고 있는 누니 오브젝트 딕셔너리에 추가
+
                 };
             }
         }
@@ -205,7 +210,7 @@ public class LoadManager : MonoBehaviour
             try
             {
                 InstantiateBuilding(item.Value,()=> {
-                    Building g_Building = MyBuildingsPrefab[item.Value.Id].GetComponent<Building>();       //건물 Instatiate
+                    Building g_Building = GameManager.Instance.BuildingPrefabData[item.Value.Id].GetComponent<Building>();       //건물 Instatiate
 
 
 
@@ -239,25 +244,38 @@ public class LoadManager : MonoBehaviour
 
             if (building.Type != BuildType.Make)
             {
-                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
+                Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
                 {            //어드레서블로 부르기
                     //GameObject BuildingPrefab = gameobject.Result;
 
 
-                    Currnetbuildings = Instantiate(gameobject.Result, new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
-                    MyBuildingsPrefab.Add(building.Id, Currnetbuildings);                   //내 건물 프리팹 딕셔너리에 추가
+                  //  Currnetbuildings = Instantiate(gameobject.Result, new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
+                   
+                    gameobject.Result.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
+                    gameobject.Result.transform.SetParent(buildings.transform);
+
+                    Currnetbuildings = gameobject.Result;
+
+                    if (GameManager.Instance.BuildingPrefabData.ContainsKey(building.Id))
+                    {
+                        GameManager.Instance.BuildingPrefabData[building.Id] = gameobject.Result;
+                    }
+                    else
+                    GameManager.Instance.BuildingPrefabData.Add(building.Id, gameobject.Result);                   //내 건물 프리팹 딕셔너리에 추가
                
 
 
-                Building g_Building = MyBuildingsPrefab[building.Id].GetComponent<Building>();
+                Building g_Building = GameManager.Instance.BuildingPrefabData[building.Id].GetComponent<Building>();
+
                 if (g_Building.isStr)       //건축물이라면
                     building.isStr = true;
 
                 g_Building.SetValue(building);
+                    g_Building._AddressableObj = gameobject.Result;
                     Debug.Log(g_Building.Id+ "의 남은 보상 시간은 " + g_Building.RemainTime);
 
                     Currnetbuildings.name = g_Building.Id;
-                    MyBuildings[g_Building.Id] = g_Building;
+                    MyBuildings[g_Building.Id] = g_Building;                //해당 건물의 Building스크립트를 참조
                     if (callback != null)
                         callback.Invoke();
                     // return g_Building;
@@ -265,10 +283,17 @@ public class LoadManager : MonoBehaviour
             }
             else
             {
-                Addressables.LoadAssetAsync<GameObject>(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
+                Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
                 {
                     //GameObject BuildingPrefab = gameobject.Result;
-                    Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
+                    //Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
+                    gameobject.Result.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
+                    gameobject.Result.transform.SetParent(buildings.transform);
+
+                    Building g_Building = gameobject.Result.GetComponent<Building>();
+                    g_Building._AddressableObj = gameobject.Result;
+
+                    Currnetbuildings = gameobject.Result;
 
                     if (callback != null)
                         callback.Invoke();
@@ -287,9 +312,9 @@ public class LoadManager : MonoBehaviour
     }
     public void RemoveBuilding(string Id)
     {
-        Destroy(MyBuildingsPrefab[Id]);
+        Destroy(GameManager.Instance.BuildingPrefabData[Id]);
       
-        MyBuildingsPrefab.Remove(Id);
+        GameManager.Instance.BuildingPrefabData.Remove(Id);
 
     }
     public void RemoveNuni(string Id)

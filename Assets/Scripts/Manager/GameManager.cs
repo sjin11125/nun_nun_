@@ -67,9 +67,10 @@ public class GameManager : Singleton<GameManager>
 
     public Dictionary<string, BuildingParse> BuildingInfo = new Dictionary<string, BuildingParse>();        //건물 정보
 
-    public static Dictionary<string, GameObject> BuildingPrefabData;    //모든 빌딩 프리팹 딕셔너리
+    public  Dictionary<string, GameObject> BuildingPrefabData=new Dictionary<string, GameObject>();      //내가 가진 건물 프리팹들
 
-    public Dictionary<string, Image> BuildingNuniImage = new Dictionary<string, Image>();
+    public Dictionary<string, Building> MyBuildings = new Dictionary<string, Building>();          //내가 가지고 있는 빌딩 정보들(id, Building)
+
     public Dictionary<string, BuildingParse> StrInfo = new Dictionary<string, BuildingParse>();        //설치물 정보
     //----------------------------------------------------이까지 건물----------------------------------------------------
 
@@ -79,7 +80,6 @@ public class GameManager : Singleton<GameManager>
 
     public static Dictionary<string, GameObject> CharacterPrefab;       //모든 캐릭터 누니 딕셔너리
 
-    public static Card[] AllNuniArray;              //엑셀에서 받아 온 모든 누니 정보 배열
     public Dictionary<string, CardInfo> NuniInfo = new Dictionary<string, CardInfo>();
     public Dictionary<string, Image> NuniImage= new Dictionary<string, Image>();
     public Dictionary<string, GameObject> NuniPrefab= new Dictionary<string, GameObject>();
@@ -159,7 +159,6 @@ public class GameManager : Singleton<GameManager>
 
 
         //
-        BuildingPrefabData = new Dictionary<string, GameObject>();      //전체 빌딩 프리팹 리스트 (가지고 있지 않은 것도 포함)
 
         CharacterPrefab = new Dictionary<string, GameObject>();
 

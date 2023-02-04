@@ -101,6 +101,8 @@ public class Building : MonoBehaviour
     public Subject<Vector3> OnMovePosition = new Subject<Vector3>();
 
     public Vector3 pos;
+
+    public GameObject _AddressableObj;
     new public Transform transform
     {
         get
@@ -114,38 +116,7 @@ public class Building : MonoBehaviour
     {
     }
     #region 생성자
-    public Building(string islock, string buildingname, string info, string image, string cost,string cost2,string cost3, string Reward, string Reward2, string Reward3, string isStr)           //파싱할 때 쓰는 생성자
-    {//잠금 유무     // 이름     //설명     //이미지    //가격1       //가격2      //가격3        //생성재화1         //생성재화2        //생성재화3
-        
-        isLock = islock;
-        Building_name = buildingname;
-
-        /*this.Reward[0] =int.Parse(Reward) ;                 //생성재화
-        this.Reward[1] = int.Parse(Reward2);
-        this.Reward[2] = int.Parse(Reward3);*/
-
-        //Info = info;                //건물 설명
-
-        Building_Image = image;     //건물 이미지
-
-        string[] Cost=cost.ToString().Split('*');           
-        string[] Cost2=cost2.ToString().Split('*');
-        string[] Cost3=cost3.ToString().Split('*');
-
-        /*this.Cost[0] = int.Parse(Cost[0]);              //비용(골드)
-        this.Cost[1] = int.Parse(Cost2[0]);
-        this.Cost[2] = int.Parse(Cost3[0]);
-
-
-
-        this.ShinCost[0] = int.Parse(Cost[1]);                //비용(발광석)
-        this.ShinCost[1] = int.Parse(Cost2[1]);
-        this.ShinCost[2] = int.Parse(Cost3[1]);
-
-        this.str = isStr;*/
-        Level = 1;
-
-    }
+   
     public void SetValue(Building getBuilding)
     {
         isLock = getBuilding.isLock;
@@ -658,6 +629,16 @@ public class Building : MonoBehaviour
       
     }
     #endregion
-    
+    private void OnEnable()
+    {
+        
+    }
+    private void OnDestroy()
+    {
+        // LoadManager.Instance.MyBuildingsPrefab.Remove(Id);
+        Debug.Log("OnDestory Id: "+ Id);
+        if(BuildingNameEnum!=BuildingName.NuniTree)
+        Addressables.ReleaseInstance(_AddressableObj);
+    }
 }
 

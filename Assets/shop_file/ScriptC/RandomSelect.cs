@@ -40,7 +40,7 @@ public class RandomSelect : MonoBehaviour
 
     public void ResultSelect()
     {
-
+        Addressables.Release(ResultImage.sprite);
         //셀력결과
         // 가중치 랜덤을 돌리면서 결과 리스트에 넣어줍니다.
         Card resultNuni = RandomCard();

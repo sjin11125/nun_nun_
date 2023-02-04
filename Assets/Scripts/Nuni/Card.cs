@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using System;
+using UnityEngine.AddressableAssets;
 
 [System.Serializable]
 public class CardInfo
@@ -50,6 +51,7 @@ public class Card : MonoBehaviour
     public Button NuniBtn;
     public GameObject DialogObject;
     public Text DialogTxt;
+    public GameObject _AddressableObj;
     public IObservable<int> CountDownObservable => _countDownObservable.AsObservable<int>();
     public IConnectableObservable<int> _countDownObservable;
     readonly Subject<int> TimerStreams = new Subject<int>();
@@ -135,5 +137,10 @@ public class Card : MonoBehaviour
         yield return new WaitForSecondsRealtime(3.0f);
         isDialog = false;
         DialogObject.SetActive(false); //대화창 생성
+    }
+
+    private void OnDestroy()
+    {
+        Addressables.ReleaseInstance(_AddressableObj);
     }
 }
