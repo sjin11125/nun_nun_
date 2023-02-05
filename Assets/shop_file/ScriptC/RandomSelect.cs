@@ -141,16 +141,6 @@ public class RandomSelect : MonoBehaviour
                     return temp;
                 }
             }
-           /* for (int i = 0; i < GameManager.AllNuniArray.Length; i++)
-            {
-                weight += int.Parse(GameManager.AllNuniArray[i].Weight);
-                if (selectNum <= weight)
-                {
-                    Card temp = new Card(GameManager.AllNuniArray[i]);
-                    return temp;
-                }
-
-            }*/
             return null;
         }
     }

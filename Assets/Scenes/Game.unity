@@ -4139,8 +4139,8 @@ MonoBehaviour:
   mainItemBool: 00000000000000000000
   keepshdow: {fileID: 1644672740}
   trashshdow: {fileID: 716381584}
-  startManagerObj: {fileID: 440157273694158767}
   GameoverObj: {fileID: 245446140}
+  startManager: {fileID: 440157273694158761}
 --- !u!1 &270532074
 GameObject:
   m_ObjectHideFlags: 0
@@ -12218,6 +12218,10 @@ PrefabInstance:
     - target: {fileID: 1712893999915157519, guid: 5ead2309b4b51874aad3b1a45e2050e4, type: 3}
       propertyPath: m_Name
       value: Text (TMP)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1712893999915157519, guid: 5ead2309b4b51874aad3b1a45e2050e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ead2309b4b51874aad3b1a45e2050e4, type: 3}
@@ -30800,6 +30804,7 @@ MonoBehaviour:
   - {fileID: 2134248796}
   - {fileID: 1220442922}
   ItemCount: 0
+  Info: {fileID: 6353551068942712361}
 --- !u!1 &440157273694158767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4799156892250437010, guid: 5170940c181c3b348b853f2737ec54d2, type: 3}
@@ -34796,7 +34801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &6353551069019509619
 CanvasRenderer:
   m_ObjectHideFlags: 0

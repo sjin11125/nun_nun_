@@ -20,7 +20,7 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
     //public Text ItemInfoText;
     //public TextMesh ItemInfoText;
     //int[] itemList = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    public static Dictionary<int, bool> itemList = new Dictionary<int, bool> {
+    public  Dictionary<int, bool> itemList = new Dictionary<int, bool> {
                                                     {0,false},
                                                     { 1,false},
                                                     { 2,false},
@@ -66,6 +66,7 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
     //[SerializeField]
     public List<ItemInfo> ItemDatas;
     public int ItemCount;
+    public Text Info;
     void Awake()
     {
         if (isParsing .Equals( false))
@@ -85,26 +86,6 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
     {
         CharacterOpen();
     }
-    void Update()
-    {
-        if (SceneManager.GetActiveScene().name.Equals("Game"))
-        {
-            if (ChaIndex.Equals(99))
-            {
-                ItemInfo.text = "";
-            }
-            else
-            {
-                foreach (var item in GameManager.Instance.NuniInfo)
-                {
-                    if (item.Value.Item == ChaIndex)
-                        ItemInfo.text = item.Value.Effect;
-                    
-                }
-            }
-        }
-
-    }
 
     public void CharacterOpen()
     {
@@ -113,21 +94,24 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
          //Card[] NuniArray = GameManager.Instance.CharacterList.ToArray();
             foreach (var item in GameManager.Instance.CharacterList)
             {
-                if (!item.Value.Item.Equals(0))
+            int ItemNumber = GameManager.Instance.NuniInfo[item.Value.cardImage].Item;
+                if (ItemNumber != 0)
                 {
-                ItemDatas[item.Value.Item].ItemBuntton.OnClickAsObservable().Subscribe(_=> {
+                ItemDatas[ItemNumber].Image.sprite = ItenImage[ItemNumber];
 
-                    ItemDatas[item.Value.Item].Image.sprite = ItenImage[item.Value.Item];
-                    ItemDatas[item.Value.Item].Info = ItemInfos[item.Value.Item];
+                ItemDatas[ItemNumber].ItemBuntton.OnClickAsObservable().Subscribe(_=> {
 
-                    if (!ItemDatas[item.Value.Item].isSelected)     //선택이 안되어있다면?
+
+                    Info.text = GameManager.Instance.NuniInfo[item.Value.cardImage].Info;
+
+                    if (!ItemDatas[ItemNumber].isSelected)     //선택이 안되어있다면?
                     {
                         if (ItemCount < 4)
                         {
                             ItemCount++;
-                            ItemDatas[item.Value.Item].isSelected = true;
-                            ItemDatas[item.Value.Item].CheckImage.SetActive(true);
-                            itemList[item.Value.Item] = true;
+                            ItemDatas[ItemNumber].isSelected = true;
+                            ItemDatas[ItemNumber].CheckImage.SetActive(true);
+                            itemList[ItemNumber] = true;
                         }
                     }
                     else                    //선택되었다면
@@ -136,9 +120,9 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
                         if (ItemCount < 0)
                             ItemCount = 0;
 
-                        ItemDatas[item.Value.Item].isSelected = false;
-                        ItemDatas[item.Value.Item].CheckImage.SetActive(false);
-                        itemList[item.Value.Item] = false;
+                        ItemDatas[ItemNumber].isSelected = false;
+                        ItemDatas[ItemNumber].CheckImage.SetActive(false);
+                        itemList[ItemNumber] = false;
                     }
                    
                 }).AddTo(this);

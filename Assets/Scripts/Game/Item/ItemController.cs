@@ -11,10 +11,11 @@ public class ItemController : MonoBehaviour
     public GameObject keepshdow;
     public GameObject trashshdow;
 
-    public GameObject startManagerObj;
     public GameObject GameoverObj;
 
     public static bool reStart;
+
+    public StartManager startManager;
 
     private void Awake()
     {
@@ -24,9 +25,10 @@ public class ItemController : MonoBehaviour
 
     public void ItemActive()//아이템 선택창에 게임 시작
     {      
+        
         for (int i = 0; i < mainItemBool.Length; i++)//선택한 아이템 전달
         {
-            mainItemBool[i] = GameManager.Items[i];
+            mainItemBool[i] = startManager.itemList[i];
         }
         SetItem();//아이템 세팅
     }
@@ -145,9 +147,9 @@ public class ItemController : MonoBehaviour
     public void GameoverReStart()//게임오버에 있는 리스타트버튼
     {
         GameoverObj.gameObject.SetActive(false);//게임오버 판넬끄고
-        startManagerObj.transform.parent.gameObject.SetActive(true);//아이템 판넬 켜기
+        startManager.transform.parent.gameObject.SetActive(true);//아이템 판넬 켜기
 
-        startManagerObj.GetComponent<StartManager>().CharacterOpen();//캐릭터 정보를 게임매니저에 전달
+        startManager.CharacterOpen();//캐릭터 정보를 게임매니저에 전달
         for (int i = 0; i < mainItemBool.Length; i++)//초기화
         {
             mainItemBool[i] = false;

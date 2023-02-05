@@ -115,6 +115,14 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
+        gameObject.transform.position = new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
+                                                    UnityEngine.Random.Range(-9.5f, 10.5f)); //처음 시작할땐 랜덤 위치
+
+
+
+        //길찾기 알고리즘 시작
+
+
         NuniBtn.OnClickAsObservable().Subscribe(_ =>
         {
             if (!isDialog)
