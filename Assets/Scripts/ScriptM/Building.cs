@@ -581,7 +581,8 @@ public class Building : MonoBehaviour
                 break;
 
             case BuildType.Make:
-                GridBuildingSystem.current.ClearArea();
+                GridBuildingSystem.current.TakeArea(areaTemp);      //타일 맵 설정
+               // GridBuildingSystem.current.ClearArea();
 
                 //GameManager.BuildingNumber[Building_Image]++; //해당 건물의 갯수 추가
                 Id = GameManager.Instance.IDGenerator();         //건물 id 생성
@@ -593,9 +594,11 @@ public class Building : MonoBehaviour
                 BuildingPosition_x =gameObject.transform.position.x.ToString();
                 BuildingPosition_y =gameObject.transform.position.y.ToString();
                 //LoadManager.Instance.MyBuildings.Add(Id, this);
+
                 RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
                 RewardBtn.gameObject.SetActive(false);
                 StartCoroutine(RewardTimer(RemainTime)); //보상 받는 코루틴 시작
+
                 FirebaseLogin.Instance.AddBuilding(this.BuildingToJson());
 
                 Debug.Log("새로만듬");

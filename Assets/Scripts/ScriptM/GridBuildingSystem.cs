@@ -28,8 +28,7 @@ public class GridBuildingSystem : MonoBehaviour
     public Building temp; //building type으로 temp 생성
     private Vector3 prevPos;
     public BoundsInt prevArea;
-    public BoundsInt prevArea2;
-    GameObject Grid;
+
     public Button StartButton;
 
     public GameObject Dialog;           //대화창
@@ -82,7 +81,6 @@ public class GridBuildingSystem : MonoBehaviour
 
         
 
-        Grid = GameObject.Find("back_down");
         Canvas= GameObject.Find("Canvas");
        
 
@@ -282,13 +280,22 @@ public class GridBuildingSystem : MonoBehaviour
    }
 
    private static void SetTilesBlock(BoundsInt area, TileType type, Tilemap tilemap)
-   {
+    {
+        try
+        {
+
         int size = area.size.x * area.size.y * area.size.z;
        TileBase[] tileArray = new TileBase[size];
        FillTiles(tileArray, type);
        tilemap.SetTilesBlock(area, tileArray);
-
-   }
+            //Debug.Log(tilemap.);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+            throw;
+        }
+    }
 
     #endregion
   
@@ -313,15 +320,7 @@ public class GridBuildingSystem : MonoBehaviour
        FillTiles(toClear, TileType.Empty);
        TempTilemap.SetTilesBlock(prevArea, toClear);
    }
-    public void ClearArea2()
-    {
-        TileBase[] toClear = new TileBase[prevArea2.size.x * prevArea2.size.y * prevArea2.size.z];//0
-        FillTiles(toClear, TileType.Empty);
-        TempTilemap.SetTilesBlock(prevArea2, toClear);
-        SetTilesBlock(prevArea2, TileType.White, MainTilemap);
 
-    }
-    
 
     private void FollowBuilding(Vector3 pos)                    //건물이 마우스 따라가게
     {
@@ -331,44 +330,49 @@ public class GridBuildingSystem : MonoBehaviour
 
 
             //temp.SetPosition(pos);
-            ClearArea();
+            ClearArea();        //이전 위치는 지움
 
-            
-                temp.gameObject.transform.position = pos;
-            if(temp.Type==BuildType.Make)
+
+            temp.gameObject.transform.position = pos;
+            if (temp.Type == BuildType.Make)
             {
-              LoadManager.Currnetbuildings.transform.position = temp.gameObject.transform.position;
+                LoadManager.Currnetbuildings.transform.position = temp.gameObject.transform.position;
             }
-       BoundsInt buildingArea = temp.area;
+            BoundsInt buildingArea = temp.area;
 
-       TileBase[] baseArray = GetTilesBlock(buildingArea, MainTilemap);
-        int size = baseArray.Length;
- 
-       
-       TileBase[] tileArray = new TileBase[size];
+            TileBase[] baseArray = GetTilesBlock(buildingArea, MainTilemap);
+            int size = baseArray.Length;
 
-       for (int i = 0; i<baseArray.Length; i++)
-       {
 
-           if (baseArray[i] .Equals( tileBases[TileType.White]))
-           {
-               tileArray[i] = tileBases[TileType.Green];            //건물을 놓을 수 있다
+            TileBase[] tileArray = new TileBase[size];
+
+            for (int i = 0; i < baseArray.Length; i++)
+            {
+
+                if (baseArray[i].Equals(tileBases[TileType.White]))
+                {
+                    tileArray[i] = tileBases[TileType.Green];            //건물을 놓을 수 있다
+                }
+                else
+                {
+                    FillTiles(baseArray, TileType.Red);
+                    FillTiles(tileArray, TileType.Red);                  //건물을 놓을 수 없다
+
+                    break;
+                }
             }
-           else
-           {
-                FillTiles(baseArray, TileType.Red);
-                FillTiles(tileArray, TileType.Red);                  //건물을 놓을 수 없다
-                
-                break;
-           }
-       }
-       TempTilemap.SetTilesBlock(buildingArea, tileArray);
-       prevArea = buildingArea;
+            TempTilemap.SetTilesBlock(buildingArea, tileArray);
+            prevArea = buildingArea;     //이전 위치설정
             if (temp.Type != BuildType.Make)
-        {
-            LoadManager.Instance.MyBuildings[temp.Id].area = temp.area;
-            LoadManager.Instance.MyBuildings[temp.Id].BuildingPosition = temp.BuildingPosition;
-        }
+            {
+                LoadManager.Instance.MyBuildings[temp.Id].area = temp.area;
+                LoadManager.Instance.MyBuildings[temp.Id].BuildingPosition = temp.BuildingPosition;
+            }
+            else
+            {
+                LoadManager.Currnetbuildings.GetComponent<Building>().area= temp.area;
+                LoadManager.Currnetbuildings.GetComponent<Building>().BuildingPosition = temp.BuildingPosition;
+            }
         }
         catch (Exception ed)
         {
@@ -398,6 +402,10 @@ public class GridBuildingSystem : MonoBehaviour
 
        SetTilesBlock(area, TileType.Empty, TempTilemap);        //TmpTilemap 비우기
        SetTilesBlock(area, TileType.Red, MainTilemap);
+            for (int i = 0; i <  MainTilemap.GetTilesBlock(area).Length; i++)
+            {
+                Debug.Log("자리는 "+ MainTilemap.GetTilesBlock(area)[i]);
+            }
 
         }
         catch (Exception e)
