@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Priority_Queue;
+using System.Linq;
 
 struct Node : IComparable<Node>
 {
@@ -75,13 +77,17 @@ public class WonderAI : MonoBehaviour
 
     }
 
-
+    public void SetPos(BoundsInt Start, BoundsInt Dest)
+    {
+        StartPos = Start;
+        DestPos = Dest;
+    }
 
     // Update is called once per frame
     void Update()
     {
         //animator.SetBool("Walk", true);
-        transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, speed * Time.deltaTime);
+       // transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, speed * Time.deltaTime);
         //충돌하면 X방향 바꾸기
 
        /* if (Vector2.Distance(transform.position, moveSpot.position) < 0.2f) // 거리가 0.2f가안되면 새로운 스팟 찾기
@@ -129,25 +135,71 @@ public class WonderAI : MonoBehaviour
     }
     public void Astar()
     {
-        int[] MoveY = new int[8] { 1, -1, 0, 0, 1, 1, -1, -1 };//상,하,좌,우,(좌상,우상,좌하,우하)만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
-        int[] MoveX = new int[8] { 1, -1, 0, 0, 1, 1, -1, -1 };
+        int[] MoveY = new int[4] { 1, -1, 0, 0 };//상,하,좌,우,(좌상,우상,좌하,우하)만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
+        int[] MoveX = new int[4] { 1, -1, 0, 0 };
 
-        int[] Cost = new int[8] { 10, 10, 10, 10, 14, 14, 14, 14 };
+        int[] Cost = new int[4] { 10, 10, 10, 10 };
 
        List<Node> Closed = new List<Node>();           //이미 방문한 타일 모음
        List<Node> Opened = new List<Node>();           //방문할 타일들 모음
        List<Node> Parent = new List<Node>();           //부모 타일(이전 타일)
 
+        SimplePriorityQueue<Node> priorityQueue = new SimplePriorityQueue<Node>();
 
         Node StartNode = new Node();
         StartNode.G = 0;
         StartNode.H= StartNode.F = Math.Abs( DestPos.position.x - StartPos.x) + Math.Abs(DestPos.position.y - StartPos.y);
+        StartNode.X = StartPos.x;
+        StartNode.Y = StartPos.y;
 
         Parent.Add(StartNode);                  //제일 처음 타일 부모 타일 리스트에 넣기
 
+        priorityQueue.Enqueue(StartNode, StartNode.F);
 
+        while (priorityQueue.Count>0)       //큐가 안남을때까지 돌려놔~ 너를 만나기 전에 내 모습으로~~
+        {
+            Node NewNode= priorityQueue.Dequeue();//F값이 제일 적은 노드 빼오기
 
+            if (Closed.Any(node => node.X == NewNode.X && node.Y == NewNode.Y))     //이미 방문한 타일이라면 패스
+                continue;
 
+            Closed.Add(NewNode);            //방문 안했다면 방문한 타일 리스트에 추가
+
+            if (NewNode.X == DestPos.x && NewNode.Y == DestPos.y)       //목적지라면 탈출
+                break;
+
+            for (int i = 0; i < MoveY.Length; i++)      //상하좌우
+            {
+                int nextY = NewNode.Y + MoveY[i];
+                int nextX = NewNode.X + MoveX[i];
+
+               // Vector3Int position = new Vector3Int(nextX, nextY);
+                BoundsInt position = new BoundsInt();
+                position.x = nextX;
+                position.y = nextY;
+                position.size = new Vector3Int(1,1,1);
+
+                if (GridBuildingSystem.current.CanTakeArea(position))         //타일맵 밖이나 건물이 있다면 패스
+                    continue;
+
+                int G = NewNode.G + Cost[i];            //G계산(처음 시작지점에서 현재 위치까지 거리)
+                int H= Math.Abs(DestPos.position.x - NewNode.X) + Math.Abs(DestPos.position.y - NewNode.Y);//현재 위치에서 목적지까지 최단거리
+
+                if (NewNode.G + NewNode.H < G + H)               //현재위치에서 상하좌우 중 제일 거리(F)가 짧은 타일로 감
+                    continue;
+
+                priorityQueue.Enqueue(new Node() { F=G+H,G=G,H=H,Y= nextY ,X= nextX }, G + H);
+
+                Parent.Add(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX });
+            }
+        }
+        foreach (var item in Parent)
+        {
+            Debug.Log("길찾기 좌표 "+item.X+ item.Y);
+        }
+        Debug.Log("출발 위치는 ("+StartPos.x+", "+ StartPos.y);
+        Debug.Log("도착 위치는 ("+DestPos.x+", "+ DestPos.y);
+        Debug.Log("길찾기 좌표 끝!");
     }
     public void OnCollisionStay2D(Collision2D other)
     {

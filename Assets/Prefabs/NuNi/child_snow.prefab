@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 746954066577057256}
   - component: {fileID: -2259295042744451341}
+  - component: {fileID: 318193370512714329}
   m_Layer: 0
   m_Name: child_snow
   m_TagString: Untagged
@@ -176,6 +177,29 @@ MonoBehaviour:
   NuniBtn: {fileID: 4706578099303319961}
   DialogObject: {fileID: 1202890348968082701}
   DialogTxt: {fileID: 258601899620440100}
+  _AddressableObj: {fileID: 0}
+--- !u!114 &318193370512714329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746954066577057259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410ede6badeb8074ba57d717fd4a253a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ai: {fileID: 0}
+  speed: 0
+  startWaitTime: 0
+  moveSpot: {fileID: 0}
+  DestPos:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  StartPos:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
 --- !u!1 &746954067222833950
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +460,12 @@ MonoBehaviour:
   speed: 0.5
   startWaitTime: 3
   moveSpot: {fileID: 746954067222833951}
+  DestPos:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  StartPos:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
 --- !u!58 &2279879092600509690
 CircleCollider2D:
   m_ObjectHideFlags: 0

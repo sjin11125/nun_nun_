@@ -55,6 +55,11 @@ public class Card : MonoBehaviour
     public IObservable<int> CountDownObservable => _countDownObservable.AsObservable<int>();
     public IConnectableObservable<int> _countDownObservable;
     readonly Subject<int> TimerStreams = new Subject<int>();
+
+    WonderAI WonderScript;
+    BoundsInt StartPos = new BoundsInt();
+    BoundsInt DestPos = new BoundsInt();
+    Vector3 DestPosition;
     public Card(Cardsave cardSave)
     {
         cardImage = cardSave.cardImage;
@@ -120,8 +125,19 @@ public class Card : MonoBehaviour
 
 
 
-        //길찾기 알고리즘 시작
+        WonderScript = gameObject.GetComponent<WonderAI>();
+        
+        StartPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(gameObject.transform.position);
+        StartPos.size = new Vector3Int(1,1,1);
 
+
+
+        DestPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
+                                                    UnityEngine.Random.Range(-9.5f, 10.5f)));
+        DestPos.size = new Vector3Int(1,1,1);
+        
+        WonderScript.SetPos(StartPos, DestPos);
+        WonderScript.Astar();       //길찾기 알고리즘 시작
 
         NuniBtn.OnClickAsObservable().Subscribe(_ =>
         {
