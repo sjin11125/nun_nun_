@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
  using UnityEngine.SceneManagement;
+using UniRx;
 public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
 {
     public GameObject CharacterPrefab;
-    public static Card[] NuNiInformation;
     public static int ItemIndex;
     public static int ChaIndex;
     public GameObject Scroll;       //스크롤에 content 넣기
@@ -63,6 +63,9 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
 
     public static GameObject Canvas;
 
+    //[SerializeField]
+    public List<ItemInfo> ItemDatas;
+    public int ItemCount;
     void Awake()
     {
         if (isParsing .Equals( false))
@@ -75,17 +78,13 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
         if (SceneManager.GetActiveScene().name.Equals("Game"))
         {
             StartManager.ChaIndex = 99;
-            CharacterOpen();
-        }
-        else if(SceneManager.GetActiveScene().name.Equals("Main"))      //마을 씬에선 아이템 선택 초기화
-        {
-            for (int i = 0; i < GameManager.Items.Length; i++)
-            {
-                GameManager.Items[i] = false;
-            }
+          
         }
     }
-
+    private void Start()
+    {
+        CharacterOpen();
+    }
     void Update()
     {
         if (SceneManager.GetActiveScene().name.Equals("Game"))
@@ -109,33 +108,52 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
 
     public void CharacterOpen()
     {
-        Transform[] child = Scroll.GetComponentsInChildren<Transform>();
-        for (int i = 1; i < child.Length; i++)
-        {
-            Destroy(child[i].gameObject);
-        }
+       
 
-
-
-        for (int j = 0; j < itemList.Count; j++)         //시작하기 전 캐릭터 나타내기
-        {
-            //Card[] NuniArray = GameManager.Instance.CharacterList.ToArray();
+         //Card[] NuniArray = GameManager.Instance.CharacterList.ToArray();
             foreach (var item in GameManager.Instance.CharacterList)
             {
-                if (item.Value.Item.Equals(j))
+                if (!item.Value.Item.Equals(0))
                 {
-                    itemList[j] = true;
-                }
+                ItemDatas[item.Value.Item].ItemBuntton.OnClickAsObservable().Subscribe(_=> {
+
+                    ItemDatas[item.Value.Item].Image.sprite = ItenImage[item.Value.Item];
+                    ItemDatas[item.Value.Item].Info = ItemInfos[item.Value.Item];
+
+                    if (!ItemDatas[item.Value.Item].isSelected)     //선택이 안되어있다면?
+                    {
+                        if (ItemCount < 4)
+                        {
+                            ItemCount++;
+                            ItemDatas[item.Value.Item].isSelected = true;
+                            ItemDatas[item.Value.Item].CheckImage.SetActive(true);
+                            itemList[item.Value.Item] = true;
+                        }
+                    }
+                    else                    //선택되었다면
+                    {
+                        ItemCount--;
+                        if (ItemCount < 0)
+                            ItemCount = 0;
+
+                        ItemDatas[item.Value.Item].isSelected = false;
+                        ItemDatas[item.Value.Item].CheckImage.SetActive(false);
+                        itemList[item.Value.Item] = false;
+                    }
+                   
+                }).AddTo(this);
+
+            }
             }
            
 
 
 
-        }
-        for (int j = 0; j < itemList.Count; j++)
+        
+       /* for (int j = 0; j < itemList.Count; j++)
         {
-            DogamCha = Instantiate(CharacterPrefab);
-            DogamCha.transform.SetParent(Scroll.transform);
+            DogamCha = Instantiate(CharacterPrefab, Scroll.transform) ;
+            //DogamCha.transform.SetParent(Scroll.transform);
 
             Transform[] ChaPrefabChilds = DogamCha.GetComponentsInChildren<Transform>();
 
@@ -146,10 +164,15 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
             Button DogamChaButton = DogamCha.GetComponent<Button>();
             Image[] image = DogamChaButton.GetComponentsInChildren<Image>();
 
+          
             if (itemList[j] .Equals( true))
             {
                 image[3].sprite = ItenImage[j];//NuNiInformation[j].GetChaImange();   //캐릭터 이름 값 받아와서 이미지 찾기
+                DogamChaButton.OnClickAsObservable().Subscribe(_ => {
 
+                    ItemInfo.text = ItemInfos[j];
+
+                });
             }
             else
             {
@@ -164,9 +187,9 @@ public class StartManager : MonoBehaviour       //엑셀 게임 데이터 넣는 스크립트
                 image[1].gameObject.SetActive(true);
             else
                 image[1].gameObject.SetActive(false);
-                
 
-        }
+          
+        }*/
     }
 
 
