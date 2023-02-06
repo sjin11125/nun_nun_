@@ -59,7 +59,9 @@ public class Card : MonoBehaviour
     WonderAI WonderScript;
     BoundsInt StartPos = new BoundsInt();
     BoundsInt DestPos = new BoundsInt();
-    Vector3 DestPosition;
+
+    bool isMove = false;
+
     public Card(Cardsave cardSave)
     {
         cardImage = cardSave.cardImage;
@@ -120,25 +122,15 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
-        gameObject.transform.position = new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
-                                                    UnityEngine.Random.Range(-9.5f, 10.5f)); //처음 시작할땐 랜덤 위치
+      
+       
+       
 
 
 
         WonderScript = gameObject.GetComponent<WonderAI>();
         
-        StartPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(gameObject.transform.position);
-        StartPos.size = new Vector3Int(1,1,1);
-
-
-
-        DestPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
-                                                    UnityEngine.Random.Range(-9.5f, 10.5f)));
-        DestPos.size = new Vector3Int(1,1,1);
-        
-        WonderScript.SetPos(StartPos, DestPos);
-        ;       //길찾기 알고리즘 시작
-        StartCoroutine(Move(WonderScript.Astar()));
+    
 
         NuniBtn.OnClickAsObservable().Subscribe(_ =>
         {
@@ -154,7 +146,18 @@ public class Card : MonoBehaviour
 
             }
         }).AddTo(this);
-       
+
+        do
+        {
+            gameObject.transform.position = new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
+                                                        UnityEngine.Random.Range(-9.5f, 10.5f)); //처음 시작할땐 랜덤 위치
+            StartPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(gameObject.transform.position);
+            StartPos.size = new Vector3Int(1, 1, 1);
+        } while (!GridBuildingSystem.current.CanTakeArea(StartPos));
+     
+        
+        StartCoroutine(FirstStart());               //길찾기 알고리즘 시작
+        
     }
 
     IEnumerator Wait(int time)
@@ -163,21 +166,48 @@ public class Card : MonoBehaviour
         isDialog = false;
         DialogObject.SetActive(false); //대화창 생성
     }
-    
-    IEnumerator Move(List<Node> MoveNodes)
+    IEnumerator FirstStart()
     {
-        WaitForSecondsRealtime waitTime=   new WaitForSecondsRealtime(0.5f);
-
-        while (MoveNodes.Count>0)
+        while (true)
         {
 
-            yield return waitTime;
-            Vector2 target = GridBuildingSystem.current.gridLayout.CellToWorld(new Vector3Int( MoveNodes[0].X, MoveNodes[0].Y,1));
-            Debug.Log("변경 전 이동하는 위치는 "+ new Vector3Int(MoveNodes[0].X, MoveNodes[0].Y, 1));
-            Debug.Log("변경 후 이동하는 위치는 " + target);
-            transform.position = target;
-            MoveNodes.RemoveAt(0);
+            do              //시작위치와 도착위치 정해주기
+            {
+
+                StartPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(gameObject.transform.position);
+                StartPos.size = new Vector3Int(1, 1, 1);
+
+                DestPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
+                                                    UnityEngine.Random.Range(-9.5f, 10.5f)));
+                DestPos.size = new Vector3Int(1, 1, 1);
+                WonderScript.SetPos(StartPos, DestPos);
+
+            } while (!GridBuildingSystem.current.CanTakeArea(DestPos));
+
+            yield return StartCoroutine(Move(WonderScript.Astar()));
+            Debug.Log("Move 코루틴 끝");
         }
+    }
+    IEnumerator Move(List<Node> MoveNodes)
+    {
+        WaitForSecondsRealtime waitTime=   new WaitForSecondsRealtime(1f);
+    
+
+            while (MoveNodes.Count > 0)                 //이동하기
+            {
+
+                yield return waitTime;
+                Vector3 target = GridBuildingSystem.current.gridLayout.CellToWorld(new Vector3Int(MoveNodes[0].X, MoveNodes[0].Y, 1));
+          
+                while (Vector2.Distance(transform.position, target) > 0.01f)
+                {
+                    Vector3 velo = Vector3.zero;
+                    transform.position = Vector3.MoveTowards(transform.position, target, 1f * Time.deltaTime);// Vector3.SmoothDamp(transform.position, target,ref velo,  0.1f); // Vector3.Lerp(transform.position, target, 5f * Time.deltaTime);
+                    yield return null;
+                }
+                MoveNodes.RemoveAt(0);
+            }
+           
         
     }
 

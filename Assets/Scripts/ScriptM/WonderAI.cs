@@ -78,55 +78,7 @@ public class WonderAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //animator.SetBool("Walk", true);
-       // transform.position = Vector2.MoveTowards(transform.position, moveSpot.position, speed * Time.deltaTime);
-        //충돌하면 X방향 바꾸기
-
-       /* if (Vector2.Distance(transform.position, moveSpot.position) < 0.2f) // 거리가 0.2f가안되면 새로운 스팟 찾기
-        {
-            if (waitTime <= 0)
-            {
-                moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-
-                if (moveSpot.position.x > ai.transform.position.x)
-                {
-
-                    for (int i = 0; i < rend.Length; i++) // 뒤집히기
-                    {
-                        rend[i].flipX = true;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < rend.Length; i++)
-                    {
-                        rend[i].flipX = false;
-                    }
-                }
-
-                waitTime = startWaitTime;
-
-
-
-
-                // wait-deltaTime=0이 되면 다음포지션을 정한다. 
-            }
-            else
-            {
-                waitTime -= Time.deltaTime; //wait - deltaTIme=0이 될 때 까지 움직여라
-
-
-                //얘가 움직이는 함수
-
-            }
-
-
-
-        }*/
-
-    }
+   
     public List<Node> Astar()
     {
         int[] MoveY = new int[4] { 1, -1, 0, 0 };//상,하,좌,우,(좌상,우상,좌하,우하)만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
@@ -221,13 +173,6 @@ public class WonderAI : MonoBehaviour
         Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });
         Parents.Reverse();
 
-          foreach (var item in Parents)
-          {
-              Debug.Log("길찾기 좌표 ("+item.X + ", " + item.Y+")");
-          }
-        Debug.Log("출발 위치는 ("+StartPos.x+", "+ StartPos.y + ")");
-        Debug.Log("도착 위치는 ("+DestPos.x+", "+ DestPos.y + ")");
-        Debug.Log("길찾기 좌표 끝!");
         return Parents;
     }
     public void OnCollisionStay2D(Collision2D other)
