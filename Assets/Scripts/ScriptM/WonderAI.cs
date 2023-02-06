@@ -5,7 +5,7 @@ using System;
 using Priority_Queue;
 using System.Linq;
 
-struct Node : IComparable<Node>
+public class Node 
 {
     public int F;               //최종 점수 (G-H)
     public int G;               //시작점에서 목적지까지 이동하는데 드는 비용(거리)
@@ -13,14 +13,8 @@ struct Node : IComparable<Node>
 
     public int Y;               //
     public int X;
-    public int CompareTo(Node other)                //IComparable 인터페이스를 상속받았으니까 무조건 구현
-    {
-        if (F == other.F)
-            return 0;
-
-        return F < other.F ? 1 : -1;
-           
-    }
+    public Node Parent;
+  
 }
 public class WonderAI : MonoBehaviour
 
@@ -71,9 +65,9 @@ public class WonderAI : MonoBehaviour
         //Vector3 moveSpot = ai.GameObject.transform.position;
 
 
-        waitTime = startWaitTime;
+      //  waitTime = startWaitTime;
         //moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        moveSpot.position = new Vector2(ai.transform.position.x, ai.transform.position.y); //ai의 position에 spot위치 // move 위치찍기
+       // moveSpot.position = new Vector2(ai.transform.position.x, ai.transform.position.y); //ai의 position에 spot위치 // move 위치찍기
 
     }
 
@@ -133,16 +127,17 @@ public class WonderAI : MonoBehaviour
         }*/
 
     }
-    public void Astar()
+    public List<Node> Astar()
     {
         int[] MoveY = new int[4] { 1, -1, 0, 0 };//상,하,좌,우,(좌상,우상,좌하,우하)만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
-        int[] MoveX = new int[4] { 1, -1, 0, 0 };
+        int[] MoveX = new int[4] { 0, 0, -1, 1};
 
-        int[] Cost = new int[4] { 10, 10, 10, 10 };
+        int[] Cost = new int[4] { 1,1,1,1 };
 
        List<Node> Closed = new List<Node>();           //이미 방문한 타일 모음
        List<Node> Opened = new List<Node>();           //방문할 타일들 모음
-       List<Node> Parent = new List<Node>();           //부모 타일(이전 타일)
+       List<Node> Parents = new List<Node>();           //방문할 타일들 모음
+       Node EndParent = new Node();           //부모 타일(이전 타일)
 
         SimplePriorityQueue<Node> priorityQueue = new SimplePriorityQueue<Node>();
 
@@ -151,55 +146,89 @@ public class WonderAI : MonoBehaviour
         StartNode.H= StartNode.F = Math.Abs( DestPos.position.x - StartPos.x) + Math.Abs(DestPos.position.y - StartPos.y);
         StartNode.X = StartPos.x;
         StartNode.Y = StartPos.y;
+        StartNode.Parent = StartNode;
 
-        Parent.Add(StartNode);                  //제일 처음 타일 부모 타일 리스트에 넣기
+       // Parent.Add(StartNode);                  //제일 처음 타일 부모 타일 리스트에 넣기
 
         priorityQueue.Enqueue(StartNode, StartNode.F);
 
         while (priorityQueue.Count>0)       //큐가 안남을때까지 돌려놔~ 너를 만나기 전에 내 모습으로~~
         {
             Node NewNode= priorityQueue.Dequeue();//F값이 제일 적은 노드 빼오기
-
+            //Debug.Log("연결리스트 좌표 (" + NewNode.X + ", " + NewNode.Y + ")");
             if (Closed.Any(node => node.X == NewNode.X && node.Y == NewNode.Y))     //이미 방문한 타일이라면 패스
                 continue;
 
             Closed.Add(NewNode);            //방문 안했다면 방문한 타일 리스트에 추가
 
             if (NewNode.X == DestPos.x && NewNode.Y == DestPos.y)       //목적지라면 탈출
+            {
+                EndParent = NewNode;
                 break;
+            }
 
             for (int i = 0; i < MoveY.Length; i++)      //상하좌우
             {
+                
                 int nextY = NewNode.Y + MoveY[i];
                 int nextX = NewNode.X + MoveX[i];
 
-               // Vector3Int position = new Vector3Int(nextX, nextY);
+                Node BNode = new Node() { Y = nextY, X = nextX };
+
+                // Vector3Int position = new Vector3Int(nextX, nextY);
                 BoundsInt position = new BoundsInt();
                 position.x = nextX;
                 position.y = nextY;
                 position.size = new Vector3Int(1,1,1);
 
-                if (GridBuildingSystem.current.CanTakeArea(position))         //타일맵 밖이나 건물이 있다면 패스
+                if (!GridBuildingSystem.current.CanTakeArea(position))         //타일맵 밖이나 건물이 있다면 패스
                     continue;
 
                 int G = NewNode.G + Cost[i];            //G계산(처음 시작지점에서 현재 위치까지 거리)
-                int H= Math.Abs(DestPos.position.x - NewNode.X) + Math.Abs(DestPos.position.y - NewNode.Y);//현재 위치에서 목적지까지 최단거리
+                int H= Math.Abs(DestPos.position.x - nextX) + Math.Abs(DestPos.position.y - nextY);//현재 위치에서 목적지까지 최단거리
 
                 if (NewNode.G + NewNode.H < G + H)               //현재위치에서 상하좌우 중 제일 거리(F)가 짧은 타일로 감
-                    continue;
+                   continue;
+                if (priorityQueue.Any(node => node.X == BNode.X && node.Y == BNode.Y))          //오픈리스트에 있을 때
+                {
+                    if (NewNode.G<G)
+                    {
+                        //오픈리스트 
+                        priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
 
-                priorityQueue.Enqueue(new Node() { F=G+H,G=G,H=H,Y= nextY ,X= nextX }, G + H);
+                    }
+                }
+                else                    //오픈리스트에 없을때
+                {
+                                    //오픈리스트 
+                    priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
+                }
 
-                Parent.Add(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX });
+               // Parent.Add(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX });
+               
             }
         }
-        foreach (var item in Parent)
+        while (EndParent.Parent.X!= StartPos.x||
+            EndParent.Parent.Y != StartPos.y)
         {
-            Debug.Log("길찾기 좌표 "+item.X+ item.Y);
+            Parents.Add(EndParent);
+                  EndParent = EndParent.Parent;
+            if (EndParent.Parent != null)
+                continue;
+            else
+                break;
         }
-        Debug.Log("출발 위치는 ("+StartPos.x+", "+ StartPos.y);
-        Debug.Log("도착 위치는 ("+DestPos.x+", "+ DestPos.y);
+        Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });
+        Parents.Reverse();
+
+          foreach (var item in Parents)
+          {
+              Debug.Log("길찾기 좌표 ("+item.X + ", " + item.Y+")");
+          }
+        Debug.Log("출발 위치는 ("+StartPos.x+", "+ StartPos.y + ")");
+        Debug.Log("도착 위치는 ("+DestPos.x+", "+ DestPos.y + ")");
         Debug.Log("길찾기 좌표 끝!");
+        return Parents;
     }
     public void OnCollisionStay2D(Collision2D other)
     {

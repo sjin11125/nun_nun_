@@ -137,7 +137,8 @@ public class Card : MonoBehaviour
         DestPos.size = new Vector3Int(1,1,1);
         
         WonderScript.SetPos(StartPos, DestPos);
-        WonderScript.Astar();       //길찾기 알고리즘 시작
+        ;       //길찾기 알고리즘 시작
+        StartCoroutine(Move(WonderScript.Astar()));
 
         NuniBtn.OnClickAsObservable().Subscribe(_ =>
         {
@@ -161,6 +162,23 @@ public class Card : MonoBehaviour
         yield return new WaitForSecondsRealtime(3.0f);
         isDialog = false;
         DialogObject.SetActive(false); //대화창 생성
+    }
+    
+    IEnumerator Move(List<Node> MoveNodes)
+    {
+        WaitForSecondsRealtime waitTime=   new WaitForSecondsRealtime(0.5f);
+
+        while (MoveNodes.Count>0)
+        {
+
+            yield return waitTime;
+            Vector2 target = GridBuildingSystem.current.gridLayout.CellToWorld(new Vector3Int( MoveNodes[0].X, MoveNodes[0].Y,1));
+            Debug.Log("변경 전 이동하는 위치는 "+ new Vector3Int(MoveNodes[0].X, MoveNodes[0].Y, 1));
+            Debug.Log("변경 후 이동하는 위치는 " + target);
+            transform.position = target;
+            MoveNodes.RemoveAt(0);
+        }
+        
     }
 
     private void OnDestroy()

@@ -14110,7 +14110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &729126927
 Transform:
   m_ObjectHideFlags: 0
@@ -14244,13 +14244,9 @@ MonoBehaviour:
   prevArea:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 0, y: 0, z: 0}
-  prevArea2:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
   StartButton: {fileID: 0}
   Dialog: {fileID: 0}
   temp_gameObject: {fileID: 0}
-  BSave: {fileID: 0}
   VisitorBooksWindow: {fileID: 0}
   Effect: {fileID: 0}
 --- !u!1 &1150411973
