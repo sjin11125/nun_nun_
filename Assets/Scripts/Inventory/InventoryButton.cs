@@ -10,26 +10,17 @@ public class InventoryButton : MonoBehaviour
     // Start is called before the first frame update
     public Image X_Image;     //건물 회수 버튼
 
-    Building this_building;         //이 버튼에 해당하는 건물
-    public Building temp_building
-    {
-        get { return this_building; }
-        set { this_building = value.DeepCopy(); }
-    }
-    public Card this_nuni;         //이 버튼에 해당하는 누니
 
+    public Card this_nuni;         //이 버튼에 해당하는 누니
+    public Building temp_building;        //이 버튼에 해당하는 건물
+
+    public Button button;        //이 스크립트를 넣은 오브젝트의 버튼 컴포넌트
 
     private GameObject settigPanel;
-    public Button button;
 
     public void SetButtonImage(Sprite image)
     {
         this.GetComponent<Image>().sprite = image;
-    }
-    public Building SetBuildingInfo( Building building)
-    {
-        this_building=building;
-        return this_building;
     }
 
     public void SetNoImage(bool isLock)

@@ -59,7 +59,7 @@ public class UIInventoryPanel : UIBase
             // Inventory_Nuni_Open();
             if (ActiveButton != null)            //이전에 배치안한 건물이 있었다면
             {
-                ActiveButton.SetBuildingInfo(LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id]);
+                ActiveButton.temp_building=LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id];
                 ActiveButton.temp_building.area = LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id].area;
                 //  Debug.LogError(ActiveButton.temp_building);
                 if (ActiveButton.temp_building.isLock == "F")
@@ -134,7 +134,7 @@ public class UIInventoryPanel : UIBase
                 
 
                 Building building = item.Value;
-                inventoryBtn.SetBuildingInfo(building);                           //해당 건물 정보 등록
+                inventoryBtn.temp_building=building;                           //해당 건물 정보 등록
                 //인벤토리 버튼에 건물 정보 넣어주기(ex. 건물 사진 등);
 
                 inventoryBtn.temp_building =LoadManager.Instance.MyBuildings[item.Value.Id];
@@ -143,7 +143,7 @@ public class UIInventoryPanel : UIBase
 
                 inventoryBtn.button.OnClickAsObservable().Subscribe(_ =>                     //인벤토리 건물 클릭 구독
                 {
-                    inventoryBtn.SetBuildingInfo(LoadManager.Instance.MyBuildings[inventoryBtn.temp_building.Id]);
+                    inventoryBtn.temp_building=LoadManager.Instance.MyBuildings[inventoryBtn.temp_building.Id];
                     if (inventoryBtn.temp_building.isLock == "T")         //해당 건물이 설치되었으면
                     {
 
@@ -164,11 +164,11 @@ public class UIInventoryPanel : UIBase
                     }
                     else                               //해당 건물이 설치안되어있으면
                     {
-                        inventoryBtn.temp_building.Type= BuildType.Load;
+                        inventoryBtn.temp_building.Type= BuildType.Move;
 
                         if (ActiveButton != null)           //이전에 인벤토리 클릭한 적이 있나?
                         {
-                            if (ActiveButton.temp_building.isLock == "F")       //이전에 배치안한 건물이 있었다면
+                            if (LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id].isLock == "F")       //이전에 배치안한 건물이 있었다면
                             {
                                 Destroy(ActiveBuildingPrefab);                  //해당 건물의 오브젝트를 삭제
 

@@ -196,7 +196,7 @@ public class LoadManager : MonoBehaviour
             try
             {
                 InstantiateBuilding(item.Value,out Currnetbuildings, ()=> {
-                    Building g_Building = GameManager.Instance.BuildingPrefabData[item.Value.Id].GetComponent<Building>();       //건물 Instatiate
+                    Building g_Building = Currnetbuildings.GetComponent<Building>();       //건물 Instatiate
 
 
 
@@ -205,7 +205,8 @@ public class LoadManager : MonoBehaviour
 
                     MyBuildings[g_Building.Id].SetValue(g_Building);
                     MyBuildings[g_Building.Id].area = g_Building.area;
-                    GameManager.IDs.Add(g_Building.Id);
+                   GameManager.IDs.Add(g_Building.Id);
+                    Debug.Log(g_Building.Id);
                 });
 
                
@@ -217,8 +218,9 @@ public class LoadManager : MonoBehaviour
                 Debug.Log(e.Message);
                 throw;
             }
+            Debug.Log("건물 로드 끝");
         }
-        Debug.Log("건물 로드 끝");
+        
       //  UILoadingPanel.DestroyGameObject();
     }
     public void InstantiateBuilding(Building building, out GameObject BuildingObj, UnityAction callback)
