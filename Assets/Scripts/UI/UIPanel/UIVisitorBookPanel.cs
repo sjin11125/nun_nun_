@@ -38,7 +38,7 @@ public class UIVisitorBookPanel : UIBase
             Uid = LoadManager.Instance.FriendUid;
 
 
-        FirebaseLogin.Instance.GetVisitorBook(Uid).ContinueWith((task) => {
+        FirebaseScript.Instance.GetVisitorBook(Uid).ContinueWith((task) => {
 
             if (!task.IsFaulted)
             {
@@ -76,7 +76,7 @@ public class UIVisitorBookPanel : UIBase
                                                             GameManager.Instance.PlayerUserInfo.Image);
             newMessage.Uid= Uid;
 
-            FirebaseLogin.Instance.SetVisitorBook(newMessage);
+            FirebaseScript.Instance.SetVisitorBook(newMessage);
 
             VisitorMessage Message = Instantiate(MessagePrefab, Content).GetComponent<VisitorMessage>();
             Message.SetMessage(newMessage.FriendName, newMessage.FriendMessage, newMessage.FriendTime, newMessage.FriendImage);

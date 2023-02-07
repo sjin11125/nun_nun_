@@ -159,7 +159,7 @@ public class UIInventoryPanel : UIBase
                         inventoryBtn.temp_building.BuildingPosition.y = 0;
                         inventoryBtn.temp_building.Placed = false;
                         // LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.updateValue, inventoryBtn.temp_building);     //서버로 전송
-                        FirebaseLogin.Instance.AddBuilding(inventoryBtn.temp_building.BuildingToJson());            //서버로 전송
+                        FirebaseScript.Instance.AddBuilding(inventoryBtn.temp_building.BuildingToJson());            //서버로 전송
                     }
                     else                               //해당 건물이 설치안되어있으면
                     {
@@ -261,7 +261,7 @@ public class UIInventoryPanel : UIBase
                     Cardsave nuni = new Cardsave(GameManager.Instance.PlayerUserInfo.Uid, inventoryBtn.this_nuni.cardImage, inventoryBtn.this_nuni.isLock, inventoryBtn.this_nuni.Id);
 
 
-                    FirebaseLogin.Instance.SetNuni(nuni);//서버로 전송
+                    FirebaseScript.Instance.SetNuni(nuni);//서버로 전송
                     inventoryBtn.SetNoImage(false); //버튼에 x표시 함
                 }
                 else                                            //해당 누니가 없으면
@@ -272,7 +272,7 @@ public class UIInventoryPanel : UIBase
                     GameManager.Instance.CharacterList[inventoryBtn.this_nuni.Id].isLock = "T";
 
                     Cardsave nuni = new Cardsave(GameManager.Instance.PlayerUserInfo.Uid, inventoryBtn.this_nuni.cardImage, inventoryBtn.this_nuni.isLock, inventoryBtn.this_nuni.Id);
-                    FirebaseLogin.Instance.SetNuni(nuni);//서버로 전송
+                    FirebaseScript.Instance.SetNuni(nuni);//서버로 전송
                     inventoryBtn.SetNoImage(true); //버튼에 x표시 없앰
                 }
             }).AddTo(this);

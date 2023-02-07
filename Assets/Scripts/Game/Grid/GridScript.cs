@@ -240,7 +240,7 @@ public class GridScript : MonoBehaviour
             if (GameOver())
             {
                 gameOver.gameObject.SetActive(true);
-                FirebaseLogin.Instance.SetMyAchieveInfo();//업적 결과 FireStore로 전송
+                FirebaseScript.Instance.SetMyAchieveInfo();//업적 결과 FireStore로 전송
             }
         }
         else

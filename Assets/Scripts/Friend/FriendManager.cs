@@ -35,7 +35,7 @@ public class FriendManager : UIBase
                 {
                     case FriendDef.GetFriend:                   //친구 목록 가져오기
 
-                        FirebaseLogin.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task)=>{
+                        FirebaseScript.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task)=>{
                             if (!task.IsFaulted)
                             {
                                 if (task.Result != null)
@@ -86,7 +86,7 @@ public class FriendManager : UIBase
                         });
                         break;
                     case FriendDef.RequestFriend:
-                        FirebaseLogin.Instance.GetRequestFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
+                        FirebaseScript.Instance.GetRequestFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
                             if (!task.IsFaulted)
                             {
                                 if (task.Result != null)
@@ -143,7 +143,7 @@ public class FriendManager : UIBase
                         SearchObject.OnEndEditAsObservable().Subscribe(_=> {
                             Debug.Log("입력끝 "+ SearchObject.text);
                             Friend_Exit();      //목록 초기화
-                            FirebaseLogin.Instance.GetSearchFriend(SearchObject.text).ContinueWith((task) => {
+                            FirebaseScript.Instance.GetSearchFriend(SearchObject.text).ContinueWith((task) => {
                                 if (!task.IsFaulted)
                                 {
                                     if (task.Result != null)//누니 넣기

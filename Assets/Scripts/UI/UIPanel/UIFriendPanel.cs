@@ -37,7 +37,7 @@ public class UIFriendPanel : UIBase
 
         LoadingPanel.SetActive(true);
 
-        FirebaseLogin.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
+        FirebaseScript.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
             if (!task.IsFaulted)
             {
                 if (task.Result != null)
@@ -101,7 +101,7 @@ public class UIFriendPanel : UIBase
                 {
                     case FriendDef.GetFriend:                   //친구 목록 가져오기
                        
-                        FirebaseLogin.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
+                        FirebaseScript.Instance.GetFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
                             if (!task.IsFaulted)
                             {
                                 if (task.Result != null)
@@ -153,7 +153,7 @@ public class UIFriendPanel : UIBase
                         });
                         break;
                     case FriendDef.RequestFriend:
-                        FirebaseLogin.Instance.GetRequestFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
+                        FirebaseScript.Instance.GetRequestFriend(GameManager.Instance.PlayerUserInfo.Uid).ContinueWith((task) => {
                             if (!task.IsFaulted)
                             {
                                 if (task.Result != null)
@@ -212,7 +212,7 @@ public class UIFriendPanel : UIBase
                             LoadingPanel.SetActive(true);           //검색중이면 로딩창 켜기
                             Debug.Log("입력끝 " + SearchObject.text);
                             Friend_Exit();      //목록 초기화
-                            FirebaseLogin.Instance.GetSearchFriend(SearchObject.text).ContinueWith((task) => {
+                            FirebaseScript.Instance.GetSearchFriend(SearchObject.text).ContinueWith((task) => {
                                 if (!task.IsFaulted)
                                 {
                                     if (task.Result != null)//누니 넣기

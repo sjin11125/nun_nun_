@@ -203,8 +203,8 @@ public class GameManager : Singleton<GameManager>
     public void GameSave()
     {
 
-        FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
-        FirebaseLogin.Instance.SetAllMyBuilding();
+        FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
+        
     }
     public void UpdateMyAchieveInfo(string id, int count)
     {

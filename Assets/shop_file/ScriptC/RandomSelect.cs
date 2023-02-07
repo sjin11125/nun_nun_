@@ -69,7 +69,7 @@ public class RandomSelect : MonoBehaviour
 
             cardsave.Uid = GameManager.Instance.PlayerUserInfo.Uid;
 
-            FirebaseLogin.Instance.SetNuni(cardsave);//파이어베이스에 업데이트
+            FirebaseScript.Instance.SetNuni(cardsave);//파이어베이스에 업데이트
 
             ShopBuyScript.isfirst = false;
         };

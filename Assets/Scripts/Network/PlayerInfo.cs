@@ -56,7 +56,7 @@ public class PlayerInfo : MonoBehaviour                 //플레이어 프로필 스크립
 
         StartCoroutine(ImagePost(form1));*/
 
-        FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
+        FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
     }
     // Update is called once per frame
   /*  void Update()

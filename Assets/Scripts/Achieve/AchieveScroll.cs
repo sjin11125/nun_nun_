@@ -106,7 +106,7 @@ public class AchieveScroll : MonoBehaviour
             AchieveCount.text = count + "/" + Info.Count[GameManager.Instance.MyAchieveInfos[Info.Id].Index].ToString();          //내 업적 카운트/총 카운트
 
             CountSlider.maxValue = Info.Count[GameManager.Instance.MyAchieveInfos[Info.Id].Index];//총 카운트
-            FirebaseLogin.Instance.SetMyAchieveInfo(); //서버로 결과 전송
+            FirebaseScript.Instance.SetMyAchieveInfo(); //서버로 결과 전송
         }).AddTo(this);
 
 

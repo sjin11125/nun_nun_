@@ -76,7 +76,7 @@ public class LoadingSceneController : MonoBehaviour
         AsyncOperation op = SceneManager.LoadSceneAsync(loadSceneName);
         op.allowSceneActivation = false;
 
-        //FirebaseLogin.Instance.GetBuilding();
+        //FirebaseScript.Instance.GetBuilding();
        /* if (loadSceneName=="Main")
         {
             LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.getMyBuilding);
@@ -123,7 +123,7 @@ public class LoadingSceneController : MonoBehaviour
                     GetBuildingNuniInfo(LoadManager.Instance.FriendUid);
                     break;
                 case "Game":
-                    FirebaseLogin.Instance.GetNuni(uid).ContinueWith((task) =>
+                    FirebaseScript.Instance.GetNuni(uid).ContinueWith((task) =>
                     {
                         if (!task.IsFaulted)
                         {
@@ -196,7 +196,7 @@ public class LoadingSceneController : MonoBehaviour
     public void GetBuildingNuniInfo(string uid)
     {
         //LoadManager.Instance.MyBuildings.Clear();
-        FirebaseLogin.Instance.GetBuilding(uid).ContinueWith((task) =>      //건물 불러오기
+        FirebaseScript.Instance.GetBuilding(uid).ContinueWith((task) =>      //건물 불러오기
         {
             if (!task.IsFaulted)
             {
@@ -229,7 +229,7 @@ public class LoadingSceneController : MonoBehaviour
                             LoadManager.Instance.MyBuildings.Add(tempBuilding.Id, tempBuilding);
                         }
 
-                        FirebaseLogin.Instance.GetNuni(uid).ContinueWith((task) =>          //누니 받아오기
+                        FirebaseScript.Instance.GetNuni(uid).ContinueWith((task) =>          //누니 받아오기
                         {
                             if (!task.IsFaulted)
                             {

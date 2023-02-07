@@ -233,16 +233,6 @@ exports.setUser=functions.https.onCall(async (req, res) => {
     CurrentTime:userData.CurrentTime
   };
 
-  /*if (!doc.exists) {        //문서가 존재하지 않으면
-    console.log('No such document!');
-    
-    const res =await user.set(data);
-    message.name="setUser";
-    message.message="Success";
-    return JSON.stringify(message);
-  
-  } else {                  //문서가 존재한다면
-*/
     const userres =await user.set(data);
     message.name="setUser";
     message.message="Success";

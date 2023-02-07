@@ -18,11 +18,11 @@ public class LoginScene : MonoBehaviour
                 switch (item.Type)
                 {
                     case LoginType.Google:
-                        FirebaseLogin.Instance.SignInWithGoogle();
+                        FirebaseScript.Instance.SignInWithGoogle();
                         break;
 
                     case LoginType.Anonymously:
-                        FirebaseLogin.Instance.SignInWithAnonyMously();
+                        FirebaseScript.Instance.SignInWithAnonyMously();
                         break;
 
                     default:

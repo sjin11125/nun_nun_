@@ -2274,7 +2274,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 789053618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
         m_MethodName: SignOutFromGoogle
         m_Mode: 1
@@ -3063,7 +3063,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 789053618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
         m_MethodName: WirteButton
         m_Mode: 1
@@ -3122,9 +3122,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 789053617}
-  - component: {fileID: 789053618}
+  - component: {fileID: 789053619}
   m_Layer: 0
-  m_Name: FBTest
+  m_Name: FireBaseScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3145,7 +3145,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &789053618
+--- !u!114 &789053619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3154,7 +3154,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 789053615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad0c2c28b2f4d6c46a4b75cccc7595e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9745558cbe53c7749ab84707a076170b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   infoText: {fileID: 0}
@@ -3303,10 +3303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4e04c24168eed4f87f8512f3fc9540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpot: {fileID: 0}
-  nuni: {fileID: 0}
-  isMove: 0
-  nuniObject: {fileID: 0}
 --- !u!1 &866829956
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,7 +4934,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 789053618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
         m_MethodName: AddMessageToDB
         m_Mode: 1
@@ -6130,7 +6126,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 789053618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
         m_MethodName: GetUserInfo
         m_Mode: 5
@@ -6682,19 +6678,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1698040541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 789053618}
-        m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
-        m_MethodName: SignInWithGoogle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1698040541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6897,19 +6881,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1842527819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 789053618}
-        m_TargetAssemblyTypeName: FirebaseLogin, Assembly-CSharp
-        m_MethodName: SignInWithAnonyMously
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: agKhkdSkQeM7MuvgwXHDWuYlnax1
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1842527819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6977,7 +6949,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53776086b23bc61418fd02d4cde5172e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoginMenus: []
+  LoginMenus:
+  - Type: 0
+    LoginBtn: {fileID: 1698040540}
+  - Type: 1
+    LoginBtn: {fileID: 1842527818}
 --- !u!4 &1847412162
 Transform:
   m_ObjectHideFlags: 0

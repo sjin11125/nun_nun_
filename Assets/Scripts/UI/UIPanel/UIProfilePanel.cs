@@ -75,7 +75,7 @@ public class UIProfilePanel : UIBase
             GameManager.Instance.ProfileImage.Value = ProfileImage.sprite;
             GameManager.Instance.PlayerUserInfo.Image = GameManager.Instance.ProfileImage.Value.name;
             GameManager.Instance.PlayerUserInfo.Message = InputField.text;
-            FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo); //서버에 저장
+            FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo); //서버에 저장
         }).AddTo(this);
     }
 

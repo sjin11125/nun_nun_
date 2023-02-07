@@ -28,7 +28,7 @@ public class UINicknamePanel : UIBase
 
             //닉넴 체크(몇글자 이하인지)
             ExistNickNameTxt.SetActive(false);
-            FirebaseLogin.Instance.NickNameCheck(NickInputField.text).ContinueWith((task) => {
+            FirebaseScript.Instance.NickNameCheck(NickInputField.text).ContinueWith((task) => {
                 Debug.Log("닉넴은 "+(string)task.Result);
                 UnityMainThreadDispatcher.Instance().Enqueue(()=> {
 
@@ -39,7 +39,7 @@ public class UINicknamePanel : UIBase
                         case "Success":
                             GameManager.Instance.PlayerUserInfo.NickName = NickInputField.text;
                             GameManager.Instance.PlayerUserInfo.CurrentTime = DateTime.Now.ToString(("yyyy-MM-dd"));
-                            FirebaseLogin.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
+                            FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
                             LoadingSceneController.Instance.LoadScene(SceneName.Main);
                             Destroy(this.gameObject);
                             break;

@@ -28,7 +28,7 @@ public class FriendPlusUI : MonoBehaviour
 
             PlusBtn.OnClickAsObservable().Subscribe(_ =>
             {
-                FirebaseLogin.Instance.PlusFriend(gameObject.name).ContinueWith((task) =>
+                FirebaseScript.Instance.PlusFriend(gameObject.name).ContinueWith((task) =>
                 {
                     Debug.Log("task: " + task.Result);
                     UnityMainThreadDispatcher.Instance().Enqueue(() =>
@@ -52,7 +52,7 @@ public class FriendPlusUI : MonoBehaviour
         if (AddBtn!=null)
         {
             AddBtn.OnClickAsObservable().Subscribe(_ => {
-                FirebaseLogin.Instance.AddFriend(gameObject.name).ContinueWith((task) =>
+                FirebaseScript.Instance.AddFriend(gameObject.name).ContinueWith((task) =>
                 {
                     Debug.Log("task: " + task.Result);
                     UnityMainThreadDispatcher.Instance().Enqueue(() =>

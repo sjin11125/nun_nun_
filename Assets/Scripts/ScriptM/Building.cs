@@ -574,7 +574,7 @@ public class Building : MonoBehaviour
 
                 
 
-                FirebaseLogin.Instance.AddBuilding(this.BuildingToJson());
+                FirebaseScript.Instance.AddBuilding(this.BuildingToJson());
                 break;
 
             case BuildType.Rotation:
@@ -599,7 +599,7 @@ public class Building : MonoBehaviour
                 RewardBtn.gameObject.SetActive(false);
                 StartCoroutine(RewardTimer(RemainTime)); //보상 받는 코루틴 시작
 
-                FirebaseLogin.Instance.AddBuilding(this.BuildingToJson());
+                FirebaseScript.Instance.AddBuilding(this.BuildingToJson());
 
                 Debug.Log("새로만듬");
                 break;
