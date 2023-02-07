@@ -2088,6 +2088,7 @@ MonoBehaviour:
     NuniInfo: {fileID: 7600644544453721373}
     NuniEffect: {fileID: 7600644544076109886}
     NuniImage: {fileID: 7600644542454275337}
+  UIMoneyPanel: {fileID: -1136479446299908012, guid: b83c0e6543bc6914ebe7225844ed7ab6, type: 3}
 --- !u!1 &458228922025223659
 GameObject:
   m_ObjectHideFlags: 0

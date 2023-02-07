@@ -252,10 +252,7 @@ public class GridBuildingSystem : MonoBehaviour
     #endregion
 
     #region Tilemap Management
-    static void MoveTIles()
-    {
 
-    }
    private static void FillTiles(TileBase[] arr, TileType type)
    {
         for (int i = 0; i < arr.Length; i++)
@@ -298,13 +295,7 @@ public class GridBuildingSystem : MonoBehaviour
     }
 
     #endregion
-  
-    IEnumerator isDialog_done(Card nuni, GameObject dialog_Window)
-    {
-        yield return new WaitForSeconds(3f);
-        nuni.isDialog = false;
-        Destroy(dialog_Window);
-    }
+
     #region Building Placement
 
    
@@ -336,7 +327,7 @@ public class GridBuildingSystem : MonoBehaviour
             temp.gameObject.transform.position = pos;
             if (temp.Type == BuildType.Make)
             {
-                LoadManager.Currnetbuildings.transform.position = temp.gameObject.transform.position;
+                LoadManager.Instance.Currnetbuildings.transform.position = temp.gameObject.transform.position;
             }
             BoundsInt buildingArea = temp.area;
 
@@ -370,8 +361,8 @@ public class GridBuildingSystem : MonoBehaviour
             }
             else
             {
-                LoadManager.Currnetbuildings.GetComponent<Building>().area= temp.area;
-                LoadManager.Currnetbuildings.GetComponent<Building>().BuildingPosition = temp.BuildingPosition;
+                LoadManager.Instance.Currnetbuildings.GetComponent<Building>().area= temp.area;
+                LoadManager.Instance.Currnetbuildings.GetComponent<Building>().BuildingPosition = temp.BuildingPosition;
             }
         }
         catch (Exception ed)

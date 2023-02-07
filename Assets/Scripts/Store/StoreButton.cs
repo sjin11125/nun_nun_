@@ -60,4 +60,10 @@ public class StoreButton : MonoBehaviour
 
         };
     }
+
+    private void OnDestroy()
+    {
+
+        Addressables.Release<Sprite>(Image.sprite);
+    }
 }

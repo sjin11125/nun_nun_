@@ -34,7 +34,7 @@ public class LoadManager : MonoBehaviour
     public static Subject<Building> AddBuildingSubject = new Subject<Building>();
     public static Subject<Building> RemoveBuildingSubject = new Subject<Building>();
 
-    public static GameObject Currnetbuildings;
+    public  GameObject Currnetbuildings;
     public static LoadManager _Instance;
 
     public Text MoneyText;
@@ -195,7 +195,7 @@ public class LoadManager : MonoBehaviour
             //string BuildingName = LoadBuilding.Building_Image;        //���� ������ �ִ� ���� ����Ʈ���� ���� �̸� �θ���
             try
             {
-                InstantiateBuilding(item.Value,()=> {
+                InstantiateBuilding(item.Value,out Currnetbuildings, ()=> {
                     Building g_Building = GameManager.Instance.BuildingPrefabData[item.Value.Id].GetComponent<Building>();       //건물 Instatiate
 
 
@@ -221,79 +221,72 @@ public class LoadManager : MonoBehaviour
         Debug.Log("건물 로드 끝");
       //  UILoadingPanel.DestroyGameObject();
     }
-    public void InstantiateBuilding(Building building,UnityAction callback)
+    public void InstantiateBuilding(Building building, out GameObject BuildingObj, UnityAction callback)
     {
-        try
+
+
+        //  GameObject BuildingPrefab = GameManager.BuildingPrefabData[building.Building_Image];           // �ش� �ǹ� ������
+        
+        if (building.Type != BuildType.Make)
         {
-
-            //  GameObject BuildingPrefab = GameManager.BuildingPrefabData[building.Building_Image];           // �ش� �ǹ� ������
-
-            if (building.Type != BuildType.Make)
-            {
-                Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
-                {            //어드레서블로 부르기
-                    //GameObject BuildingPrefab = gameobject.Result;
+            var gameobject = Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path, buildings.transform).WaitForCompletion();
+                   //어드레서블로 부르기
 
 
-                  //  Currnetbuildings = Instantiate(gameobject.Result, new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0), Quaternion.identity, buildings.transform) as GameObject;
-                   
-                    gameobject.Result.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
-                    gameobject.Result.transform.SetParent(buildings.transform);
+                    gameobject.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
+                
 
-                    Currnetbuildings = gameobject.Result;
-
-                    if (GameManager.Instance.BuildingPrefabData.ContainsKey(building.Id))
-                    {
-                        GameManager.Instance.BuildingPrefabData[building.Id] = gameobject.Result;
-                    }
-                    else
-                    GameManager.Instance.BuildingPrefabData.Add(building.Id, gameobject.Result);                   //내 건물 프리팹 딕셔너리에 추가
-               
+                Currnetbuildings = gameobject;
+            BuildingObj = gameobject;
+            if (GameManager.Instance.BuildingPrefabData.ContainsKey(building.Id))
+                {
+                    GameManager.Instance.BuildingPrefabData[building.Id] = gameobject;
+                }
+                else
+                    GameManager.Instance.BuildingPrefabData.Add(building.Id, gameobject);                   //내 건물 프리팹 딕셔너리에 추가
 
 
-                Building g_Building = GameManager.Instance.BuildingPrefabData[building.Id].GetComponent<Building>();
+
+                    Building g_Building = GameManager.Instance.BuildingPrefabData[building.Id].GetComponent<Building>();
 
                 if (g_Building.isStr)       //건축물이라면
                     building.isStr = true;
 
                 g_Building.SetValue(building);
-                    g_Building._AddressableObj = gameobject.Result;
-                    Debug.Log(g_Building.Id+ "의 남은 보상 시간은 " + g_Building.RemainTime);
+                g_Building._AddressableObj = gameobject;
+                Debug.Log(g_Building.Id + "의 남은 보상 시간은 " + g_Building.RemainTime);
 
-                    Currnetbuildings.name = g_Building.Id;
-                    MyBuildings[g_Building.Id] = g_Building;                //해당 건물의 Building스크립트를 참조
+                Currnetbuildings.name = g_Building.Id;
+                MyBuildings[g_Building.Id] = g_Building;                //해당 건물의 Building스크립트를 참조
+
                     if (callback != null)
-                        callback.Invoke();
+                    callback.Invoke();
                     // return g_Building;
-                };
-            }
-            else
-            {
-                Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path).Completed += (gameobject) =>
-                {
+                
+
+        }
+        else
+        {
+            var gameobject = Addressables.InstantiateAsync(GameManager.Instance.BuildingInfo[building.Building_Image].Path, buildings.transform).WaitForCompletion();
+        
                     //GameObject BuildingPrefab = gameobject.Result;
                     //Currnetbuildings = Instantiate(gameobject.Result, new Vector3(0, 0, 0), Quaternion.identity, buildings.transform) as GameObject;
-                    gameobject.Result.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
-                    gameobject.Result.transform.SetParent(buildings.transform);
+                    gameobject.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
+               
 
-                    Building g_Building = gameobject.Result.GetComponent<Building>();
-                    g_Building._AddressableObj = gameobject.Result;
+                Building g_Building = gameobject.GetComponent<Building>();
+                g_Building._AddressableObj = gameobject;
 
-                    Currnetbuildings = gameobject.Result;
+                Currnetbuildings = gameobject;
 
-                    if (callback != null)
-                        callback.Invoke();
-                    
-                };
-            }
+                if (callback != null)
+                    callback.Invoke();
 
+           
+            BuildingObj = gameobject;
         }
-        catch (Exception e)
-        {
-            Debug.LogError(e.Message);
-            throw;
-        }
-       // return null;
+        
+        // return null;
 
     }
     public void RemoveBuilding(string Id)

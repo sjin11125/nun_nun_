@@ -16,6 +16,8 @@ public class UIStorePanel : UIBase
     [SerializeField]
     public StoreNuniInfo StoreNuniInfo;
 
+    public GameObject UIMoneyPanel;
+
     public UIStorePanel(GameObject UIPrefab)
     {
         UIStorePanel r = UIPrefab.GetComponent<UIStorePanel>();
@@ -45,13 +47,13 @@ public class UIStorePanel : UIBase
 
                         foreach (var items in GameManager.Instance.BuildingInfo)
                         {
-                            GameObject BuildingInfoObj = Instantiate(item.Prefab,item.Content.transform) as GameObject;
-                            StoreButton BuildingInfo = BuildingInfoObj.GetComponent<StoreButton>();
+                            GameObject BuildingInfoObj = Instantiate(item.Prefab,item.Content.transform) as GameObject;     //상점 버튼 프리팹 Instantiate
+                            StoreButton BuildingInfo = BuildingInfoObj.GetComponent<StoreButton>();     
 
-                            BuildingInfo.SetStoreData(items.Value);
+                            BuildingInfo.SetStoreData(items.Value);                                 //건물 데이터 세팅
                             if (BuildingInfo.BuyBtn != null)
                             {
-                                BuildingInfo.BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼
+                                BuildingInfo.BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼 구독
                                     int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
                                     int shinmoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
 
@@ -63,26 +65,25 @@ public class UIStorePanel : UIBase
 
 
                                         Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>
-                                        {            //어드레서블로 이미지 불러서 넣기
+                                        {            
                                             Building Newbuilding = gameobject.Result.GetComponent<Building>();
 
                                             Newbuilding.Placed = false;
-                                            Newbuilding.Type = BuildType.Make;
+                                            Newbuilding.Type = BuildType.Make;              //BuildType을 Make로
+                                            Newbuilding._AddressableObj = gameobject.Result;
                                             //Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
 
 
-                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, () => {
+                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, out LoadManager.Instance.Currnetbuildings,() => {            //건물 프리팹 Instantiate 하고 콜백으로 건축모드 ON
+                                                GridBuildingSystem.OnEditMode.OnNext(Newbuilding);                  //건축모드 ON
 
-
-                                                GridBuildingSystem.OnEditMode.OnNext(Newbuilding);
-
-                                                ClosePanel();
+                                                ClosePanel();                                                   //상점 창 닫기
                                             });
                                         };  //어드레서블에서 건물 프리팹 불러와 Instantiate함
                                     }
                                     else
                                     {
-                                        //돈부족 패널 뜨기
+                                        UIYesNoPanel MoneyPanel = new UIYesNoPanel(UIMoneyPanel);  //돈부족 패널 뜨기
                                     }
                                 }).AddTo(this);
                             }
@@ -121,10 +122,11 @@ public class UIStorePanel : UIBase
 
                                             Newbuilding.Placed = false;
                                             Newbuilding.Type = BuildType.Make;
+                                            Newbuilding._AddressableObj = gameobject.Result;
                                             //Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
 
 
-                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, () => {
+                                            LoadManager.Instance.InstantiateBuilding(Newbuilding,out LoadManager.Instance.Currnetbuildings, () => {
 
 
                                                 GridBuildingSystem.OnEditMode.OnNext(Newbuilding);
@@ -135,7 +137,7 @@ public class UIStorePanel : UIBase
                                     }
                                     else
                                     {
-                                        //돈부족 패널 뜨기
+                                        UIYesNoPanel MoneyPanel = new UIYesNoPanel(UIMoneyPanel);  //돈부족 패널 뜨기 //돈부족 패널 뜨기
                                     }
                                 }).AddTo(this);
                             }

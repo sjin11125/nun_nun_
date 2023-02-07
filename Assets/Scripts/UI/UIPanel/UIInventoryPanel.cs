@@ -18,8 +18,8 @@ public class UIInventoryPanel : UIBase
     public Button InvenNuniBtn;
     public Button InvenCloseBtn;
 
-    GameObject ActiveBuildingPrefab;
-    InventoryButton ActiveButton;
+    GameObject ActiveBuildingPrefab=null;
+    InventoryButton ActiveButton=null;
     public UIInventoryPanel(GameObject UIPrefab)
     {
         UIInventoryPanel r = UIPrefab.GetComponent<UIInventoryPanel>();
@@ -131,79 +131,69 @@ public class UIInventoryPanel : UIBase
                     inventoryBtn.SetNoImage(false);                  //X표시 생기게
                 }
 
-                inventoryBtn.SetBuildingInfo(LoadManager.Instance.MyBuildings[item.Value.Id]);
+                
 
                 Building building = item.Value;
                 inventoryBtn.SetBuildingInfo(building);                           //해당 건물 정보 등록
-                inventoryBtn.temp_building = item.Value;
+                //인벤토리 버튼에 건물 정보 넣어주기(ex. 건물 사진 등);
 
-                Button Button = inven.GetComponent<Button>();
+                inventoryBtn.temp_building =LoadManager.Instance.MyBuildings[item.Value.Id];
 
+      
 
-
-                Button.OnClickAsObservable().Subscribe(_ =>                     //인벤토리 건물 클릭 구독
+                inventoryBtn.button.OnClickAsObservable().Subscribe(_ =>                     //인벤토리 건물 클릭 구독
                 {
                     inventoryBtn.SetBuildingInfo(LoadManager.Instance.MyBuildings[inventoryBtn.temp_building.Id]);
                     if (inventoryBtn.temp_building.isLock == "T")         //해당 건물이 설치되었으면
                     {
 
-                        inventoryBtn.temp_building.Type = BuildType.Load;
+                        inventoryBtn.temp_building.Type = BuildType.Load;       //BuildType을 Load로 
                         GridBuildingSystem.OnEditMode.OnNext(inventoryBtn.temp_building);  //건설모드 ON (타일 초기화)
-                        LoadManager.Instance.RemoveBuilding(inventoryBtn.temp_building.Id); //해당 프리팹 삭제
+
+                        Destroy(GameManager.Instance.BuildingPrefabData[inventoryBtn.temp_building.Id]); //해당 건물 오브젝트 삭제
 
                         inventoryBtn.temp_building.isLock = "F";                            //배치안된 상태로 바꾸기
 
-                        inventoryBtn.SetNoImage(false);
+                        inventoryBtn.SetNoImage(false);                             //버튼에 X 이미지 넣기
 
                         inventoryBtn.temp_building.BuildingPosition.x = 0;                            //위치 초기화
                         inventoryBtn.temp_building.BuildingPosition.y = 0;
                         inventoryBtn.temp_building.Placed = false;
-                        // LoadManager.Instance.buildingsave.BuildingReq(BuildingDef.updateValue, inventoryBtn.temp_building);     //서버로 전송
-                        FirebaseScript.Instance.AddBuilding(inventoryBtn.temp_building.BuildingToJson());            //서버로 전송
+
+                        FirebaseScript.Instance.AddBuilding(inventoryBtn.temp_building.BuildingToJson());            //정보를 서버로 전송
                     }
                     else                               //해당 건물이 설치안되어있으면
                     {
-                        Building ActiveBuilding = new Building();
+                        inventoryBtn.temp_building.Type= BuildType.Load;
 
-                        if (ActiveButton != null)            //이전에 배치안한 건물이 있었다면
+                        if (ActiveButton != null)           //이전에 인벤토리 클릭한 적이 있나?
                         {
-                            ActiveButton.SetBuildingInfo(LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id]);
-                            ActiveButton.temp_building.area = LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id].area;
-                            //  Debug.LogError(ActiveButton.temp_building);
-                            if (ActiveButton.temp_building.isLock == "F")
+                            if (ActiveButton.temp_building.isLock == "F")       //이전에 배치안한 건물이 있었다면
                             {
+                                Destroy(ActiveBuildingPrefab);                  //해당 건물의 오브젝트를 삭제
 
-
-                                Destroy(ActiveBuildingPrefab);
                                 ActiveButton.temp_building.Type = BuildType.Load;
+
                                 ActiveButton.SetNoImage(false);                  //X표시 생기게
-                                GridBuildingSystem.OnEditMode.OnNext(ActiveButton.temp_building);  //건설모드 ON (타일 초기화)
-                                if (LoadManager.Instance.MyBuildingsPrefab.ContainsKey(ActiveButton.temp_building.Id))
-                                    LoadManager.Instance.RemoveBuilding(ActiveButton.temp_building.Id); //해당 프리팹 삭제
+
+                                GridBuildingSystem.OnEditMode.OnNext(LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id]);  //건설모드 ON (타일 초기화)
+
                             }
                         }
-                        try
+
+                        LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building,out ActiveBuildingPrefab, () =>      //건물 프리팹 Instantiate하고 콜백 실행
                         {
-                             LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building,()=> { 
-                            ActiveBuilding = LoadManager.Instance.MyBuildingsPrefab[inventoryBtn.temp_building.Id].GetComponent<Building>();
-                            ActiveBuildingPrefab = ActiveBuilding.gameObject;
+                            
+                            GridBuildingSystem.OnEditMode.OnNext(LoadManager.Instance.MyBuildings[inventoryBtn.temp_building.Id]);  //건설모드 ON
+                                inventoryBtn.SetNoImage(true);
+                                ActiveButton = inventoryBtn;
+                                ActiveButton.temp_building.area = LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id].area;
 
-                            ActiveButton = inventoryBtn;
-                            ActiveButton.temp_building.area = LoadManager.Instance.MyBuildings[ActiveButton.temp_building.Id].area;
+                                ActiveButton.temp_building.Type = BuildType.Move;
+                          
+                        });
 
-                            Debug.Log(ActiveBuildingPrefab);
-                            ActiveBuilding.Type = BuildType.Move;
 
-                            GridBuildingSystem.OnEditMode.OnNext(ActiveBuilding);  //건설모드 ON
-                            inventoryBtn.SetNoImage(true);
-                             });
-                       
-                        }
-                        catch (System.Exception e)
-                        {
-                            Debug.LogError(e.Message);
-                            throw;
-                        }
 
                     }
 

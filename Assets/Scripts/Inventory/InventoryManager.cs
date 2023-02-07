@@ -174,7 +174,7 @@ public class InventoryManager : MonoBehaviour
                             }
                             try
                             {
-                                LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building,()=> { 
+                                LoadManager.Instance.InstantiateBuilding(inventoryBtn.temp_building,out ActiveBuildingPrefab, ()=> { 
                                 
                                
                                 ActiveBuilding =LoadManager.Instance.MyBuildingsPrefab[inventoryBtn.temp_building.Id].GetComponent<Building>();
