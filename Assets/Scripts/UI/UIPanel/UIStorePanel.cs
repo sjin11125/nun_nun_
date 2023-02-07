@@ -111,8 +111,8 @@ public class UIStorePanel : UIBase
                                     if (GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0] <= money //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
                                     && GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0] <= shinmoney)
                                     {
-                                        money -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0]; //결제
-                                        shinmoney -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0];
+                                        money -= GameManager.Instance.StrInfo[items.Value.Building_Image].Cost[0]; //결제
+                                        shinmoney -= GameManager.Instance.StrInfo[items.Value.Building_Image].ShinCost[0];
 
 
                                         Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>
