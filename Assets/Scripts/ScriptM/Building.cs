@@ -167,6 +167,7 @@ public class Building : MonoBehaviour
         BuildingPosition = new Vector2(float.Parse(parse.BuildingPosition_x), float.Parse(parse.BuildingPosition_y));
         Id = parse.Id;
         RemainTime = parse.RemainTime;
+        Level = parse.Level;
     }
     public Building DeepCopy()
     {
@@ -194,7 +195,7 @@ public class Building : MonoBehaviour
     }
     public Buildingsave BuildingToJson()
     {
-        Buildingsave BuildingCopy = new Buildingsave(this.BuildingPosition_x,this.BuildingPosition_y,isLock,Building_name,Building_Image,Level.ToString(),isFliped,Id,RemainTime);
+        Buildingsave BuildingCopy = new Buildingsave(this.BuildingPosition_x,this.BuildingPosition_y,isLock,Building_name,Building_Image,Level,isFliped,Id,RemainTime);
         BuildingCopy.Uid = GameManager.Instance.PlayerUserInfo.Uid;
         return BuildingCopy;
     }
@@ -258,29 +259,7 @@ public class Building : MonoBehaviour
             }
         }
 
-        switch (Level)                      //건물 레벨에 따라 레벨별 이미지 넣기
-        {
-            case 1:
-                break;
-            case 2:
-
-                // BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
-                Addressables.LoadAssetAsync<Sprite>(Building_Image + Level.ToString()).Completed += (image) =>
-                {            //어드레서블로 이미지 불러서 넣기
-                    BuildingImage.sprite = image.Result;
-
-                };
-                break;
-            case 3:                     //레벨3은 아직 보류
-                break;
-            default:
-                break;
-        }
-
-        if (isFliped == "F")        //회전 안했는가
-            BuildingBtn.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        else                      //회전 햇는가
-            BuildingBtn.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+       
 
         if (SceneManager.GetActiveScene().name != "Main")           //친구 마을 씬이라면 밑에 실행 ㄴㄴ
             return;
@@ -470,6 +449,32 @@ public class Building : MonoBehaviour
             }).AddTo(this);
         }
 
+    }
+    public void BuildingSetting()
+    {
+        switch (Level)                      //건물 레벨에 따라 레벨별 이미지 넣기
+        {
+            case 1:
+                break;
+            case 2:
+
+                // BuildingImage.sprite = GameManager.GetDogamChaImage(Building_Image + Level.ToString());
+                Addressables.LoadAssetAsync<Sprite>(Building_Image + Level.ToString()).Completed += (image) =>
+                {            //어드레서블로 이미지 불러서 넣기
+                    BuildingImage.sprite = image.Result;
+
+                };
+                break;
+            case 3:                     //레벨3은 아직 보류
+                break;
+            default:
+                break;
+        }
+
+        if (isFliped == "F")        //회전 안했는가
+            BuildingBtn.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        else                      //회전 햇는가
+            BuildingBtn.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
     }
     IEnumerator RewardTimer(int remainTime)
     {

@@ -410,6 +410,10 @@ public class GridBuildingSystem : MonoBehaviour
         SetTilesBlock(area, TileType.Empty, TempTilemap);        //TmpTilemap 비우기
         SetTilesBlock(area, TileType.White, MainTilemap);
     }
+    public void ClearTempArea(BoundsInt area)
+    {
+        SetTilesBlock(area, TileType.Empty, TempTilemap);        //TmpTilemap 비우기
+    }
     #endregion
 
 

@@ -74,7 +74,7 @@ public class UIStorePanel : UIBase
                                             //Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
 
 
-                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, out LoadManager.Instance.Currnetbuildings,() => {            //건물 프리팹 Instantiate 하고 콜백으로 건축모드 ON
+                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, ref LoadManager.Instance.Currnetbuildings,() => {            //건물 프리팹 Instantiate 하고 콜백으로 건축모드 ON
                                                 GridBuildingSystem.OnEditMode.OnNext(Newbuilding);                  //건축모드 ON
 
                                                 ClosePanel();                                                   //상점 창 닫기
@@ -126,7 +126,7 @@ public class UIStorePanel : UIBase
                                             //Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
 
 
-                                            LoadManager.Instance.InstantiateBuilding(Newbuilding,out LoadManager.Instance.Currnetbuildings, () => {
+                                            LoadManager.Instance.InstantiateBuilding(Newbuilding,ref LoadManager.Instance.Currnetbuildings, () => {
 
 
                                                 GridBuildingSystem.OnEditMode.OnNext(Newbuilding);

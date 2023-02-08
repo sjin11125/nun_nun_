@@ -195,7 +195,7 @@ public class LoadManager : MonoBehaviour
             //string BuildingName = LoadBuilding.Building_Image;        //���� ������ �ִ� ���� ����Ʈ���� ���� �̸� �θ���
             try
             {
-                InstantiateBuilding(item.Value,out Currnetbuildings, ()=> {
+                InstantiateBuilding(item.Value,ref Currnetbuildings, ()=> {
                     Building g_Building = Currnetbuildings.GetComponent<Building>();       //건물 Instatiate
 
 
@@ -205,6 +205,7 @@ public class LoadManager : MonoBehaviour
 
                     MyBuildings[g_Building.Id].SetValue(g_Building);
                     MyBuildings[g_Building.Id].area = g_Building.area;
+                   // g_Building.BuildingSetting();
                    GameManager.IDs.Add(g_Building.Id);
                     Debug.Log(g_Building.Id);
                 });
@@ -223,7 +224,7 @@ public class LoadManager : MonoBehaviour
         
       //  UILoadingPanel.DestroyGameObject();
     }
-    public void InstantiateBuilding(Building building, out GameObject BuildingObj, UnityAction callback)
+    public void InstantiateBuilding(Building building, ref GameObject BuildingObj, UnityAction callback)
     {
 
 
@@ -238,7 +239,7 @@ public class LoadManager : MonoBehaviour
                     gameobject.transform.position = new Vector3(building.BuildingPosition.x, building.BuildingPosition.y, 0);
                 
 
-                Currnetbuildings = gameobject;
+               // Currnetbuildings = gameobject;
             BuildingObj = gameobject;
             if (GameManager.Instance.BuildingPrefabData.ContainsKey(building.Id))
                 {
@@ -249,18 +250,18 @@ public class LoadManager : MonoBehaviour
 
 
 
-                    Building g_Building = GameManager.Instance.BuildingPrefabData[building.Id].GetComponent<Building>();
+                    Building g_Building = gameobject.GetComponent<Building>();
 
                 if (g_Building.isStr)       //건축물이라면
                     building.isStr = true;
 
                 g_Building.SetValue(building);
                 g_Building._AddressableObj = gameobject;
-                Debug.Log(g_Building.Id + "의 남은 보상 시간은 " + g_Building.RemainTime);
+            g_Building.BuildingSetting();
+            Debug.Log(g_Building.Id + "의 남은 보상 시간은 " + g_Building.RemainTime);
 
-                Currnetbuildings.name = g_Building.Id;
-                MyBuildings[g_Building.Id] = g_Building;                //해당 건물의 Building스크립트를 참조
-
+            gameobject.name = g_Building.Id;
+              
                     if (callback != null)
                     callback.Invoke();
                     // return g_Building;

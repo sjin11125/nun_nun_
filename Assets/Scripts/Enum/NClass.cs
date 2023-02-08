@@ -74,11 +74,11 @@ public class Buildingsave
     public string Building_Image;          //빌딩 이미지 이름 *
     public string Cost;        //건물비용
     public string ShinCost;
-    public string Level;       //건물 레벨
+    public int Level;       //건물 레벨
     public string isFliped;        //뒤집어졌는지
     public string Id;
     public int RemainTime;
-    public Buildingsave(string buildingPosition_x, string buildingPosition_y, string isLock, string building_name, string building_Image, string level, string isFlied, string id,int remainTime)
+    public Buildingsave(string buildingPosition_x, string buildingPosition_y, string isLock, string building_name, string building_Image, int level, string isFlied, string id,int remainTime)
     {
         BuildingPosition_x = buildingPosition_x;
         BuildingPosition_y = buildingPosition_y;
