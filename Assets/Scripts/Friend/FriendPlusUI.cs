@@ -26,9 +26,9 @@ public class FriendPlusUI : MonoBehaviour
         {
 
 
-            PlusBtn.OnClickAsObservable().Subscribe(_ =>
+            PlusBtn.OnClickAsObservable().Subscribe(_ =>            //친구 요청 버튼을 누르면 구독
             {
-                FirebaseScript.Instance.PlusFriend(gameObject.name).ContinueWith((task) =>
+                FirebaseScript.Instance.PlusFriend(gameObject.name).ContinueWith((task) =>      //요청된 친구 정보 전송
                 {
                     Debug.Log("task: " + task.Result);
                     UnityMainThreadDispatcher.Instance().Enqueue(() =>

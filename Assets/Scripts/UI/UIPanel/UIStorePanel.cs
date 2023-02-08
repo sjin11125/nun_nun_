@@ -64,7 +64,7 @@ public class UIStorePanel : UIBase
                                         shinmoney -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0];
 
 
-                                        Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>
+                                    /*    Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>
                                         {            
                                             Building Newbuilding = gameobject.Result.GetComponent<Building>();
 
@@ -74,12 +74,17 @@ public class UIStorePanel : UIBase
                                             //Newbuilding.area = gameobject.Result.GetComponent<Building>().area;
 
 
-                                            LoadManager.Instance.InstantiateBuilding(Newbuilding, ref LoadManager.Instance.Currnetbuildings,() => {            //건물 프리팹 Instantiate 하고 콜백으로 건축모드 ON
-                                                GridBuildingSystem.OnEditMode.OnNext(Newbuilding);                  //건축모드 ON
+                                        }; */ //어드레서블에서 건물 프리팹 불러와 Instantiate함
+                                        Building Newbuilding = new Building();
+                                        Newbuilding.SetValueParse(GameManager.Instance.BuildingInfo[items.Value.Building_Image]);
+                                        Newbuilding.Type = BuildType.Make;
+                                        LoadManager.Instance.InstantiateBuilding(Newbuilding, ref LoadManager.Instance.Currnetbuildings, () => {            //건물 프리팹 Instantiate 하고 콜백으로 건축모드 ON
 
-                                                ClosePanel();                                                   //상점 창 닫기
-                                            });
-                                        };  //어드레서블에서 건물 프리팹 불러와 Instantiate함
+                                            Newbuilding = LoadManager.Instance.Currnetbuildings.GetComponent<Building>();
+                                            GridBuildingSystem.OnEditMode.OnNext(Newbuilding);                  //건축모드 ON
+
+                                            ClosePanel();                                                   //상점 창 닫기
+                                        });
                                     }
                                     else
                                     {

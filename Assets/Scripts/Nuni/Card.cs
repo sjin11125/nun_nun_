@@ -170,39 +170,44 @@ public class Card : MonoBehaviour
     {
         while (true)
         {
-
             do              //시작위치와 도착위치 정해주기
             {
 
                 StartPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(gameObject.transform.position);
+                //시작위치를 Vector3Int로 변환
+
                 StartPos.size = new Vector3Int(1, 1, 1);
 
                 DestPos.position = GridBuildingSystem.current.gridLayout.WorldToCell(new Vector3(UnityEngine.Random.Range(-9.5f, 10f),
                                                     UnityEngine.Random.Range(-9.5f, 10.5f)));
+                //도착위치를 랜덤으로 정하고 Vector3Int로 변환
+
                 DestPos.size = new Vector3Int(1, 1, 1);
+
                 WonderScript.SetPos(StartPos, DestPos);
+                //도착위치와 시작위치 정해주기
 
             } while (!GridBuildingSystem.current.CanTakeArea(DestPos));
+            //도착위치가 건물에 위치한 곳과 겸치지 않을 때까지 루프
 
             yield return StartCoroutine(Move(WonderScript.Astar()));
-            Debug.Log("Move 코루틴 끝");
+            //도착지가 정해지면 최적의 경로 계산 후 이동
+            //이동을 다하면 그 자리에서 시작위치와 랜덤의 도착위치를 정하고 다시 이동
         }
     }
+
     IEnumerator Move(List<Node> MoveNodes)
     {
-        WaitForSecondsRealtime waitTime=   new WaitForSecondsRealtime(1f);
+        WaitForSecondsRealtime waitTime= new WaitForSecondsRealtime(1f);
     
-
             while (MoveNodes.Count > 0)                 //이동하기
             {
-
                 yield return waitTime;
                 Vector3 target = GridBuildingSystem.current.gridLayout.CellToWorld(new Vector3Int(MoveNodes[0].X, MoveNodes[0].Y, 1));
           
                 while (Vector2.Distance(transform.position, target) > 0.01f)
                 {
-                    Vector3 velo = Vector3.zero;
-                    transform.position = Vector3.MoveTowards(transform.position, target, 1f * Time.deltaTime);// Vector3.SmoothDamp(transform.position, target,ref velo,  0.1f); // Vector3.Lerp(transform.position, target, 5f * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, target, 1f * Time.deltaTime);
                     yield return null;
                 }
                 MoveNodes.RemoveAt(0);

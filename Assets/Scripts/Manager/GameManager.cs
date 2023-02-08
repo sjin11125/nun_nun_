@@ -203,26 +203,32 @@ public class GameManager : Singleton<GameManager>
     public void GameSave()
     {
         FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
+        if (SceneManager.GetActiveScene().name=="Main")
+        {
+            FirebaseScript.Instance.SetAllMyBuilding();
+        }
     }
+
+
     public void UpdateMyAchieveInfo(string id, int count)
     {
-        if (GameManager.Instance.MyAchieveInfos.ContainsKey(id))      //클리어한 업적 중에 해당 업적 Id가 있으면
+        if (GameManager.Instance.MyAchieveInfos.ContainsKey(id))      //진행 중인 업적 중에 해당 업적의 정보가 있나
         {
-            GameManager.Instance.MyAchieveInfos[id].Count += count;
+            GameManager.Instance.MyAchieveInfos[id].Count += count;     //카운트 증가
             if (GameManager.Instance.MyAchieveInfos[id].Count
                 >= GameManager.Instance.AchieveInfos[id].Count[GameManager.Instance.MyAchieveInfos[id].Index])
-            {
+            {           //횟수를 다 채웠으면
                 GameManager.Instance.MyAchieveInfos[id].isReward[GameManager.Instance.MyAchieveInfos[id].Index] = "true";
+                //보상 받을 수 있는 여부를 true로
             }
         }
-        else
+        else                 //진행 중인 업적 중에 해당 업적의 정보가 없나
         {
             MyAchieveInfo NewMyAchieveInfo = new MyAchieveInfo(new string[] { "false", "false", "false", "false", "false" },
                                                                 id, 0, count, GameManager.Instance.PlayerUserInfo.Uid);
 
-            GameManager.Instance.MyAchieveInfos.Add(id, NewMyAchieveInfo);
+            GameManager.Instance.MyAchieveInfos.Add(id, NewMyAchieveInfo);      //해당 업적 정보를 추가해주기
 
-            // GameManager.Instance.MyAchieveInfos[achieveId[0][i]].CountRP.Value += 5;
         }
     }
 

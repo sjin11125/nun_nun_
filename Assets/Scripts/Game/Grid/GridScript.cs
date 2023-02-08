@@ -493,14 +493,17 @@ public class GridScript : MonoBehaviour
         {
             if (colors[i] != null && colors[i + 1] != null && colors[i + 2] != null && colors[i + 3] != null && colors[i + 4] != null)
             {
-                if (colors[i] == colors[i + 1] && colors[i] == colors[i + 2] && colors[i] == colors[i + 3] && colors[i] == colors[i + 4])       //컬러가 같다
+                if (colors[i] == colors[i + 1] && colors[i] == colors[i + 2] &&
+                    colors[i] == colors[i + 3] && colors[i] == colors[i + 4])       //컬러가 같다
                 {
                     sameCompCol = i;
                     sameColorTrueCol = true;
-                    GameManager.Instance.UpdateMyAchieveInfo(achieveId[0,i],5);
+
+                    GameManager.Instance.UpdateMyAchieveInfo(achieveId[0,i],5);     //업적 정보 업데이트
 
                 }
-                if (shapes[i] == shapes[i + 1] && shapes[i] == shapes[i + 2] && shapes[i] == shapes[i + 3] && shapes[i] == shapes[i + 4])       //모양이 같다
+                if (shapes[i] == shapes[i + 1] && shapes[i] == shapes[i + 2] && 
+                    shapes[i] == shapes[i + 3] && shapes[i] == shapes[i + 4])       //모양이 같다
                 {
                     sameCompCol = i;
                     sameShapeTrueCol = true;

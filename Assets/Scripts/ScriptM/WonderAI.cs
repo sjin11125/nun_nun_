@@ -46,30 +46,6 @@ public class WonderAI : MonoBehaviour
     public BoundsInt DestPos;
     public BoundsInt StartPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //ani = gameObject.GetComponent<Animator>();
-
-        //추가
-        /*rend = GetComponentsInChildren<SpriteRenderer>();
-        waitTime = Random.Range(3, 7); // 3~7초동안 기다림 
-
-        //추가 이거를 바꿔서 AI들이 움직이는 범위 지정하면 될거 같음 Good 
-        // 이거의 좌표를 지금 맵 전체로 잡아야 할 것 같음. 그리고 벽을 칠해서 거기 닿이면 방향반대로 하면 될 것 같은데 
-        //벽만들고 벽/건물충돌시 방향반대, 누니는 무시하기
-        minX = Random.Range(-10, 0);
-        maxX = Random.Range(0, 10);
-        minY = Random.Range(-11, 0);
-        maxY = Random.Range(0, 7);*/
-        //Vector3 moveSpot = ai.GameObject.transform.position;
-
-
-      //  waitTime = startWaitTime;
-        //moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-       // moveSpot.position = new Vector2(ai.transform.position.x, ai.transform.position.y); //ai의 position에 spot위치 // move 위치찍기
-
-    }
 
     public void SetPos(BoundsInt Start, BoundsInt Dest)
     {
@@ -77,7 +53,6 @@ public class WonderAI : MonoBehaviour
         DestPos = Dest;
     }
 
-    // Update is called once per frame
    
     public List<Node> Astar()
     {
@@ -145,19 +120,16 @@ public class WonderAI : MonoBehaviour
                 {
                     if (NewNode.G<G)
                     {
-                        //오픈리스트 
+                        //오픈리스트에 넣기
                         priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
 
                     }
                 }
                 else                    //오픈리스트에 없을때
                 {
-                                    //오픈리스트 
+                                    //오픈리스트에 넣기
                     priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
                 }
-
-               // Parent.Add(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX });
-               
             }
         }
         while (EndParent.Parent.X!= StartPos.x||
@@ -174,39 +146,6 @@ public class WonderAI : MonoBehaviour
         Parents.Reverse();
 
         return Parents;
-    }
-    public void OnCollisionStay2D(Collision2D other)
-    {
-        /*if (other.gameObject.tag == "Building")
-        {
-            //반대쪽 X좌표를 찍게 해야 할 것 같음 
-            //if ( this.transform.position.x < moveSpot.position.x)
-            moveSpot.position = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-
-            if (moveSpot.position.x > ai.transform.position.x)
-            {
-
-                for (int i = 0; i < rend.Length; i++) // 뒤집히기
-                {
-                    rend[i].flipX = true;
-                }
-            }
-            else
-            {
-                for (int i = 0; i < rend.Length; i++)
-                {
-                    rend[i].flipX = false;
-                }
-            }
-
-            waitTime = startWaitTime;
-
-
-
-
-            // wait-deltaTime=0이 되면 다음포지션을 정한다. 
-        }*/
-
     }
 }
 

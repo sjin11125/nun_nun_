@@ -278,15 +278,15 @@ public class LoadManager : MonoBehaviour
                
 
                 Building g_Building = gameobject.GetComponent<Building>();
-                g_Building._AddressableObj = gameobject;
+            g_Building.SetValue(building);
+
+            g_Building._AddressableObj = gameobject;
 
                 Currnetbuildings = gameobject;
 
                 if (callback != null)
                     callback.Invoke();
 
-           
-            BuildingObj = gameobject;
         }
         
         // return null;

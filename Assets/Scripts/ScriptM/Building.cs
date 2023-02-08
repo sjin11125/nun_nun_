@@ -150,9 +150,10 @@ public class Building : MonoBehaviour
         //ShinCost = parse.ShinCost;
         Level = parse.Level;       //건물 레벨
         isFliped = parse.isFliped;
-        BuildingPosition_x = parse.BuildingPosition_x;
-        BuildingPosition_y = parse.BuildingPosition_y;
-        BuildingPosition = new Vector2(float.Parse(parse.BuildingPosition_x),float.Parse( parse.BuildingPosition_y));
+        RemainTime = parse.RewardTime;
+       // BuildingPosition_x = parse.BuildingPosition_x;
+       // BuildingPosition_y = parse.BuildingPosition_y;
+        //BuildingPosition = new Vector2(float.Parse(parse.BuildingPosition_x),float.Parse( parse.BuildingPosition_y));
         Id = parse.Id;
     }
     public  Building(Buildingsave parse)
@@ -413,39 +414,34 @@ public class Building : MonoBehaviour
         //보상을 받을 수 있는지 체크
 
 
-        if (RemainTime > 1) //보상을 받을 수 없으면
+        if (RemainTime > 0) //보상을 받을 수 없으면
         {
-            StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+            StartCoroutine(RewardTimer()); //보상받는 카운트 시작
             if (RewardBtn != null)
                 RewardBtn.gameObject.SetActive(false);      //보상버튼 비활성화
         }
         else                    //보상을 받을 수 있으면
         {
-            if (Type != BuildType.Make)
-            {
-
                 if (RewardBtn != null)
                     RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
-            }
+            
         }
         if (RewardBtn != null && SceneManager.GetActiveScene().name != "FriendMain")
         {
-            RewardBtn.OnClickAsObservable().Subscribe(_ =>
+            RewardBtn.OnClickAsObservable().Subscribe(_ =>          //보상 받기 버튼 누르면
             {
-                Debug.Log("Before" + GameManager.Instance.PlayerUserInfo.Money);
 
                 int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
                 money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
                 GameManager.Instance.PlayerUserInfo.Money = money.ToString();
 
-                RewardBtn.gameObject.SetActive(false);
+                RewardBtn.gameObject.SetActive(false);          //보상 버튼 사라짐
 
-                Debug.Log("After" + GameManager.Instance.PlayerUserInfo.Money);
+      
+                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;    
+                //남은 보상 시간 초기화
 
-                Debug.Log("RewardTime: " + GameManager.Instance.BuildingInfo[Building_Image].RewardTime);
-                RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
-
-                StartCoroutine(RewardTimer(RemainTime)); //보상받는 카운트 시작
+                StartCoroutine(RewardTimer()); //보상받는 카운트 시작
             }).AddTo(this);
         }
 
@@ -476,16 +472,16 @@ public class Building : MonoBehaviour
         else                      //회전 햇는가
             BuildingBtn.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
     }
-    IEnumerator RewardTimer(int remainTime)
+    IEnumerator RewardTimer()
     {
-        while (RemainTime>1)
+        while (RemainTime>0)
         {
 
             yield return new WaitForSecondsRealtime(1.0f);
             RemainTime -= 1;
         
         }
-        if (RemainTime==1)
+        if (RemainTime==0)
         {
             RewardBtn.gameObject.SetActive(true);      //보상버튼 활성화
         }
@@ -602,7 +598,7 @@ public class Building : MonoBehaviour
 
                 RemainTime = GameManager.Instance.BuildingInfo[Building_Image].RewardTime;
                 RewardBtn.gameObject.SetActive(false);
-                StartCoroutine(RewardTimer(RemainTime)); //보상 받는 코루틴 시작
+                StartCoroutine(RewardTimer()); //보상 받는 코루틴 시작
 
                 FirebaseScript.Instance.AddBuilding(this.BuildingToJson());
 

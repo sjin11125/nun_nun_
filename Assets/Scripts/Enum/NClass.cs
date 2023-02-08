@@ -213,26 +213,20 @@ public class AchieveReward
 [Serializable]
 public class AchieveInfo
 {
-    public string AchieveName,Context;
-    public int[] Count;
-    public string[] CountType;
-    //public AchieveCountType[] CountType;
-    // public string[] Count;
-    public string[] Reward;
-    public string[] RewardType;
-    // public AchieveRewardType[] RewardType;
-    //public string[] Reward;
-    public string Id;
-    public bool isClear;            //새로 클리어했는지 여부
+    public string AchieveName,Context;          //업적 제목,내용
+    public int[] Count;                         //목표 카운트
+    public string[] Reward;                     //업적 인덱스별 보상 목록
+    public string[] RewardType;                 //업적 인덱스별 보상 타입
+    public string Id;                           //업적 고유 ID
 }
 [Serializable]
 public class MyAchieveInfo
 {   
     public string[] isReward;           //해당 인덱스 별 보상받았는지 
-    public string Id;
-    public int Index;
-    public int Count;
-    public ReactiveProperty<int> CountRP;            //새로 클리어했는지 여부
+    public string Id;               //해당 업적 고유 ID
+    public int Index;               //해당 업적 인덱스
+    public int Count;               //해당 업적 카운트
+
     public string Uid;
 
     public MyAchieveInfo(string[] isReward, string id, int index, int count,string uid)
@@ -242,7 +236,6 @@ public class MyAchieveInfo
         Index = index;
         Count = count;
         Uid = uid;
-       // CountRP.Value =int.Parse( count);
     }
 }
 [Serializable]

@@ -2726,12 +2726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AchieveName: {fileID: 7693644696721758372}
   AchieveCount: {fileID: 3619873209367392901}
-  CountText:
-  - {fileID: 3243309598340870334}
-  - {fileID: 3243309597153091521}
-  - {fileID: 3243309596976971142}
-  - {fileID: 3243309598521594520}
-  - {fileID: 3243309597867077148}
+  RewardText: {fileID: 3243309597625254261}
   CountSlider: {fileID: 8626793188979077888}
   RewardBtn: {fileID: 3243309598235140306}
   RewardImage: {fileID: 8259423312833325951}
@@ -3111,7 +3106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 958949603338384817, guid: c955df8cefeb3b64cb218064054d7759, type: 3}
       propertyPath: m_Text
-      value: +2000
+      value: +0
       objectReference: {fileID: 0}
     - target: {fileID: 958949603338384817, guid: c955df8cefeb3b64cb218064054d7759, type: 3}
       propertyPath: m_Color.b
@@ -3143,6 +3138,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c955df8cefeb3b64cb218064054d7759, type: 3}
+--- !u!114 &3243309597625254261 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 958949603338384817, guid: c955df8cefeb3b64cb218064054d7759, type: 3}
+  m_PrefabInstance: {fileID: 2327326849277752516}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3243309598235140306 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 958949602189792278, guid: c955df8cefeb3b64cb218064054d7759, type: 3}
