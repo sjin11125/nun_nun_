@@ -56,17 +56,16 @@ public class WonderAI : MonoBehaviour
    
     public List<Node> Astar()
     {
-        int[] MoveY = new int[4] { 1, -1, 0, 0 };//상,하,좌,우,(좌상,우상,좌하,우하)만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
+        int[] MoveY = new int[4] { 1, -1, 0, 0 };//상,하,좌,우 만큼 이동하려면 더해주기 ex) 상으로 가려면 y를 1해줘야함
         int[] MoveX = new int[4] { 0, 0, -1, 1};
 
-        int[] Cost = new int[4] { 1,1,1,1 };
+        int[] Cost = new int[4] { 1,1,1,1 };            //비용(거리)
 
        List<Node> Closed = new List<Node>();           //이미 방문한 타일 모음
-       List<Node> Opened = new List<Node>();           //방문할 타일들 모음
        List<Node> Parents = new List<Node>();           //방문할 타일들 모음
-       Node EndParent = new Node();           //부모 타일(이전 타일)
+       Node EndParent = new Node();           //마지막 타일
 
-        SimplePriorityQueue<Node> priorityQueue = new SimplePriorityQueue<Node>();
+        SimplePriorityQueue<Node> priorityQueue = new SimplePriorityQueue<Node>();      //우선순위큐
 
         Node StartNode = new Node();
         StartNode.G = 0;
@@ -75,14 +74,12 @@ public class WonderAI : MonoBehaviour
         StartNode.Y = StartPos.y;
         StartNode.Parent = StartNode;
 
-       // Parent.Add(StartNode);                  //제일 처음 타일 부모 타일 리스트에 넣기
-
         priorityQueue.Enqueue(StartNode, StartNode.F);
 
-        while (priorityQueue.Count>0)       //큐가 안남을때까지 돌려놔~ 너를 만나기 전에 내 모습으로~~
+        while (priorityQueue.Count>0)       //큐가 안남을때까지 루프
         {
             Node NewNode= priorityQueue.Dequeue();//F값이 제일 적은 노드 빼오기
-            //Debug.Log("연결리스트 좌표 (" + NewNode.X + ", " + NewNode.Y + ")");
+
             if (Closed.Any(node => node.X == NewNode.X && node.Y == NewNode.Y))     //이미 방문한 타일이라면 패스
                 continue;
 
@@ -102,7 +99,6 @@ public class WonderAI : MonoBehaviour
 
                 Node BNode = new Node() { Y = nextY, X = nextX };
 
-                // Vector3Int position = new Vector3Int(nextX, nextY);
                 BoundsInt position = new BoundsInt();
                 position.x = nextX;
                 position.y = nextY;
@@ -116,6 +112,7 @@ public class WonderAI : MonoBehaviour
 
                 if (NewNode.G + NewNode.H < G + H)               //현재위치에서 상하좌우 중 제일 거리(F)가 짧은 타일로 감
                    continue;
+
                 if (priorityQueue.Any(node => node.X == BNode.X && node.Y == BNode.Y))          //오픈리스트에 있을 때
                 {
                     if (NewNode.G<G)
@@ -132,6 +129,8 @@ public class WonderAI : MonoBehaviour
                 }
             }
         }
+        Debug.Log("EndParent: "+EndParent.X+", "+ EndParent.Y);
+        Debug.Log("StartPos: " + StartPos.x+", "+ StartPos.y);
         while (EndParent.Parent.X!= StartPos.x||
             EndParent.Parent.Y != StartPos.y)
         {
