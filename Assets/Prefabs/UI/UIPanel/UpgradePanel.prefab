@@ -358,8 +358,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2360323921054798699, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
+      propertyPath: m_Text
+      value: "\uC5C5\uADF8\uB808\uC774\uB4DC"
+      objectReference: {fileID: 0}
     - target: {fileID: 3594496775184476414, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552195727474998595, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7390193762401510284, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
@@ -478,7 +486,10 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\uC5C5\uADF8\uB808\uC774\uB4DC \uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7390193762401510273, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
+    - {fileID: 7390193762513063591, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
+    - {fileID: 3594496775184476415, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: da51a8f3e96963d4ba809e36b3b41a14, type: 3}
 --- !u!1 &5544224975788530128 stripped
 GameObject:

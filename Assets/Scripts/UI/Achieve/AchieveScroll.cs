@@ -75,20 +75,15 @@ public class AchieveScroll : MonoBehaviour
             switch (GameManager.Instance.AchieveInfos[Info.Id].RewardType[index])
             {           //해당 업적의 보상 리워드 타입에 따라 
                 case "Money":
-      
                     GameManager.Instance.Money.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
-                  
                     break;
 
                 case "ShinMoney":
-                    GameManager.Instance.ShinMoney.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
-                  
+                    GameManager.Instance.ShinMoney.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);                    
                     break;
 
                 case "Zem":
-                    int zem = int.Parse(GameManager.Instance.PlayerUserInfo.Zem);
-                    zem += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
-                    GameManager.Instance.PlayerUserInfo.Zem = zem.ToString();
+                    GameManager.Instance.Zem.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
                     break;
 
                 default:
