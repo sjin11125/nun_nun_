@@ -284,8 +284,10 @@ public class FirebaseLogin : MonoBehaviour
             {
                 try { 
                 GameManager.Instance.PlayerUserInfo = JsonUtility.FromJson<UserInfo>((string)task.Result.Data);     //유저 정보 세팅
-                   
-                GameManager.Instance.PlayerUserInfo.Uid = idToken;
+                    Debug.Log("Money: " + long.Parse(GameManager.Instance.PlayerUserInfo.Money));
+                    GameManager.Instance.PlayerUserInfo.Uid = idToken;      //유저 정보 넣기
+
+              
                     Addressables.InitializeAsync().Completed += (result) =>
                     {
                         if (result.IsDone)
@@ -314,6 +316,11 @@ public class FirebaseLogin : MonoBehaviour
                                 Debug.Log("My id: " + GameManager.Instance.MyAchieveInfos[achieveInfo.Id].Id);
                             }
                             UnityMainThreadDispatcher.Instance().Enqueue(() => {
+                            //재화넣기
+                            GameManager.Instance.Money.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Money);
+                            GameManager.Instance.ShinMoney.Value = long.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
+                            GameManager.Instance.Zem.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Zem);
+                            
 
                                 if (GameManager.Instance.PlayerUserInfo.NickName == "")       //닉네임이 설정안되어있다면
                                 {

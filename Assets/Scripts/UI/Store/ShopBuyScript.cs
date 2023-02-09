@@ -14,7 +14,7 @@ public class ShopBuyScript : MonoBehaviour
 
     public void NuniBuy()
     {
-        if (int.Parse(GameManager.Instance.PlayerUserInfo.Money) < 2000)
+        if (GameManager.Instance.Money.Value < 2000)
         {
             CancelText.gameObject.SetActive(true);
             return;
@@ -29,7 +29,7 @@ public class ShopBuyScript : MonoBehaviour
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
             Achieve12++;
-            int goalCount = CanvasManger.achieveContNuniIndex[12];
+           /* int goalCount = CanvasManger.achieveContNuniIndex[12];
             switch (goalCount)
             {
                 case 0:
@@ -65,7 +65,7 @@ public class ShopBuyScript : MonoBehaviour
                 default:
                     CanvasManger.currentAchieveSuccess[12] = false;
                     break;
-            }
+            }*/
         }
     }
 }

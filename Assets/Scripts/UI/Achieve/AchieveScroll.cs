@@ -68,23 +68,21 @@ public class AchieveScroll : MonoBehaviour
         }
 
         RewardBtn.OnClickAsObservable().Subscribe(_ => {                //보상 받기 버튼 구독
-            Debug.Log("Before Money: "+ GameManager.Instance.PlayerUserInfo.Money);
+            Debug.Log("Before Money: "+ GameManager.Instance.Money.Value);
 
             if (GameManager.Instance.MyAchieveInfos[Info.Id].isReward[index] == "false") 
                 return;
             switch (GameManager.Instance.AchieveInfos[Info.Id].RewardType[index])
             {           //해당 업적의 보상 리워드 타입에 따라 
                 case "Money":
-                    int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-                    money+= int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
-                    GameManager.Instance.PlayerUserInfo.Money = money.ToString();
-
+      
+                    GameManager.Instance.Money.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
+                  
                     break;
 
                 case "ShinMoney":
-                    int shinmoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-                    shinmoney += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
-                    GameManager.Instance.PlayerUserInfo.ShinMoney = shinmoney.ToString();
+                    GameManager.Instance.ShinMoney.Value += int.Parse(GameManager.Instance.AchieveInfos[Info.Id].Reward[index]);
+                  
                     break;
 
                 case "Zem":

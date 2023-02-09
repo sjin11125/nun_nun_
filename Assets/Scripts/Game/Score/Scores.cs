@@ -92,18 +92,13 @@ public class Scores : MonoBehaviour
 
     public void coinInput()
     {
-        int Money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-        Money += currentScores_;
-        GameManager.Instance.PlayerUserInfo.Money = Money.ToString();
+        GameManager.Instance.Money.Value += currentScores_;
 
 
-        CanvasManger.AchieveMoney += currentScores_;
+        //CanvasManger.AchieveMoney += currentScores_;
 
-        int ShinMoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-        ShinMoney += currentShinScores_;
-        GameManager.Instance.PlayerUserInfo.ShinMoney = ShinMoney.ToString();
-         
-        CanvasManger.AchieveShinMoney += currentShinScores_;
+      GameManager.Instance.ShinMoney.Value += currentShinScores_;
+        //CanvasManger.AchieveShinMoney += currentShinScores_;
 
         GameManager.BestScore = bestScores_.score;
     }

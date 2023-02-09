@@ -289,6 +289,10 @@ public class FirebaseScript : MonoBehaviour
                     GameManager.Instance.PlayerUserInfo = JsonUtility.FromJson<UserInfo>((string)task.Result.Data);     //유저 정보 세팅
 
                     GameManager.Instance.PlayerUserInfo.Uid = idToken;
+
+                    GameManager.Instance.Money.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Money);
+                    GameManager.Instance.ShinMoney.Value = long.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
+                    GameManager.Instance.Zem.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Zem);
                     Addressables.InitializeAsync().Completed += (result) =>
                     {
                         if (result.IsDone)

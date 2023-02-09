@@ -54,14 +54,12 @@ public class UIStorePanel : UIBase
                             if (BuildingInfo.BuyBtn != null)
                             {
                                 BuildingInfo.BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼 구독
-                                    int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-                                    int shinmoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-
-                                    if (GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0] <= money //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
-                                    && GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0] <= shinmoney)
+                             
+                                    if (GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0] <= GameManager.Instance.Money.Value //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
+                                    && GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0] <= GameManager.Instance.ShinMoney.Value)
                                     {
-                                        money -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0]; //결제
-                                        shinmoney -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0];
+                                        GameManager.Instance.Money.Value -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0]; //결제
+                                        GameManager.Instance.ShinMoney.Value -= GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0];
 
 
                                     /*    Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>
@@ -111,14 +109,12 @@ public class UIStorePanel : UIBase
                             if (BuildingInfo.BuyBtn != null)
                             {
                                 BuildingInfo.BuyBtn.OnClickAsObservable().Subscribe(_ => {                //구매버튼
-                                    int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-                                    int shinmoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-
-                                    if (GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0] <= money //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
-                                    && GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0] <= shinmoney)
+                               
+                                    if (GameManager.Instance.BuildingInfo[items.Value.Building_Image].Cost[0] <= GameManager.Instance.Money.Value //자원체크(돈있으면 결제, 없으면 돈없다는 패널뜸)
+                                    && GameManager.Instance.BuildingInfo[items.Value.Building_Image].ShinCost[0] <= GameManager.Instance.ShinMoney.Value)
                                     {
-                                        money -= GameManager.Instance.StrInfo[items.Value.Building_Image].Cost[0]; //결제
-                                        shinmoney -= GameManager.Instance.StrInfo[items.Value.Building_Image].ShinCost[0];
+                                        GameManager.Instance.Money.Value -= GameManager.Instance.StrInfo[items.Value.Building_Image].Cost[0]; //결제
+                                        GameManager.Instance.ShinMoney.Value -= GameManager.Instance.StrInfo[items.Value.Building_Image].ShinCost[0];
 
 
                                         Addressables.LoadAssetAsync<GameObject>(items.Value.Path).Completed += (gameobject) =>

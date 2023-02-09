@@ -99,6 +99,7 @@ exports.findUser=functions.https.onCall(async (req, res) => {
       Image:"snow",
       Money:"2000",
       ShinMoney:"0",
+      Zem:"0",
       Tuto:"0",
       Version:"1.3.6",
       Id:"",
@@ -213,10 +214,10 @@ exports.setAllBuilding=functions.https.onCall(async(req,res)=>{
 });
 exports.setUser=functions.https.onCall(async (req, res) => {
   const db=admin.firestore();
-  console.log("req: "+req);
+
   const userData=JSON.parse(req);
   
-  console.log("req to json: "+JSON.stringify(userData));
+
   const user = db.collection('user').doc(userData.Uid);
   const doc = await user.get();
 
@@ -227,6 +228,7 @@ exports.setUser=functions.https.onCall(async (req, res) => {
     Image:userData.Image,
     Money:userData.Money,
     ShinMoney:userData.ShinMoney,
+    Zem:userData.Zem,
     Tuto:userData.Tuto,
     Version:userData.Version,
     NickName:userData.NickName,

@@ -13,7 +13,7 @@ public class QuestController : MonoBehaviour
         gridObj = GameObject.FindGameObjectWithTag("Grid");
         for (int i = 0; i < count.Length; i++)
         {
-            count[i] = CanvasManger.achieveCount[i];
+           // count[i] = CanvasManger.achieveCount[i];
             transform.GetChild(i).GetChild(1).GetComponent<Text>().text= count[i].ToString();
         }
     }
@@ -44,7 +44,7 @@ public class QuestController : MonoBehaviour
             }
         }
         transform.GetChild(questIndex).GetChild(1).GetComponent<Text>().text = count[questIndex].ToString();
-        int goalCount = CanvasManger.achieveContNuniIndex[questIndex];
+     /*   int goalCount = CanvasManger.achieveContNuniIndex[questIndex];
         switch (goalCount)
         {
             case 0:
@@ -81,7 +81,7 @@ public class QuestController : MonoBehaviour
                 CanvasManger.currentAchieveSuccess[questIndex] = false;
                 break;
         }
-        CanvasManger.achieveCount[questIndex] = count[questIndex];
+        CanvasManger.achieveCount[questIndex] = count[questIndex];*/
     }
     public void GetShapes(string shape, int questIndex)
     {
@@ -93,7 +93,7 @@ public class QuestController : MonoBehaviour
             }
         }
         transform.GetChild(questIndex).GetChild(1).GetComponent<Text>().text = count[questIndex].ToString();
-        int goalCount = CanvasManger.achieveContNuniIndex[questIndex];
+      /*  int goalCount = CanvasManger.achieveContNuniIndex[questIndex];
         switch (goalCount)
         {
             case 0:
@@ -130,6 +130,6 @@ public class QuestController : MonoBehaviour
                 CanvasManger.currentAchieveSuccess[questIndex] = false;
                 break;
         }
-        CanvasManger.achieveCount[questIndex] = count[questIndex];
+        CanvasManger.achieveCount[questIndex] = count[questIndex];*/
     }
 }

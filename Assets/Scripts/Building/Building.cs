@@ -431,9 +431,9 @@ public class Building : MonoBehaviour
             RewardBtn.OnClickAsObservable().Subscribe(_ =>          //보상 받기 버튼 누르면
             {
 
-                int money = int.Parse(GameManager.Instance.PlayerUserInfo.Money); //보상받기
-                money += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
-                GameManager.Instance.PlayerUserInfo.Money = money.ToString();
+               //보상받기
+                GameManager.Instance.Money.Value += GameManager.Instance.BuildingInfo[Building_Image].Reward[Level - 1];
+               
 
                 RewardBtn.gameObject.SetActive(false);          //보상 버튼 사라짐
 

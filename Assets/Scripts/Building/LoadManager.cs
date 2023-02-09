@@ -45,16 +45,7 @@ public class LoadManager : MonoBehaviour
     public Button MyHomeBtn;
 
     public GameObject TutoManager;
-    private void FixedUpdate()
-    {
-        if (SceneManager.GetActiveScene().name == "Main")
-        {
 
-
-            MoneyText.text = GameManager.Instance.PlayerUserInfo.Money;
-            ShinMoneyText.text = GameManager.Instance.PlayerUserInfo.ShinMoney;
-        }
-    }
     public static LoadManager Instance
     {
         get
@@ -111,6 +102,17 @@ public class LoadManager : MonoBehaviour
 
             });
         }
+        GameManager.Instance.Money.Subscribe((money)=> {
+
+            MoneyText.text = money.ToString();
+        });
+        
+        GameManager.Instance.ShinMoney.Subscribe((shinmoney)=> {
+
+            ShinMoneyText.text = shinmoney.ToString();
+        });
+
+
         if (SceneManager.GetActiveScene().name.Equals("Main"))          //메인씬이면
         {
 

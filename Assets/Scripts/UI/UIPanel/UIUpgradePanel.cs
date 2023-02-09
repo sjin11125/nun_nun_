@@ -137,18 +137,13 @@ public class UIUpgradePanel : UIBase
 
     void MoneyCheck()
     {
-        
 
-        if (int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney) >= ShinMoneyCost &&           //재화 체크
-            int.Parse(GameManager.Instance.PlayerUserInfo.Money) >= MoneyCost)
+
+        if (GameManager.Instance.ShinMoney.Value >= ShinMoneyCost &&           //재화 체크
+           GameManager.Instance.Money.Value >= MoneyCost)
         {
-            int ShinMoney = int.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
-            ShinMoney -= ShinMoneyCost;
-            GameManager.Instance.PlayerUserInfo.ShinMoney = ShinMoney.ToString();
-
-            int Money = int.Parse(GameManager.Instance.PlayerUserInfo.Money);
-            Money -= MoneyCost;
-            GameManager.Instance.PlayerUserInfo.Money = Money.ToString();
+            GameManager.Instance.ShinMoney.Value -= ShinMoneyCost;
+            GameManager.Instance.Money.Value -= MoneyCost;
 
             building.Level += 1;
             Addressables.LoadAssetAsync<Sprite>(building.Building_Image + building.Level.ToString()).Completed += (image) =>
@@ -156,7 +151,7 @@ public class UIUpgradePanel : UIBase
                 building.BuildingImage.sprite = image.Result;
 
             };
-          //  building.BuildingImage.sprite = GameManager.GetDogamChaImage(building.Building_Image + building.Level.ToString());//건물이미지 바꿈
+            //  building.BuildingImage.sprite = GameManager.GetDogamChaImage(building.Building_Image + building.Level.ToString());//건물이미지 바꿈
         }
         else                                             //재화가 없음
         {

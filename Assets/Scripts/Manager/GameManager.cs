@@ -96,10 +96,6 @@ public class GameManager : Singleton<GameManager>
     public static bool nuniDialogParse = false;
 
     public Card CurrentNuni;
-    //-----------------------------------여기서부터 재화---------------------------------
-    public static int Money;            //재화
-    public static int ShinMoney;
-    public static int Zem;
 
 
     //---------------------------------------------------------------------------------------------
@@ -110,9 +106,11 @@ public class GameManager : Singleton<GameManager>
 
     public static string NickName;      //플레이어 닉네임
 
+
     public ReactiveProperty<Sprite> ProfileImage = new ReactiveProperty<Sprite>();       //플레이어 프로필 이미지
-
-
+    public ReactiveProperty<long> Money = new ReactiveProperty<long>();       //돈(얼음)
+    public ReactiveProperty<long> ShinMoney = new ReactiveProperty<long>();       //돈(얼음)
+    public ReactiveProperty<long> Zem = new ReactiveProperty<long>();       //돈(얼음)
 
     public static bool isReward;        //일괄수확 가능한지
 
@@ -137,9 +135,6 @@ public class GameManager : Singleton<GameManager>
      */
 
     public bool isTuto=false;
-
-    //--------------------------------------------------------------------퀘스트---------------------------------------------------
-
 
 
     public static bool gameMusicOn = true;
@@ -202,6 +197,10 @@ public class GameManager : Singleton<GameManager>
 
     public void GameSave()
     {
+        GameManager.Instance.PlayerUserInfo.Money = GameManager.Instance.Money.ToString();
+        GameManager.Instance.PlayerUserInfo.ShinMoney = GameManager.Instance.ShinMoney.ToString();
+        GameManager.Instance.PlayerUserInfo.Zem = GameManager.Instance.Zem.ToString();
+
         FirebaseScript.Instance.SetUserInfo(GameManager.Instance.PlayerUserInfo);
         if (SceneManager.GetActiveScene().name=="Main")
         {
