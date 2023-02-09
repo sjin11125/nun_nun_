@@ -11,19 +11,7 @@ public class SettingScript : MonoBehaviour
     public AudioSource BGM;
     public AudioSource SoundEffect;
 
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SoundChange(string Soundname)
     {
