@@ -7287,7 +7287,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b33f4daf3b1aa8428d33e49476b361b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  csvData: {fileID: 0}
+  Questlist: []
   QuestText: []
+  Quest: []
+  QuestArray:
+  - quest: 
+    count: 
+    title: 
+  - quest: 
+    count: 
+    title: 
+  - quest: 
+    count: 
+    title: 
+  GetQuestList: []
+  isStart: 0
+  isReset: 
 --- !u!4 &1980512271
 Transform:
   m_ObjectHideFlags: 0
