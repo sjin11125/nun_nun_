@@ -102,16 +102,22 @@ public class LoadManager : MonoBehaviour
 
             });
         }
-        GameManager.Instance.Money.Subscribe((money)=> {
+        if (MoneyText != null && ShinMoneyText != null)
+        {
 
-            MoneyText.text = money.ToString();
-        });
-        
-        GameManager.Instance.ShinMoney.Subscribe((shinmoney)=> {
 
-            ShinMoneyText.text = shinmoney.ToString();
-        });
+            GameManager.Instance.Money.Subscribe((money) =>
+            {
 
+                MoneyText.text = money.ToString();
+            }).AddTo(this);
+
+            GameManager.Instance.ShinMoney.Subscribe((shinmoney) =>
+            {
+
+                ShinMoneyText.text = shinmoney.ToString();
+            }).AddTo(this);
+        }
 
         if (SceneManager.GetActiveScene().name.Equals("Main"))          //메인씬이면
         {
