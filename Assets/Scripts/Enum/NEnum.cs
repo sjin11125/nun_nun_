@@ -165,3 +165,22 @@ public enum LoginType {
 
 
 }
+
+public enum Dir
+{
+    Right = 1,
+    Left = -1,
+    Up = -7,
+    Down = 7
+
+}
+public enum GameState
+{
+    Start,
+    Playing,
+    End
+}
+public enum PuzzleState
+{
+    NB, MB, LB, CB
+}
