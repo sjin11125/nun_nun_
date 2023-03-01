@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3962451199112031082}
   - component: {fileID: 3962451199112031083}
   - component: {fileID: 88933382662369223}
-  - component: {fileID: -3800623684766306880}
   - component: {fileID: 7333390988844844625}
   - component: {fileID: 642635586091707084}
+  - component: {fileID: 5589495574579259763}
   m_Layer: 5
   m_Name: Shape
   m_TagString: NB
@@ -124,26 +124,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-3800623684766306880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3962451199112031077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d3391c726c2ae44195743ad4c49b2fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  X: 0
-  Y: 0
-  Image: {fileID: 3962451199112031083}
-  ShapeNum: 0
-  Index: 0
-  Btn: {fileID: 88933382662369223}
-  State: 0
-  isSelected: 0
 --- !u!61 &7333390988844844625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,3 +171,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5589495574579259763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3962451199112031077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57dd84d5f492a6244b5008473627d7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 0
+  Image: {fileID: 3962451199112031083}
+  ShapeNum: 0
+  Index: 0
+  Btn: {fileID: 88933382662369223}
+  State: 0
+  isSelected: 0

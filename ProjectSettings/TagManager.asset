@@ -43,6 +43,8 @@ TagManager:
   - TutoBuy
   - ShopBtn
   - Card
+  - NB
+  - MB
   layers:
   - Default
   - TransparentFX

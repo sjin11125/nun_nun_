@@ -65,7 +65,7 @@ public class Board : Singleton<Board>
                 startIndex++;
             }
         }
-        CountText.text = ClearCount.ToString();
+       // CountText.text = ClearCount.ToString();
 
         OverlapCheck();         //중복 체크
 
@@ -584,7 +584,7 @@ public class Board : Singleton<Board>
     void UpdateCount()
     {
         ClearCount -= 1;
-        CountText.text = ClearCount.ToString();
+       // CountText.text = ClearCount.ToString();
         if (ClearCount == 0)
         {
             ClearPanel.SetActive(true);
