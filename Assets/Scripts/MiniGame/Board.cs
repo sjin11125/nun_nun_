@@ -10,7 +10,8 @@ public class Board : Singleton<Board>
     public Sprite[] ShapeImages;
 
     public int Height, Width = 7;
-    public ReactiveProperty<int> Score=new ReactiveProperty<int>   ();
+    public ReactiveProperty<int> Score=new ReactiveProperty<int> ();
+    public ReactiveProperty<int> time = new ReactiveProperty<int>();
 
 
     public GameObject ShapeParent;
@@ -22,10 +23,9 @@ public class Board : Singleton<Board>
     public Puzzle SelectedShape;
 
 
-    int ClearCount = 3;
     public Text ScoreText;
     public Text TimerText;
-    public GameObject ClearPanel;
+    public GameObject GameOverPanel;
 
     int[,] CheckDirections =
  {
@@ -38,7 +38,45 @@ public class Board : Singleton<Board>
     GameState gameState = GameState.Start;
     void Start()
     {
+        BoardSetting();     //맨 처음 타일 세팅
+
+        Score.AsObservable().Subscribe(score=> {
+            ScoreText.text = score.ToString(); 
+
+
+        });
+
+        
+
+        Observable.Timer(System.TimeSpan.FromSeconds(1)).Repeat().Subscribe(_=> {
+            if (time.Value != 0)
+            {
+
+
+                time.Value--;
+
+                TimerText.text = time.Value.ToString();
+
+                if (time.Value == 0)            //타이머 시간이 끝났을 때
+                {
+                    GameOverPanel.SetActive(true);
+                }
+            }
+        });
+       // CountText.text = ClearCount.ToString();
+
+        OverlapCheck();         //중복 체크
+
+        gameState = GameState.Playing;
+    }
+
+    public void BoardSetting()
+    {
         int startIndex = 0;
+
+        time.Value = 60;            //타이머 시간 세팅
+        Score.Value = 0;            //점수 세팅
+
         for (int i = 0; i < Height; i++)
         {
             for (int k = 0; k < Width; k++)
@@ -67,17 +105,6 @@ public class Board : Singleton<Board>
                 startIndex++;
             }
         }
-
-        Score.AsObservable().Subscribe(score=> {
-            ScoreText.text = score.ToString(); 
-
-
-        });
-       // CountText.text = ClearCount.ToString();
-
-        OverlapCheck();         //중복 체크
-
-        gameState = GameState.Playing;
     }
     public void OverlapCheck()
     {
@@ -144,7 +171,6 @@ public class Board : Singleton<Board>
                 yield return StartCoroutine(CreatePuzzle());
 
 
-                UpdateCount();
 
                 Destroy(MBBlockObj);
                 break;
@@ -163,7 +189,6 @@ public class Board : Singleton<Board>
 
                 yield return StartCoroutine(CreatePuzzle());
 
-                UpdateCount();
 
                 Destroy(MBBlockObj);
 
@@ -181,7 +206,6 @@ public class Board : Singleton<Board>
 
                 yield return StartCoroutine(CreatePuzzle());
 
-                UpdateCount();
                 Destroy(MBBlockObj);
 
                 break;
@@ -199,7 +223,6 @@ public class Board : Singleton<Board>
 
                 yield return StartCoroutine(CreatePuzzle());
 
-                UpdateCount();
                 Destroy(MBBlockObj);
                 break;
             default:
@@ -589,14 +612,5 @@ public class Board : Singleton<Board>
         }
 
     }
-    void UpdateCount()
-    {
-        ClearCount -= 1;
-       // CountText.text = ClearCount.ToString();
-        if (ClearCount == 0)
-        {
-            ClearPanel.SetActive(true);
-        }
-
-    }
+  
 }
