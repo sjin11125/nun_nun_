@@ -131,7 +131,8 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
         while (transform.position != DesObj.transform.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, DesObj.transform.position, 100 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, DesObj.transform.position,  500*Time.deltaTime);
+            
             yield return null;
         }
         yield return null;
@@ -140,7 +141,7 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         while (transform.position != DesObj.transform.position)
         {
-            transform.position = Vector3.MoveTowards(transform.position, DesObj.transform.position, 90 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, DesObj.transform.position, 500 * Time.deltaTime);
 
 
             yield return null;
