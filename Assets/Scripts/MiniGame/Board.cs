@@ -60,6 +60,7 @@ public class Board : Singleton<Board>
                 if (time.Value == 0)            //타이머 시간이 끝났을 때
                 {
                     GameOverPanel.SetActive(true);
+                    GameManager.Instance.Money.Value += Score.Value;            //점수를 돈으로 추가
                 }
             }
         });
