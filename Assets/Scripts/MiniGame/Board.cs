@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UniRx;
 
 public class Board : Singleton<Board>
 {
     public Sprite[] ShapeImages;
 
     public int Height, Width = 7;
+    public ReactiveProperty<int> Score=new ReactiveProperty<int>   ();
 
-    GridLayoutGroup gridLayoutGroup;
 
     public GameObject ShapeParent;
     public GameObject ShapePrefab;
@@ -22,7 +23,8 @@ public class Board : Singleton<Board>
 
 
     int ClearCount = 3;
-    public Text CountText;
+    public Text ScoreText;
+    public Text TimerText;
     public GameObject ClearPanel;
 
     int[,] CheckDirections =
@@ -65,6 +67,12 @@ public class Board : Singleton<Board>
                 startIndex++;
             }
         }
+
+        Score.AsObservable().Subscribe(score=> {
+            ScoreText.text = score.ToString(); 
+
+
+        });
        // CountText.text = ClearCount.ToString();
 
         OverlapCheck();         //중복 체크

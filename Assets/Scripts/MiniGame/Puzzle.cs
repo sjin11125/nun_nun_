@@ -192,7 +192,9 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (State != PuzzleState.MB)
         {
             Board.Instance.Boards[Y, X] = null;
+            
         }
+        Board.Instance.Score.Value += 10;
     }
 }
 
