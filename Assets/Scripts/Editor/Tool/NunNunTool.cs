@@ -56,6 +56,17 @@ public class NunNunTool : EditorWindow
         }
         using (new EditorGUILayout.HorizontalScope())
         {
+            if (GUILayout.Button("미니게임씬"))
+            {
+                if (EditorSceneManager.GetActiveScene().isDirty)
+                {
+                    EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                }
+                EditorSceneManager.OpenScene("Assets/Scenes/MiniGame.unity");
+            }
+        }
+        using (new EditorGUILayout.HorizontalScope())
+        {
             if (GUILayout.Button("친구마을씬"))
             {
                 if (EditorSceneManager.GetActiveScene().isDirty)
