@@ -74,7 +74,7 @@ public class Board : Singleton<Board>
         });
         // CountText.text = ClearCount.ToString();
 
-        OverlapCheck();         //중복 체크
+       // OverlapCheck();         //중복 체크
 
         gameState = GameState.Playing;
 
@@ -156,6 +156,15 @@ public class Board : Singleton<Board>
             }
         }
     }
+    public void MatchCheckStart(Dir dir)
+   {
+        StartCoroutine(Board.Instance.MatchCheck(dir));
+    }
+    public void MunchkinBlockCheck(Dir dir,int X,int Y,GameObject gameObject)
+    {
+
+        StartCoroutine(MunchkinBlock(dir, X, Y, gameObject));
+    }
     public IEnumerator MatchCheck(Dir dir)
     {
         switch (dir)
@@ -189,71 +198,82 @@ public class Board : Singleton<Board>
                 yield return StartCoroutine(Boards[Y, X].MBBlockMoveCoroutine(obj, dir));
 
 
-                Boards[Y, X].GetComponent<Image>().enabled = false;
-                Boards[Y, X].GetComponent<BoxCollider2D>().enabled = false;//먼치킨 블럭 삭제 후 퍼즐 내려오기
+                //shapeInfo.GetComponent<Image>().enabled = false;
+                //shapeInfo.GetComponent<BoxCollider2D>().enabled = false;//먼치킨 블럭 삭제 후 퍼즐 내려오기
                 Boards[Y, X] = null;
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(DownPuzzle());
 
 
                 yield return new WaitForSeconds(1);
-                MBBlockObj.SetActive(false);
+                
                 yield return StartCoroutine(CreatePuzzle());
 
 
-
+                /*shapeInfo.GetComponent<Image>().enabled = true;
+                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
+                shapeInfo.State = PuzzleState.NB;*/
                 //Destroy(MBBlockObj);
-                
+
                 break;
 
             case Dir.Left:
                 obj = BoardObj[(Boards.GetLength(0) * Y)];
                 yield return StartCoroutine(Boards[Y, X].MBBlockMoveCoroutine(obj, dir));
                 Boards[Y, X] = null;
-                shapeInfo.GetComponent<Image>().enabled = false;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
-
+                // shapeInfo.GetComponent<Image>().enabled = false;
+                //shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(DownPuzzle());
 
 
                 yield return new WaitForSeconds(1);
-                MBBlockObj.SetActive(false);
+             
                 yield return StartCoroutine(CreatePuzzle());
 
 
+               /* shapeInfo.GetComponent<Image>().enabled = true;
+                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
+                shapeInfo.State = PuzzleState.NB;*/
                 //Destroy(MBBlockObj);
-                
+
                 break;
             case Dir.Up:
                 obj = BoardObj[X];
                 yield return StartCoroutine(Boards[Y, X].MBBlockMoveCoroutine(obj, dir));
 
                 Boards[Y, X] = null;
-                shapeInfo.GetComponent<Image>().enabled = false;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
-
-
-                yield return new WaitForSeconds(1);
+                // shapeInfo.GetComponent<Image>().enabled = false;
+                //shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
 
                 MBBlockObj.SetActive(false);
+                yield return new WaitForSeconds(1);
+
                 yield return StartCoroutine(CreatePuzzle());
 
-                //Destroy(MBBlockObj);
+               /* shapeInfo.GetComponent<Image>().enabled = true;
+                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
+
+                shapeInfo.State = PuzzleState.NB;//Destroy(MBBlockObj);*/
                 break;
             case Dir.Down:
                 obj = BoardObj[shapeInfo.Index + (7 * (Boards.GetLength(0) - Y - 1))];
                 yield return StartCoroutine(Boards[Y, X].MBBlockMoveCoroutine(obj, dir));
                 Boards[Y, X] = null;
-                shapeInfo.GetComponent<Image>().enabled = false;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
-
+                // shapeInfo.GetComponent<Image>().enabled = false;
+                //shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(DownPuzzle());
 
 
                 yield return new WaitForSeconds(1);
 
-                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(CreatePuzzle());
 
+               /* shapeInfo.GetComponent<Image>().enabled = true;
+                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
+
+                shapeInfo.State = PuzzleState.NB;*/
                 //Destroy(MBBlockObj);
                 break;
             default:
@@ -632,6 +652,7 @@ public class Board : Singleton<Board>
                     GameObject ShapeObj = GetObject();
                     ShapeObj.SetActive(true);
                     ShapeObj.transform.position = BoardObj[x].transform.position;
+                    ShapeObj.tag = "NB";
                     Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
                     newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
 

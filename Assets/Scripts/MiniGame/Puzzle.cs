@@ -81,9 +81,9 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 Debug.Log("오른쪽으로 움직임");
 
                 if (State != PuzzleState.MB)
-                    StartCoroutine(Board.Instance.MatchCheck(Dir.Right));
+                    Board.Instance.MatchCheckStart(Dir.Right);
                 else
-                    StartCoroutine(Board.Instance.MunchkinBlock(Dir.Right, X, Y, this.gameObject));
+                    Board.Instance.MunchkinBlockCheck(Dir.Right, X, Y, this.gameObject);
 
 
             }
@@ -94,9 +94,9 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 Debug.Log("왼쪽으로 움직임");
 
                 if (State != PuzzleState.MB)
-                    StartCoroutine(Board.Instance.MatchCheck(Dir.Left));
+                    Board.Instance.MatchCheckStart(Dir.Left);
                 else
-                    StartCoroutine(Board.Instance.MunchkinBlock(Dir.Left, X, Y, this.gameObject));
+                    Board.Instance.MunchkinBlockCheck(Dir.Left, X, Y, this.gameObject);
             }
             else if ((FirstPosition.y < Input.mousePosition.y) &&
                Mathf.Abs(FirstPosition.y) + 100 < Mathf.Abs(Input.mousePosition.y))                                  //위쪽으로 움직임
@@ -105,9 +105,9 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 Debug.Log("위쪽으로 움직임");
 
                 if (State != PuzzleState.MB)
-                    StartCoroutine(Board.Instance.MatchCheck(Dir.Up));
+                    Board.Instance.MatchCheckStart(Dir.Up);
                 else
-                    StartCoroutine(Board.Instance.MunchkinBlock(Dir.Up, X, Y, this.gameObject));
+                    Board.Instance.MunchkinBlockCheck(Dir.Up, X, Y, this.gameObject);
             }
             else if ((FirstPosition.y > Input.mousePosition.y) &&
                Mathf.Abs(FirstPosition.y) - 100 > Mathf.Abs(Input.mousePosition.y))                                  //아래쪽으로 움직임
@@ -116,9 +116,9 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                 Debug.Log("아래쪽으로 움직임");
 
                 if (State != PuzzleState.MB)
-                    StartCoroutine(Board.Instance.MatchCheck(Dir.Down));
+                    Board.Instance.MatchCheckStart(Dir.Down);
                 else
-                    StartCoroutine(Board.Instance.MunchkinBlock(Dir.Down, X, Y, this.gameObject));
+                    Board.Instance.MunchkinBlockCheck(Dir.Down, X, Y, this.gameObject);
             }
 
             //  StartCoroutine(Board.Instance.DownCreateMatchCheck());
