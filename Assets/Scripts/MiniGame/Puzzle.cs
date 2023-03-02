@@ -183,7 +183,7 @@ public class Puzzle : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             if (collision.CompareTag("MB"))         //먼치킨 블럭이랑 만나면
             {
-                Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

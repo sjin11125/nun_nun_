@@ -16,6 +16,14 @@ public class TransferMap : MonoBehaviour
 
                 LoadingSceneController.Instance.LoadScene(SceneName.Main);
                 break;
+            case "Game":
+
+                LoadingSceneController.Instance.LoadScene(SceneName.Game);
+                break;
+            case "MiniGame":
+
+                LoadingSceneController.Instance.LoadScene(SceneName.MiniGame);
+                break;
             default:
                 break;
         }

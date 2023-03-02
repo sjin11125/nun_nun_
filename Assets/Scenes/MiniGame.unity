@@ -904,7 +904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &195384491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2066,7 +2066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &377426611
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2822,6 +2822,8 @@ MonoBehaviour:
   ScoreText: {fileID: 923957718}
   TimerText: {fileID: 1700665836}
   GameOverPanel: {fileID: 429039110}
+  GameOverScoreText: {fileID: 299729296}
+  GetMoneyText: {fileID: 1044513236}
 --- !u!114 &481500218
 MonoBehaviour:
   m_ObjectHideFlags: 0

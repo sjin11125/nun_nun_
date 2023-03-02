@@ -26,6 +26,8 @@ public class Board : Singleton<Board>
     public Text ScoreText;
     public Text TimerText;
     public GameObject GameOverPanel;
+    public Text GameOverScoreText;
+    public Text GetMoneyText;
 
     int[,] CheckDirections =
  {
@@ -35,20 +37,24 @@ public class Board : Singleton<Board>
     { 1, -1 },   // 좌측하단
     };
 
+    List<GameObject> ObjPooling = new List<GameObject>();
+
     GameState gameState = GameState.Start;
     void Start()
     {
         BoardSetting();     //맨 처음 타일 세팅
 
-        Score.AsObservable().Subscribe(score=> {
-            ScoreText.text = score.ToString(); 
+        Score.AsObservable().Subscribe(score =>
+        {
+            ScoreText.text = score.ToString();
 
 
         });
 
-        
 
-        Observable.Timer(System.TimeSpan.FromSeconds(1)).Repeat().Subscribe(_=> {
+
+        Observable.Timer(System.TimeSpan.FromSeconds(1)).Repeat().Subscribe(_ =>
+        {
             if (time.Value != 0)
             {
 
@@ -60,16 +66,35 @@ public class Board : Singleton<Board>
                 if (time.Value == 0)            //타이머 시간이 끝났을 때
                 {
                     GameOverPanel.SetActive(true);
+                    GetMoneyText.text= Score.Value.ToString();
+                    GameOverScoreText.text = Score.Value.ToString();
                     GameManager.Instance.Money.Value += Score.Value;            //점수를 돈으로 추가
                 }
             }
         });
-       // CountText.text = ClearCount.ToString();
+        // CountText.text = ClearCount.ToString();
 
         OverlapCheck();         //중복 체크
 
         gameState = GameState.Playing;
+
     }
+    public GameObject GetObject()           //오브젝트풀에서 비활성화된 오브젝트 불러오기
+    {
+        foreach (var item in ObjPooling)
+        {
+            if (!item.activeInHierarchy)       //활성화가 안되어있는 오브젝트가 있으면?
+            {
+                //내보내기
+
+                return item;
+            }
+        }
+        //활성화가 안되어있는 오브젝트가 없을 때 (그럴 일은 없겠지만)
+        GameObject newObj = Instantiate(ShapePrefab,ShapeParent.transform);
+        return newObj;
+    }
+
 
     public void BoardSetting()
     {
@@ -91,6 +116,9 @@ public class Board : Singleton<Board>
 
 
                 GameObject ShapeObj = Instantiate(ShapePrefab, ShapeParent.transform) as GameObject;
+
+                ObjPooling.Add(ShapeObj);           //오브젝트 풀링 대입
+
                 Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
 
                 newShape.SetInfo(new Puzzle(k, i, Random.Range(0, 3), startIndex, PuzzleState.NB));            //노멀블럭으로 랜덤0~3
@@ -168,12 +196,13 @@ public class Board : Singleton<Board>
 
 
                 yield return new WaitForSeconds(1);
-
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(CreatePuzzle());
 
 
 
-                Destroy(MBBlockObj);
+                //Destroy(MBBlockObj);
+                
                 break;
 
             case Dir.Left:
@@ -187,12 +216,12 @@ public class Board : Singleton<Board>
 
 
                 yield return new WaitForSeconds(1);
-
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(CreatePuzzle());
 
 
-                Destroy(MBBlockObj);
-
+                //Destroy(MBBlockObj);
+                
                 break;
             case Dir.Up:
                 obj = BoardObj[X];
@@ -205,10 +234,10 @@ public class Board : Singleton<Board>
 
                 yield return new WaitForSeconds(1);
 
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(CreatePuzzle());
 
-                Destroy(MBBlockObj);
-
+                //Destroy(MBBlockObj);
                 break;
             case Dir.Down:
                 obj = BoardObj[shapeInfo.Index + (7 * (Boards.GetLength(0) - Y - 1))];
@@ -222,9 +251,10 @@ public class Board : Singleton<Board>
 
                 yield return new WaitForSeconds(1);
 
+                MBBlockObj.SetActive(false);
                 yield return StartCoroutine(CreatePuzzle());
 
-                Destroy(MBBlockObj);
+                //Destroy(MBBlockObj);
                 break;
             default:
                 obj = null;
@@ -329,9 +359,12 @@ public class Board : Singleton<Board>
                             Boards[ShapeData.Y, ShapeData.X].Image.sprite = ShapeImages[4];
                             Boards[ShapeData.Y, ShapeData.X].gameObject.tag = "MB";
 
-                            Destroy(Boards[ShapeData.Y, ShapeData.X + CheckDirections[i, 1]].gameObject);  //다른 블럭 삭제
-                            Destroy(Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X + CheckDirections[i, 1]].gameObject);
-                            Destroy(Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X].gameObject);  //다른 블럭 삭제
+                            Boards[ShapeData.Y, ShapeData.X + CheckDirections[i, 1]].gameObject.SetActive(false);
+                            Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X + CheckDirections[i, 1]].gameObject.SetActive(false);
+                            Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X].gameObject.SetActive(false);
+                            //Destroy(Boards[ShapeData.Y, ShapeData.X + CheckDirections[i, 1]].gameObject);  //다른 블럭 삭제
+                            // Destroy(Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X + CheckDirections[i, 1]].gameObject);
+                          //  Destroy(Boards[ShapeData.Y + CheckDirections[i, 0], ShapeData.X].gameObject);  //다른 블럭 삭제
                         }
                         isMatch = true;
                         return isMatch;     //바로 넘겨버려
@@ -596,7 +629,8 @@ public class Board : Singleton<Board>
                 if (Boards[y, x] == null)
                 {
 
-                    GameObject ShapeObj = Instantiate(ShapePrefab, ShapeParent.transform) as GameObject;
+                    GameObject ShapeObj = GetObject();
+                    ShapeObj.SetActive(true);
                     ShapeObj.transform.position = BoardObj[x].transform.position;
                     Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
                     newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));

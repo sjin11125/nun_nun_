@@ -111,7 +111,8 @@ public enum SceneName
     Main,
     Shop,
     FriendMain,
-    Game
+    Game,
+    MiniGame
 }
 public enum UIBtn
 {
