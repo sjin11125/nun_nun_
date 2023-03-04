@@ -13,7 +13,8 @@ public class Board : Singleton<Board>
     public ReactiveProperty<int> Score=new ReactiveProperty<int> ();
     public ReactiveProperty<int> time = new ReactiveProperty<int>();
 
-
+    public List<Puzzle> NewPuzzle = new List<Puzzle>();
+    //ReactiveCollection<Puzzle> NewPuzzle = new ReactiveCollection<Puzzle>();
     public GameObject ShapeParent;
     public GameObject ShapePrefab;
 
@@ -66,7 +67,7 @@ public class Board : Singleton<Board>
                 if (time.Value == 0)            //타이머 시간이 끝났을 때
                 {
                     GameOverPanel.SetActive(true);
-                    GetMoneyText.text= Score.Value.ToString();
+                    GetMoneyText.text = Score.Value.ToString();
                     GameOverScoreText.text = Score.Value.ToString();
                     GameManager.Instance.Money.Value += Score.Value;            //점수를 돈으로 추가
                 }
@@ -74,10 +75,29 @@ public class Board : Singleton<Board>
         });
         // CountText.text = ClearCount.ToString();
 
-       // OverlapCheck();         //중복 체크
+        // OverlapCheck();         //중복 체크
 
         gameState = GameState.Playing;
 
+      
+    }
+    public IEnumerator MatchCheckAgain(Puzzle puzzle)
+    {
+        if (Match2X2(puzzle))        //(2x2 매치 처리)움직인 타일 반대편도 처리해주기
+        {
+            yield return StartCoroutine(DownPuzzle());
+           
+            // yield return StartCoroutine(DownCreateMatchCheck());
+            // yield return StartCoroutine(CreatePuzzle());
+        }
+        else if (Match345(puzzle.X, puzzle.Y, puzzle.Index))
+        {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
+            yield return StartCoroutine(DownPuzzle());
+           // yield return StartCoroutine(CreatePuzzle());
+            //  yield return StartCoroutine(DownCreateMatchCheck());
+            //yield return StartCoroutine(CreatePuzzle());
+        }
+        // yield return StartCoroutine(DownCreateMatchCheck());
     }
     public GameObject GetObject()           //오브젝트풀에서 비활성화된 오브젝트 불러오기
     {
@@ -113,24 +133,17 @@ public class Board : Singleton<Board>
                     startIndex++;
                     continue;
                 }*/
-
-
                 GameObject ShapeObj = Instantiate(ShapePrefab, ShapeParent.transform) as GameObject;
-
                 ObjPooling.Add(ShapeObj);           //오브젝트 풀링 대입
-
                 Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
-
-                newShape.SetInfo(new Puzzle(k, i, Random.Range(0, 3), startIndex, PuzzleState.NB));            //노멀블럭으로 랜덤0~3
-                Boards[i, k] = newShape;
-
-                /*  Vector3 childWorldPos = transform.TransformPoint(new Vector3(
-                           (startIndex / 7) * (cellSize.y + spacing.y) + cellSize.y / 2,
-                           (startIndex % 7) * (cellSize.x + spacing.x) + cellSize.x / 2,
-                          0f
-                          ));*/
-
-                ShapeObj.transform.position = BoardObj[startIndex].transform.position;
+                do
+                {
+                    newShape.SetInfo(new Puzzle(k, i, Random.Range(0, 3), startIndex, PuzzleState.NB));            //노멀블럭으로 랜덤0~3
+                    Boards[i, k] = newShape;
+                    ShapeObj.transform.position = BoardObj[startIndex].transform.position;
+                } while (Match2X2(newShape) || Match345(newShape.X, newShape.Y, newShape.Index));
+            
+                
                 startIndex++;
             }
         }
@@ -415,7 +428,7 @@ public class Board : Singleton<Board>
         //---------------------------수정중---------------------------------------
         for (int i = 1; i < 7; i++)                //상
         {
-            if (y - i >= 0)
+            if (y - i >= 0&& Boards[y - i, x]!=null)
             {
 
                 if (SelectedShape.ShapeNum == Boards[y - i, x].ShapeNum)
@@ -431,7 +444,7 @@ public class Board : Singleton<Board>
 
         for (int i = 1; i < 7; i++)                //하
         {
-            if (y + i < 7)
+            if (y + i < 7&& Boards[y + i, x]!=null)
             {
                 if (SelectedShape.ShapeNum == Boards[y + i, x].ShapeNum)
                 {
@@ -452,7 +465,7 @@ public class Board : Singleton<Board>
 
         for (int i = 1; i < 7; i++)                //좌
         {
-            if (x - i >= 0)
+            if (x - i >= 0&& Boards[y, x - i]!=null)
             {
                 if (SelectedShape.ShapeNum == Boards[y, x - i].ShapeNum)
                 {
@@ -473,7 +486,7 @@ public class Board : Singleton<Board>
 
         for (int i = 1; i < 7; i++)                //우
         {
-            if (x + i < 7)
+            if (x + i < 7&& Boards[y, x + i]!=null)
             {
                 if (SelectedShape.ShapeNum == Boards[y, x + i].ShapeNum)
                 {
@@ -621,7 +634,8 @@ public class Board : Singleton<Board>
                     Boards[y + blank, x].Y = y + blank;
                     Boards[y + blank, x].Index = x + (y + blank) * 7;
 
-                    StartCoroutine(Boards[y + blank, x].MoveCoroutine(BoardObj[x + (y + blank) * 7]));               //오브젝트 이동
+                     StartCoroutine(Boards[y + blank, x].MoveCoroutine(BoardObj[x + (y + blank) * 7]));               //오브젝트 이동
+                    
                     yield return 0;
                     //null;
                     y -= 1;
@@ -630,10 +644,15 @@ public class Board : Singleton<Board>
                 else
                     y -= 1;
             }
-
+            
             x++;
         }
+        foreach (var item in NewPuzzle)
+        {
 
+            yield return StartCoroutine(MatchCheckAgain(item));
+        }
+        yield return StartCoroutine(CreatePuzzle());
     }
     public IEnumerator CreatePuzzle()
     {
@@ -657,7 +676,9 @@ public class Board : Singleton<Board>
                     newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
 
                     Boards[newShape.Y, newShape.X] = newShape;
+                   
                     yield return StartCoroutine(DownPuzzle());
+                    NewPuzzle.Add(newShape);
                     // break;
                 }
                 else
