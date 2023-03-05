@@ -88,14 +88,14 @@ public class Board : Singleton<Board>
             yield return StartCoroutine(DownPuzzle());
            
             // yield return StartCoroutine(DownCreateMatchCheck());
-            // yield return StartCoroutine(CreatePuzzle());
+             yield return StartCoroutine(CreatePuzzle());
         }
         else if (Match345(puzzle.X, puzzle.Y, puzzle.Index))
         {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
             yield return StartCoroutine(DownPuzzle());
            // yield return StartCoroutine(CreatePuzzle());
             //  yield return StartCoroutine(DownCreateMatchCheck());
-            //yield return StartCoroutine(CreatePuzzle());
+            yield return StartCoroutine(CreatePuzzle());
         }
         // yield return StartCoroutine(DownCreateMatchCheck());
     }
@@ -148,27 +148,7 @@ public class Board : Singleton<Board>
             }
         }
     }
-    public void OverlapCheck()
-    {
-
-        for (int i = 0; i < Height; i++)
-        {
-            for (int k = 0; k < Width; k++)
-            {
-                int rand = 0;
-
-                while (Match2X2(Boards[i, k]) || Match345(Boards[i, k].X, Boards[i, k].Y, Boards[i, k].Index))           //처음에 매치 되는 것 막기
-                {
-                    do
-                    {
-                        rand = Random.Range(0, 3);
-                    } while (Boards[i, k].ShapeNum == rand);
-                    Boards[i, k].ShapeNum = rand;
-                    Boards[i, k].Image.sprite = ShapeImages[rand];
-                }
-            }
-        }
-    }
+   
     public void MatchCheckStart(Dir dir)
    {
         StartCoroutine(Board.Instance.MatchCheck(dir));
@@ -324,45 +304,51 @@ public class Board : Singleton<Board>
         ///2x2 아래로 체크 할 때 y+1이 GetLength 이상 OR x+1이 0 미만이면 2x2 체크 취소
         // if (SelectedShape.X + 1 >= 0 && SelectedShape.Y + 1 < Boards.GetLength(0))
         // {
-        if (Match2X2(SelectedShape) || Match2X2(Boards[SelectedShape.Y - YDir, SelectedShape.X - XDir]))        //(2x2 매치 처리)움직인 타일 반대편도 처리해주기
+        int x = 0, y = 0;
+        bool isMoved = true;
+        do
         {
-            yield return StartCoroutine(DownPuzzle());
-            yield return StartCoroutine(CreatePuzzle());
-            // yield return StartCoroutine(DownCreateMatchCheck());
-            // yield return StartCoroutine(CreatePuzzle());
-        }
-        else if (Match345(SelectedShape.X, SelectedShape.Y, SelectedShape.Index) || Match345(SelectedShape.X - XDir, SelectedShape.Y - YDir, SelectedShape.Index - (int)tempDir))
-        {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
-            yield return StartCoroutine(DownPuzzle());
-            yield return StartCoroutine(CreatePuzzle());
-            //  yield return StartCoroutine(DownCreateMatchCheck());
-            //yield return StartCoroutine(CreatePuzzle());
-        }
-        else            //하나도 맞는게 없다면
-        {
-
-            yield return StartCoroutine(Swap(-XDir, -YDir, -(int)tempDir));
-        }
-
-
-    }
-    public IEnumerator DownCreateMatchCheck()
-    {
-
-        //내려온 타일들이 매치가 되는지 확인
-        for (int i = 0; i < Height; i++)
-        {
-            for (int k = 0; k < Width; k++)
+            if (Match2X2(Boards[y, x]))        //(2x2 매치 처리)움직인 타일 반대편도 처리해주기
             {
-
-                while (Match2X2(Boards[i, k]) || Match345(Boards[i, k].X, Boards[i, k].Y, Boards[i, k].Index))
+                yield return StartCoroutine(DownPuzzle());
+                //yield return StartCoroutine(CreatePuzzle());
+                // yield return StartCoroutine(DownCreateMatchCheck());
+                // yield return StartCoroutine(CreatePuzzle());
+                x = 0;
+                y = 0;
+            }
+            else if (Match345(Boards[y, x].X, Boards[y, x].Y, Boards[y, x].Index) )
+            {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
+                yield return StartCoroutine(DownPuzzle());
+                //yield return StartCoroutine(CreatePuzzle());
+                //  yield return StartCoroutine(DownCreateMatchCheck());
+                //yield return StartCoroutine(CreatePuzzle());
+                x = 0;
+                y = 0;
+            }
+            else            //하나도 맞는게 없다면
+            {
+                if (isMoved == true&&x== SelectedShape.X&&y== SelectedShape.Y)
                 {
-                    yield return StartCoroutine(DownPuzzle());
-                    yield return StartCoroutine(CreatePuzzle());
+
+                    yield return StartCoroutine(Swap(-XDir, -YDir, -(int)tempDir));
+                    isMoved = false;
                 }
             }
-        }
+            x++;
+            if (x>=7)
+            {
+                x = 0;
+                y++;
+            }
+            //yield return new WaitForSeconds(1f) ;
+        } while (y!=7);
+       
+      
+
+
     }
+
     public bool Match2X2(Puzzle ShapeData)
     {
         bool isMatch = false;
@@ -634,7 +620,7 @@ public class Board : Singleton<Board>
                     Boards[y + blank, x].Y = y + blank;
                     Boards[y + blank, x].Index = x + (y + blank) * 7;
 
-                     StartCoroutine(Boards[y + blank, x].MoveCoroutine(BoardObj[x + (y + blank) * 7]));               //오브젝트 이동
+                    StartCoroutine(Boards[y + blank, x].MoveCoroutine(BoardObj[x + (y + blank) * 7]));               //오브젝트 이동
                     
                     yield return 0;
                     //null;
@@ -647,12 +633,42 @@ public class Board : Singleton<Board>
             
             x++;
         }
-        foreach (var item in NewPuzzle)
-        {
+        /*x = 0;
 
-            yield return StartCoroutine(MatchCheckAgain(item));
-        }
-        yield return StartCoroutine(CreatePuzzle());
+        while (x < 7)
+        {
+            int y = 6;
+            while (y >= 0)
+            {
+
+                if (Boards[y, x] == null)
+                {
+
+                    GameObject ShapeObj = GetObject();
+                    ShapeObj.SetActive(true);
+                    ShapeObj.transform.position = BoardObj[x].transform.position;
+                    ShapeObj.tag = "NB";
+                    Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
+                    newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
+
+                    Boards[newShape.Y, newShape.X] = newShape;
+
+                     StartCoroutine(DownPuzzle());
+                    NewPuzzle.Add(newShape);
+                    // break;
+                }
+                else
+                    y--;
+
+            }
+            x++;
+        }*/
+        /* foreach (var item in NewPuzzle)
+         {
+
+             yield return StartCoroutine(MatchCheckAgain(item));
+         }*/
+        //yield return StartCoroutine(CreatePuzzle());
     }
     public IEnumerator CreatePuzzle()
     {
@@ -676,10 +692,11 @@ public class Board : Singleton<Board>
                     newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
 
                     Boards[newShape.Y, newShape.X] = newShape;
-                   
+
                     yield return StartCoroutine(DownPuzzle());
                     NewPuzzle.Add(newShape);
                     // break;
+                    yield return 0;
                 }
                 else
                     y--;
