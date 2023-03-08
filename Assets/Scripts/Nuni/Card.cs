@@ -139,8 +139,8 @@ public class Card : MonoBehaviour
                 isDialog = true;
                 DialogObject.SetActive(true); //대화창 생성
                 DialogTxt.text = GameManager.Instance.NuniInfo[cardImage].Dialog[UnityEngine.Random.Range(0, GameManager.Instance.NuniInfo[cardImage].Dialog.Length - 1)];
-
-                // _countDownObservable.Connect();
+                //대사 랜덤 생성
+           
                 StartCoroutine(Wait(3));
 
 
@@ -166,6 +166,7 @@ public class Card : MonoBehaviour
         isDialog = false;
         DialogObject.SetActive(false); //대화창 생성
     }
+
     IEnumerator FirstStart()
     {
         while (true)

@@ -20,10 +20,7 @@ public class WonderAI : MonoBehaviour
 
 {
 
-    //콜라이더 충돌하면 방향바꾸기
-
-    SpriteRenderer[] rend;
-    SpriteRenderer[] rend2;
+  
 
     //public Animator animator;
     //추가
@@ -93,7 +90,6 @@ public class WonderAI : MonoBehaviour
 
             for (int i = 0; i < MoveY.Length; i++)      //상하좌우
             {
-                
                 int nextY = NewNode.Y + MoveY[i];
                 int nextX = NewNode.X + MoveX[i];
 
@@ -129,8 +125,7 @@ public class WonderAI : MonoBehaviour
                 }
             }
         }
-        Debug.Log("EndParent: "+EndParent.X+", "+ EndParent.Y);
-        Debug.Log("StartPos: " + StartPos.x+", "+ StartPos.y);
+
         while (EndParent.Parent.X!= StartPos.x||
             EndParent.Parent.Y != StartPos.y)
         {
@@ -141,6 +136,7 @@ public class WonderAI : MonoBehaviour
             else
                 break;
         }
+
         Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });
         Parents.Reverse();
 

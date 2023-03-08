@@ -52,8 +52,7 @@ public class Board : Singleton<Board>
 
         });
 
-
-
+        //타이머 세팅
         Observable.Timer(System.TimeSpan.FromSeconds(1)).Repeat().Subscribe(_ =>
         {
             if (time.Value != 0)
@@ -73,9 +72,6 @@ public class Board : Singleton<Board>
                 }
             }
         });
-        // CountText.text = ClearCount.ToString();
-
-        // OverlapCheck();         //중복 체크
 
         gameState = GameState.Playing;
 
@@ -108,12 +104,6 @@ public class Board : Singleton<Board>
         {
             for (int k = 0; k < Width; k++)
             {
-                /*if (!BoardObj[startIndex].activeSelf)
-                {
-                    Boards[i, k] = null;
-                    startIndex++;
-                    continue;
-                }*/
                 GameObject ShapeObj = Instantiate(ShapePrefab, ShapeParent.transform) as GameObject;
                 ObjPooling.Add(ShapeObj);           //오브젝트 풀링 대입
                 Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
@@ -268,6 +258,7 @@ public class Board : Singleton<Board>
         yield return StartCoroutine(Swap(XDir, YDir, (int)tempDir));        //타일 스왑
 
         int x = 0, y = 0;
+        bool isMove = false;
         do
         {
             if (Match2X2(Boards[y, x]))        //(2x2 매치 처리)
@@ -277,8 +268,8 @@ public class Board : Singleton<Board>
 
                 x = 0;              //매치가 된다면 첨부터 다시 탐색
                 y = 0;
-             
-                yield return new WaitForSeconds(1f);
+                isMove=true;
+                   yield return new WaitForSeconds(1f);
             }
             else if (Match345(Boards[y, x].X, Boards[y, x].Y, Boards[y, x].Index))       //(3 4 5 이상 매치 처리)
             {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
@@ -287,14 +278,13 @@ public class Board : Singleton<Board>
 
                 x = 0;              //매치가 된다면 첨부터 다시 탐색
                 y = 0;
-              
-                yield return new WaitForSeconds(1f);
+                isMove=true;
+                  yield return new WaitForSeconds(1f);
             }
             else            //하나도 맞는게 없다면
             {
-                if (x== SelectedShape.X&&y== SelectedShape.Y)
+                if (!isMove&&x == SelectedShape.X&&y== SelectedShape.Y)
                     yield return StartCoroutine(Swap(-XDir, -YDir, -(int)tempDir));     //스왑했던 퍼즐 다시 원위치로
-                
             }
             x++;
             if (x>=7)
@@ -558,7 +548,6 @@ public class Board : Singleton<Board>
                         y -= 1;
                         continue;
                     }
-
                     Boards[y + blank, x] = Boards[y - 1, x];            //데이터 바꾸기
                     Boards[y - 1, x] = null;
                     Boards[y + blank, x].Y = y + blank;
