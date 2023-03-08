@@ -81,24 +81,6 @@ public class Board : Singleton<Board>
 
       
     }
-    public IEnumerator MatchCheckAgain(Puzzle puzzle)
-    {
-        if (Match2X2(puzzle))        //(2x2 매치 처리)움직인 타일 반대편도 처리해주기
-        {
-            yield return StartCoroutine(DownPuzzle());
-           
-            // yield return StartCoroutine(DownCreateMatchCheck());
-             yield return StartCoroutine(CreatePuzzle());
-        }
-        else if (Match345(puzzle.X, puzzle.Y, puzzle.Index))
-        {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
-            yield return StartCoroutine(DownPuzzle());
-           // yield return StartCoroutine(CreatePuzzle());
-            //  yield return StartCoroutine(DownCreateMatchCheck());
-            yield return StartCoroutine(CreatePuzzle());
-        }
-        // yield return StartCoroutine(DownCreateMatchCheck());
-    }
     public GameObject GetObject()           //오브젝트풀에서 비활성화된 오브젝트 불러오기
     {
         foreach (var item in ObjPooling)
@@ -106,7 +88,6 @@ public class Board : Singleton<Board>
             if (!item.activeInHierarchy)       //활성화가 안되어있는 오브젝트가 있으면?
             {
                 //내보내기
-
                 return item;
             }
         }
@@ -138,10 +119,10 @@ public class Board : Singleton<Board>
                 Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
                 do
                 {
-                    newShape.SetInfo(new Puzzle(k, i, Random.Range(0, 3), startIndex, PuzzleState.NB));            //노멀블럭으로 랜덤0~3
+                    newShape.SetInfo(new Puzzle(k, i, Random.Range(0, 5), startIndex, PuzzleState.NB));            //노멀블럭으로 랜덤0~3
                     Boards[i, k] = newShape;
                     ShapeObj.transform.position = BoardObj[startIndex].transform.position;
-                } while (Match2X2(newShape) || Match345(newShape.X, newShape.Y, newShape.Index));
+                } while (Match2X2(newShape) || Match345(newShape.X, newShape.Y, newShape.Index));       //매칭 안될 때까지 루프
             
                 
                 startIndex++;
@@ -214,8 +195,7 @@ public class Board : Singleton<Board>
                 obj = BoardObj[(Boards.GetLength(0) * Y)];
                 yield return StartCoroutine(Boards[Y, X].MBBlockMoveCoroutine(obj, dir));
                 Boards[Y, X] = null;
-                // shapeInfo.GetComponent<Image>().enabled = false;
-                //shapeInfo.GetComponent<BoxCollider2D>().enabled = false;
+
                 MBBlockObj.SetActive(false);
                 yield return StartCoroutine(DownPuzzle());
 
@@ -225,10 +205,6 @@ public class Board : Singleton<Board>
                 yield return StartCoroutine(CreatePuzzle());
 
 
-               /* shapeInfo.GetComponent<Image>().enabled = true;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
-                shapeInfo.State = PuzzleState.NB;*/
-                //Destroy(MBBlockObj);
 
                 break;
             case Dir.Up:
@@ -244,10 +220,7 @@ public class Board : Singleton<Board>
 
                 yield return StartCoroutine(CreatePuzzle());
 
-               /* shapeInfo.GetComponent<Image>().enabled = true;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
-
-                shapeInfo.State = PuzzleState.NB;//Destroy(MBBlockObj);*/
+  
                 break;
             case Dir.Down:
                 obj = BoardObj[shapeInfo.Index + (7 * (Boards.GetLength(0) - Y - 1))];
@@ -263,11 +236,6 @@ public class Board : Singleton<Board>
 
                 yield return StartCoroutine(CreatePuzzle());
 
-               /* shapeInfo.GetComponent<Image>().enabled = true;
-                shapeInfo.GetComponent<BoxCollider2D>().enabled = true;
-
-                shapeInfo.State = PuzzleState.NB;*/
-                //Destroy(MBBlockObj);
                 break;
             default:
                 obj = null;
@@ -276,64 +244,57 @@ public class Board : Singleton<Board>
     }
     public IEnumerator Swap(int XDir, int YDir, int tempDir)
     {
-        StartCoroutine(SelectedShape.MoveCoroutine(BoardObj[SelectedShape.Index + tempDir]));       //타일 무브 애니메이션
+        StartCoroutine(SelectedShape.MoveCoroutine(BoardObj[SelectedShape.Index + tempDir]));       //타일 무브 코루틴
                                                                                                     //Puzzle tempShape = this;
         yield return StartCoroutine(Boards[SelectedShape.Y + YDir, SelectedShape.X + XDir].MoveCoroutine(BoardObj[SelectedShape.Index]));
 
         Puzzle temp = SelectedShape;
         Boards[SelectedShape.Y, SelectedShape.X] = Boards[SelectedShape.Y + YDir, SelectedShape.X + XDir];
         Boards[SelectedShape.Y + YDir, SelectedShape.X + XDir] = temp;
-
+        //퍼즐 정보 스왑
 
 
         Boards[SelectedShape.Y, SelectedShape.X].X -= XDir;
         Boards[SelectedShape.Y, SelectedShape.X].Y -= YDir;
         Boards[SelectedShape.Y, SelectedShape.X].Index -= tempDir;
+
         SelectedShape.X += XDir;
         SelectedShape.Y += YDir;
         SelectedShape.Index += tempDir;
 
     }
-    public IEnumerator BlockMatchCheck(int XDir, int YDir, Dir tempDir)           //움직인 쪽의 타일과 바꾼다
+    public IEnumerator BlockMatchCheck(int XDir, int YDir, Dir tempDir)           //움직인 쪽의 타일과 바꾸고 매칭 체크
     {
+        yield return StartCoroutine(Swap(XDir, YDir, (int)tempDir));        //타일 스왑
 
-
-        yield return StartCoroutine(Swap(XDir, YDir, (int)tempDir));
-        ////////------------------------수정중---------------------------------------
-        ///2x2 위로 체크 할 때 y-1이 0 미만 OR x+1이 GetLength 이상이면 2x2 체크 취소
-        ///2x2 아래로 체크 할 때 y+1이 GetLength 이상 OR x+1이 0 미만이면 2x2 체크 취소
-        // if (SelectedShape.X + 1 >= 0 && SelectedShape.Y + 1 < Boards.GetLength(0))
-        // {
         int x = 0, y = 0;
-        bool isMoved = true;
         do
         {
-            if (Match2X2(Boards[y, x]))        //(2x2 매치 처리)움직인 타일 반대편도 처리해주기
+            if (Match2X2(Boards[y, x]))        //(2x2 매치 처리)
             {
-                yield return StartCoroutine(DownPuzzle());
-                //yield return StartCoroutine(CreatePuzzle());
-                // yield return StartCoroutine(DownCreateMatchCheck());
-                // yield return StartCoroutine(CreatePuzzle());
-                x = 0;
+                yield return StartCoroutine(DownPuzzle());          //위에 있던 퍼즐이 아래로 내려오는 코루틴
+               yield return StartCoroutine(CreatePuzzle());          //새로운 퍼즐 만드는 코루틴
+
+                x = 0;              //매치가 된다면 첨부터 다시 탐색
                 y = 0;
+             
+                yield return new WaitForSeconds(1f);
             }
-            else if (Match345(Boards[y, x].X, Boards[y, x].Y, Boards[y, x].Index) )
+            else if (Match345(Boards[y, x].X, Boards[y, x].Y, Boards[y, x].Index))       //(3 4 5 이상 매치 처리)
             {      //(3 매치 처리)움직인 타일 반대편도 처리해주기
-                yield return StartCoroutine(DownPuzzle());
-                //yield return StartCoroutine(CreatePuzzle());
-                //  yield return StartCoroutine(DownCreateMatchCheck());
-                //yield return StartCoroutine(CreatePuzzle());
-                x = 0;
+                yield return StartCoroutine(DownPuzzle());          //위에 있던 퍼즐이 아래로 내려오는 코루틴
+                yield return StartCoroutine(CreatePuzzle());          //새로운 퍼즐 만드는 코루틴
+
+                x = 0;              //매치가 된다면 첨부터 다시 탐색
                 y = 0;
+              
+                yield return new WaitForSeconds(1f);
             }
             else            //하나도 맞는게 없다면
             {
-                if (isMoved == true&&x== SelectedShape.X&&y== SelectedShape.Y)
-                {
-
-                    yield return StartCoroutine(Swap(-XDir, -YDir, -(int)tempDir));
-                    isMoved = false;
-                }
+                if (x== SelectedShape.X&&y== SelectedShape.Y)
+                    yield return StartCoroutine(Swap(-XDir, -YDir, -(int)tempDir));     //스왑했던 퍼즐 다시 원위치로
+                
             }
             x++;
             if (x>=7)
@@ -341,12 +302,7 @@ public class Board : Singleton<Board>
                 x = 0;
                 y++;
             }
-            //yield return new WaitForSeconds(1f) ;
-        } while (y!=7);
-       
-      
-
-
+        } while (y!=7);                     //전체 퍼즐에서 매칭체크
     }
 
     public bool Match2X2(Puzzle ShapeData)
@@ -374,8 +330,8 @@ public class Board : Singleton<Board>
 
                             Debug.Log("매칭된 방향은 [" + CheckDirections[i, 0] + ". " + CheckDirections[i, 1] + "]");
                             Boards[ShapeData.Y, ShapeData.X].State = PuzzleState.MB;//먼치킨 블럭으로 바꿈s
-                            Boards[ShapeData.Y, ShapeData.X].ShapeNum = 4;
-                            Boards[ShapeData.Y, ShapeData.X].Image.sprite = ShapeImages[4];
+                            Boards[ShapeData.Y, ShapeData.X].ShapeNum = 5;
+                            Boards[ShapeData.Y, ShapeData.X].Image.sprite = ShapeImages[5];
                             Boards[ShapeData.Y, ShapeData.X].gameObject.tag = "MB";
 
                             Boards[ShapeData.Y, ShapeData.X + CheckDirections[i, 1]].gameObject.SetActive(false);
@@ -584,22 +540,10 @@ public class Board : Singleton<Board>
             return false;
         }
     }
-    /*  public void DestroyShape(int x, int y,int count)
-      {
-          for (int i = 0; i <= count; i++)
-          {
-              if (Boards[y + i, x] != null)
-                  Boards[y + i, x].gameObject.SetActive(false);
 
-          }
-      }*/
     public IEnumerator DownPuzzle()          //밑에서 부터 탐색해 타일을 하나씩 밑으로 내리는 함수
     {
-        //int index = DestroyShape.Index;
-        //int y = DestroyShape.Y;
-
         int x = 0;
-
         while (x < 7)
         {
             int y = 6;
@@ -633,48 +577,11 @@ public class Board : Singleton<Board>
             
             x++;
         }
-        /*x = 0;
-
-        while (x < 7)
-        {
-            int y = 6;
-            while (y >= 0)
-            {
-
-                if (Boards[y, x] == null)
-                {
-
-                    GameObject ShapeObj = GetObject();
-                    ShapeObj.SetActive(true);
-                    ShapeObj.transform.position = BoardObj[x].transform.position;
-                    ShapeObj.tag = "NB";
-                    Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
-                    newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
-
-                    Boards[newShape.Y, newShape.X] = newShape;
-
-                     StartCoroutine(DownPuzzle());
-                    NewPuzzle.Add(newShape);
-                    // break;
-                }
-                else
-                    y--;
-
-            }
-            x++;
-        }*/
-        /* foreach (var item in NewPuzzle)
-         {
-
-             yield return StartCoroutine(MatchCheckAgain(item));
-         }*/
-        //yield return StartCoroutine(CreatePuzzle());
     }
-    public IEnumerator CreatePuzzle()
+
+    public IEnumerator CreatePuzzle()           //새로운 퍼즐 생성하는 함수
     {
-
         int x = 0;
-
         while (x < 7)
         {
             int y = 6;
@@ -684,23 +591,23 @@ public class Board : Singleton<Board>
                 if (Boards[y, x] == null)
                 {
 
-                    GameObject ShapeObj = GetObject();
+                    GameObject ShapeObj = GetObject();  //오브젝트 풀에서 비활성화 된 오브젝트 불러옴
                     ShapeObj.SetActive(true);
                     ShapeObj.transform.position = BoardObj[x].transform.position;
                     ShapeObj.tag = "NB";
+
                     Puzzle newShape = ShapeObj.GetComponent<Puzzle>();
                     newShape.SetInfo(new Puzzle(x, 0, Random.Range(0, 3), x, PuzzleState.NB));
+                    //새로운 퍼즐 정보 세팅
 
                     Boards[newShape.Y, newShape.X] = newShape;
 
-                    yield return StartCoroutine(DownPuzzle());
-                    NewPuzzle.Add(newShape);
-                    // break;
+                    yield return StartCoroutine(DownPuzzle());          //퍼즐 내리는 함수
+                    
                     yield return 0;
                 }
                 else
                     y--;
-
             }
             x++;
         }

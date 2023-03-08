@@ -292,10 +292,6 @@ public class Building : MonoBehaviour
                                       }).AddTo(this);
                                   }
 
-                                  // longClickStream.Dispose();          //타이머 구독해지
-
-                                  //1.3초
-
                               }).AddTo(this);
 
         var longClickUpStream = BuildingBtn.OnPointerUpAsObservable().Subscribe(_ =>     //마우스 업 스트림

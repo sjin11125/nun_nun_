@@ -186,11 +186,9 @@ public class GridBuildingSystem : MonoBehaviour
         {
             case BuildType.Empty:
                 break;
+
             case BuildType.Load:
-               
-                    
                     RemoveArea(buildingArea);      //타일 초기화
-                
                 break;
             
             case BuildType.Move:
@@ -214,9 +212,8 @@ public class GridBuildingSystem : MonoBehaviour
             default:
                 break;
         }
-
-     
     }
+
    public  void EditModeOff(Building tempBuilding)                         //건축 모드 Off
     {
         MainTilemap.GetComponent<TilemapRenderer>().sortingOrder = -50;             //메인 타일 보이게

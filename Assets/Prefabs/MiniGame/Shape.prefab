@@ -186,6 +186,7 @@ MonoBehaviour:
   X: 0
   Y: 0
   Image: {fileID: 3962451199112031083}
+  EffectPrefab: {fileID: 2146084827453266624, guid: 2db71d1296c43b643b17894a96689303, type: 3}
   ShapeNum: 0
   Index: 0
   Btn: {fileID: 88933382662369223}

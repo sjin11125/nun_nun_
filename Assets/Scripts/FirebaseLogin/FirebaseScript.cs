@@ -272,13 +272,14 @@ public class FirebaseScript : MonoBehaviour
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
-            LoginPanel.SetActive(false);
+            LoginPanel.SetActive(false);                            //로그인 패널 지우기
         });
+
         functions = FirebaseFunctions.GetInstance(FirebaseApp.DefaultInstance);
-        var function = functions.GetHttpsCallable("findUser");
+        var function = functions.GetHttpsCallable("findUser");                  //유저 정보 불러오기
 
         SendMessage IdToken = new SendMessage("Send IdToken", idToken);
-        Debug.Log("Getuser");
+
         function.CallAsync(JsonUtility.ToJson(IdToken)).ContinueWithOnMainThread((task) => {
             Debug.Log("res: " + task.Result.Data);
 
@@ -290,9 +291,11 @@ public class FirebaseScript : MonoBehaviour
 
                     GameManager.Instance.PlayerUserInfo.Uid = idToken;
 
+                    //재화 설정
                     GameManager.Instance.Money.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Money);
                     GameManager.Instance.ShinMoney.Value = long.Parse(GameManager.Instance.PlayerUserInfo.ShinMoney);
                     GameManager.Instance.Zem.Value = long.Parse(GameManager.Instance.PlayerUserInfo.Zem);
+
                     Addressables.InitializeAsync().Completed += (result) =>
                     {
                         if (result.IsDone)
@@ -337,16 +340,8 @@ public class FirebaseScript : MonoBehaviour
                                 }
 
                             });
-
-
                         }
                     });
-
-
-
-
-
-                    //return true;   
                 }
                 catch (Exception e)
                 {
@@ -576,7 +571,7 @@ public class FirebaseScript : MonoBehaviour
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
 
-                if (!PlayerPrefs.HasKey("Uid"))
+                if (!PlayerPrefs.HasKey("Uid"))                                 //로그인한 기록 없으면 PlayerPref에 저장
                 {
                     PlayerPrefs.SetString("Uid", newUser.UserId);
                     PlayerPrefs.SetString("SignMethod", "Anonymous");
@@ -615,10 +610,7 @@ public class FirebaseScript : MonoBehaviour
         }
         else            //로그인 성공
         {
-            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
-            Debug.Log("Email = " + task.Result.Email);
-            Debug.Log("Google ID Token = " + task.Result.IdToken);
-            Debug.Log("Email = " + task.Result.Email);
+          
             SignInWithGoogle(task.Result.IdToken);
 
         }
@@ -662,7 +654,7 @@ public class FirebaseScript : MonoBehaviour
                 }
 
                 PlayerPrefs.SetString("SignMethod", "Google");
-                GetUserInfo(task.Result.UserId);
+                GetUserInfo(task.Result.UserId);                    //받은 id 토큰으로 유저정보 불러오기
             }
         });
 
