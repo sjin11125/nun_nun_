@@ -16,7 +16,7 @@ public class Node
     public Node Parent;
   
 }
-public class WonderAI : MonoBehaviour
+public class WanderAI : MonoBehaviour
 
 {
 
@@ -115,9 +115,7 @@ public class WonderAI : MonoBehaviour
                     if (G>queueNode.G)          //오픈리스트에 있는 G가 더 작다면
                     {
                         //현재 위치 업데이트
-                        NewNode.X= queueNode.X; 
-                        NewNode.Y= queueNode.Y;
-                        NewNode.Parent = queueNode.Parent;
+                        NewNode= queueNode; 
                         Closed.Add(NewNode);            //방문한 타일 리스트에 추가
 
                         //priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = BNode.Y, X = BNode.X, Parent = NewNode }, G + H);
@@ -144,7 +142,7 @@ public class WonderAI : MonoBehaviour
         }
 
         Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });   
-        //tlwk
+        
         Parents.Reverse();
 
         return Parents;

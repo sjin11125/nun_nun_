@@ -56,7 +56,7 @@ public class Card : MonoBehaviour
     public IConnectableObservable<int> _countDownObservable;
     readonly Subject<int> TimerStreams = new Subject<int>();
 
-    WonderAI WonderScript;
+    WanderAI WonderScript;
     BoundsInt StartPos = new BoundsInt();
     BoundsInt DestPos = new BoundsInt();
 
@@ -128,7 +128,7 @@ public class Card : MonoBehaviour
 
 
 
-        WonderScript = gameObject.GetComponent<WonderAI>();
+        WonderScript = gameObject.GetComponent<WanderAI>();
         
     
 
