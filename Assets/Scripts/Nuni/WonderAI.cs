@@ -96,36 +96,42 @@ public class WonderAI : MonoBehaviour
                 Node BNode = new Node() { Y = nextY, X = nextX };
 
                 BoundsInt position = new BoundsInt();
-                position.x = nextX;
-                position.y = nextY;
+                position.x = BNode.X;
+                position.y = BNode.Y;
                 position.size = new Vector3Int(1,1,1);
 
                 if (!GridBuildingSystem.current.CanTakeArea(position))         //타일맵 밖이나 건물이 있다면 패스
                     continue;
 
                 int G = NewNode.G + Cost[i];            //G계산(처음 시작지점에서 현재 위치까지 거리)
-                int H= Math.Abs(DestPos.position.x - nextX) + Math.Abs(DestPos.position.y - nextY);//현재 위치에서 목적지까지 최단거리
+                int H= Math.Abs(DestPos.position.x - BNode.X) + Math.Abs(DestPos.position.y - BNode.Y);//현재 위치에서 목적지까지 최단거리
 
                 if (NewNode.G + NewNode.H < G + H)               //현재위치에서 상하좌우 중 제일 거리(F)가 짧은 타일로 감
                    continue;
 
                 if (priorityQueue.Any(node => node.X == BNode.X && node.Y == BNode.Y))          //오픈리스트에 있을 때
                 {
-                    if (NewNode.G<G)
+                    var queueNode= priorityQueue.First(node => node.X == BNode.X && node.Y == BNode.Y);
+                    if (G>queueNode.G)          //오픈리스트에 있는 G가 더 작다면
                     {
-                        //오픈리스트에 넣기
-                        priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
+                        //현재 위치 업데이트
+                        NewNode.X= queueNode.X; 
+                        NewNode.Y= queueNode.Y;
+                        NewNode.Parent = queueNode.Parent;
+                        Closed.Add(NewNode);            //방문한 타일 리스트에 추가
+
+                        //priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = BNode.Y, X = BNode.X, Parent = NewNode }, G + H);
 
                     }
                 }
                 else                    //오픈리스트에 없을때
                 {
                                     //오픈리스트에 넣기
-                    priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = nextY, X = nextX, Parent = NewNode }, G + H);
+                    priorityQueue.Enqueue(new Node() { F = G + H, G = G, H = H, Y = BNode.Y, X = BNode.X, Parent = NewNode }, G + H);
                 }
             }
         }
-
+        //마지막 단계(EndParent의 Parernt를 추적해서 최종 경로 구하기)
         while (EndParent.Parent.X!= StartPos.x||
             EndParent.Parent.Y != StartPos.y)
         {
@@ -137,7 +143,8 @@ public class WonderAI : MonoBehaviour
                 break;
         }
 
-        Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });
+        Parents.Add(new Node() {  Y = StartPos.y, X = StartPos.x });   
+        //tlwk
         Parents.Reverse();
 
         return Parents;

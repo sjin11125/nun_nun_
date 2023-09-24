@@ -482,7 +482,7 @@ public class GridScript : MonoBehaviour
         return sameTrueDia;
     }
 
-    public bool CheckColumColor()
+    public bool CheckColumColor()       //색깔 체크
     {
         var sameCompCol = 0;
         var sameTrueCol = false;
@@ -507,7 +507,7 @@ public class GridScript : MonoBehaviour
                 {
                     sameCompCol = i;
                     sameShapeTrueCol = true;
-                    GameManager.Instance.UpdateMyAchieveInfo(achieveId[1,i], 5);
+                    GameManager.Instance.UpdateMyAchieveInfo(achieveId[1,i], 5);     //업적 정보 업데이트
                 }
             }
         }
